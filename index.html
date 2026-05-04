@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andres Pelizzer</title>
+
+    <!-- preconnect: apre subito la connessione con i server Google
+         per i font.
+         Il primo link punta al dominio dei CSS dei font.
+         Il secondo punta al dominio dei file font veri e propri.
+         Senza www. e senza path completi — solo il dominio. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- caricamento font:
+         Syne pesi 400 700 800 — l'800 è per i titoloni,
+                                  400 e 700 servono per il corsivo nei paragrafi
+         DM Mono pesi 300 400, sia normale che corsivo (ital) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- foglio di stile principale — DOPO i font così può usarli subito -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- linea decorativa verticale fissa sul bordo destro,
+         visibile solo su desktop, parte dopo il caricamento -->
+    <div class="deco-line"></div>
+
+    <!-- ════════════════════════════
+         NAV — barra fissa in alto
+    ════════════════════════════ -->
+    <nav>
+      <a href="#hero" class="nav-logo">Andres Pelizzer</a>
+
+      <!-- link desktop: nascosti su mobile via media query -->
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- bottone hamburger: nascosto su desktop, visibile solo su mobile.
+           Le tre <span> sono le tre lineette,
+           via JS aggiungiamo la classe "open" che le trasforma in X -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- pannello mobile che scivola da destra quando l'hamburger è aperto -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <nav class="mobile-nav-links">
+          <a href="#about" class="mobile-link">About</a>
+          <a href="#projects" class="mobile-link">Work</a>
+          <a href="#skills" class="mobile-link">Skills</a>
+          <a href="#contact" class="mobile-link">Contact</a>
+        </nav>
+        <div class="mobile-menu-footer">Andres Pelizzer © 2026</div>
+      </div>
+    </div>
+
+    <!-- backdrop scuro: cliccando fuori dal menu lo chiude -->
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <!-- ════════════════════════════
+         HERO — prima sezione
+    ════════════════════════════ -->
+    <section id="hero">
+      <!-- riga in cima: indice a sinistra, status a destra -->
+      <div class="hero-top-row">
+        <span class="hero-index">001 — Introduction</span>
+        <span class="hero-status">
+          <span class="status-dot"></span>Open to opportunities
+        </span>
+      </div>
+
+      <!-- linea decorativa orizzontale che cresce in animazione -->
+      <div class="hero-line"></div>
+
+      <!-- blocco nome — ANDRES outline accent, PELIZZER bianco pieno.
+           Lo span esterno ha overflow:hidden,
+           lo span interno parte da sotto e sale (curtain reveal) -->
+      <div class="hero-name-block">
+        <span class="hero-first"><span>ANDRES</span></span>
+        <span class="hero-last"><span>PELIZZER</span></span>
+      </div>
+
+      <!-- pannello live system con uptime e stack che cambia ogni 1.8s -->
+      <div class="live-system">
+        <div class="sys-item">
+          <span class="sys-label">Status</span>
+          <span class="sys-value">● Online</span>
+        </div>
+        <div class="sys-item">
+          <span class="sys-label">Location</span>
+          <span class="sys-value">Treviso, IT</span>
+        </div>
+        <div class="sys-item">
+          <span class="sys-label">Role</span>
+          <span class="sys-value">Full Stack Dev</span>
+        </div>
+        <div class="sys-item">
+          <span class="sys-label">Uptime</span>
+          <!-- id="uptime": il JS lo trova e aggiorna ogni secondo -->
+          <span class="sys-value" id="uptime">00:00:00</span>
+        </div>
+        <div class="sys-item">
+          <span class="sys-label">Stack</span>
+          <!-- id="stackCycle": il JS cicla le tecnologie -->
+          <span class="sys-value" id="stackCycle">HTML</span>
+        </div>
+      </div>
+
+      <!-- riga inferiore: meta a sinistra, bottoni a destra,
+           separati dal nome dalla border-top grigia -->
+      <div class="hero-bottom">
+        <div class="hero-meta">
+          <span class="hero-role">Web Full Stack Dev</span>
+          <span class="hero-sep"></span>
+          <span class="hero-location">Treviso, IT</span>
+        </div>
+        <div class="hero-cta">
+          <a href="#projects" class="btn">See my work</a>
+          <a href="#contact" class="btn">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════
+         ABOUT — editorial layout
+    ════════════════════════════ -->
+    <section id="about">
+      <div class="section-header">
+        <span class="section-index">002 — About</span>
+        <div class="section-line"></div>
+      </div>
+
+      <!-- meta strip in cima, stile rivista -->
+      <div class="about-meta-top reveal">
+        <span class="meta-label">Profile</span>
+        <span class="meta-value">19 · Treviso · Italy</span>
+      </div>
+
+      <!-- citazione grande — pezzo forte della sezione -->
+      <h2 class="about-quote reveal delay-1">
+        I want to know how things work —
+        <span class="quote-accent">then build them.</span>
+      </h2>
+
+      <!-- corpo a due colonne -->
+      <div class="about-body">
+        <div class="about-col-left">
+          <p class="about-para reveal delay-2">
+            Hi, I'm Andres. I'm 19, based in Treviso, and I'm in my first year
+            of the <em>ITS Web Stack Full Developer</em> program at
+            <strong>Mario Volpato Academy</strong>.
+          </p>
+          <p class="about-para reveal delay-2">
+            I came here straight from a scientific high school with no real
+            coding background — just curiosity. I picked ITS over university
+            because I wanted the most direct path to building real things. So
+            far, the part that surprised me most has been the backend: writing
+            APIs with Node.js and Express, watching requests flow through routes
+            and middleware, designing relational schemas in MySQL.
+          </p>
+
+          <!-- 3 mini-card chiave/valore al posto dei numeri grandi -->
+          <div class="about-stats reveal delay-3">
+            <div class="stat">
+              <span class="stat-key">Timeline</span>
+              <span class="stat-val">First year<br />at ITS Academy</span>
+            </div>
+            <div class="stat">
+              <span class="stat-key">Focus</span>
+              <span class="stat-val">Backend &<br />full stack</span>
+            </div>
+            <div class="stat">
+              <span class="stat-key">Internship</span>
+              <span class="stat-val">Stealth S.R.L.<br />May 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-col-right">
+          <p class="about-para reveal delay-2">
+            Outside of code, I play <em>tennis</em> — have done for years. I
+            follow the pro circuit closely, and I'm drawn to the analytics side
+            of the sport. I'm also generally curious about how the world works:
+            politics, economics, the systems behind everyday things.
+            Programming, for me, is part of that same instinct — taking
+            something opaque and making it transparent.
+          </p>
+
+          <!-- lista dettagli editoriale: label a sinistra, valore a destra -->
+          <ul class="about-list reveal delay-3">
+            <li><span>Education</span><span>ITS Digital Academy</span></li>
+            <li>
+              <span>Background</span
+              ><span>Liceo Scientifico — Scienze Applicate</span>
+            </li>
+            <li>
+              <span>Internship</span><span>Stealth S.R.L. — May 2026</span>
+            </li>
+            <li>
+              <span>Stack</span><span>Node.js · Express · MySQL · JS</span>
+            </li>
+            <li><span>Based in</span><span>Treviso, Italy</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════
+         PROJECTS — sticky scroll showcase
+         Sinistra: browser frame fisso (sticky) con immagine progetto
+         Destra: contenuto scrollabile con le schede progetto
+    ════════════════════════════ -->
+    <section id="projects">
+      <div class="section-header">
+        <span class="section-index">003 — Projects</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="projects-layout">
+        <!-- COLONNA SINISTRA: finto browser sticky -->
+        <div class="projects-frame">
+          <div class="browser">
+            <!-- barra superiore con pallini macOS + URL -->
+            <div class="browser-bar">
+              <div class="browser-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <!-- id="browserUrl": il JS aggiorna questo testo
+                   quando cambia il progetto in vista -->
+              <div class="browser-url" id="browserUrl">https://diventa.com</div>
+            </div>
+
+            <!-- viewport con l'immagine del progetto.
+                 id="projectImage": il JS aggiorna il src in fade -->
+            <div class="browser-viewport">
+              <img
+                id="projectImage"
+                src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1280&q=80"
+                alt="Project screenshot"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- COLONNA DESTRA: schede progetto scrollabili -->
+        <div class="projects-content">
+          <!-- PROGETTO 1.
+               data-image e data-url vengono letti dal JS
+               quando questo .project entra nel viewport. -->
+          <article
+            class="project"
+            data-project="1"
+            data-image="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1280&q=80"
+            data-url="https://diventa.com"
+          >
+            <span class="project-num">01 / 02</span>
+            <h3 class="project-title">Diventa</h3>
+            <span class="project-year">2026 — Multi page website</span>
+            <p class="project-desc">
+              Multi-page responsive website built from a Figma design. Layout in
+              pure HTML5 and CSS3 with Flexbox and Grid, fully adaptive across
+              three breakpoints.
+            </p>
+            <ul class="project-stack">
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>Flexbox / Grid</li>
+              <li>Responsive</li>
+            </ul>
+            <div class="project-links">
+              <a href="#" class="project-link">View live →</a>
+              <a href="#" class="project-link">GitHub →</a>
+            </div>
+          </article>
+
+          <!-- PROGETTO 2 -->
+          <article
+            class="project"
+            data-project="2"
+            data-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&q=80"
+            data-url="https://andrespelizzer.com"
+          >
+            <span class="project-num">02 / 02</span>
+            <h3 class="project-title">Portfolio</h3>
+            <span class="project-year">2026 — Personal site</span>
+            <p class="project-desc">
+              Personal portfolio site built from scratch in vanilla HTML, CSS
+              and JavaScript. No frameworks. Custom animations, parallax, and a
+              fully responsive editorial layout.
+            </p>
+            <ul class="project-stack">
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>JavaScript</li>
+              <li>Animations</li>
+            </ul>
+            <div class="project-links">
+              <a href="#" class="project-link">View live →</a>
+              <a href="#" class="project-link">GitHub →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════
+         SKILLS — marquee infinito
+         3 nastri sovrapposti, direzioni alterne.
+         Ogni track ha 4 ripetizioni dei chip → loop senza buchi.
+    ════════════════════════════ -->
+    <section id="skills">
+      <div class="section-header">
+        <span class="section-index">004 — Skills</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="skills-marquees">
+        <!-- ── NASTRO 1: Frontend (scorre →←) ── -->
+        <div class="marquee">
+          <div class="marquee-track">
+            <!-- 8 chip × 4 ripetizioni = 32 chip totali -->
+            <span class="skill"><span class="skill-dot"></span>HTML5</span>
+            <span class="skill"><span class="skill-dot"></span>CSS3</span>
+            <span class="skill"><span class="skill-dot"></span>JavaScript</span>
+            <span class="skill"><span class="skill-dot"></span>Vue</span>
+            <span class="skill"><span class="skill-dot"></span>Responsive</span>
+            <span class="skill"><span class="skill-dot"></span>Animation</span>
+            <span class="skill"><span class="skill-dot"></span>Flexbox</span>
+            <span class="skill"><span class="skill-dot"></span>Grid</span>
+
+            <span class="skill"><span class="skill-dot"></span>HTML5</span>
+            <span class="skill"><span class="skill-dot"></span>CSS3</span>
+            <span class="skill"><span class="skill-dot"></span>JavaScript</span>
+            <span class="skill"><span class="skill-dot"></span>Vue</span>
+            <span class="skill"><span class="skill-dot"></span>Responsive</span>
+            <span class="skill"><span class="skill-dot"></span>Animation</span>
+            <span class="skill"><span class="skill-dot"></span>Flexbox</span>
+            <span class="skill"><span class="skill-dot"></span>Grid</span>
+
+            <span class="skill"><span class="skill-dot"></span>HTML5</span>
+            <span class="skill"><span class="skill-dot"></span>CSS3</span>
+            <span class="skill"><span class="skill-dot"></span>JavaScript</span>
+            <span class="skill"><span class="skill-dot"></span>Vue</span>
+            <span class="skill"><span class="skill-dot"></span>Responsive</span>
+            <span class="skill"><span class="skill-dot"></span>Animation</span>
+            <span class="skill"><span class="skill-dot"></span>Flexbox</span>
+            <span class="skill"><span class="skill-dot"></span>Grid</span>
+
+            <span class="skill"><span class="skill-dot"></span>HTML5</span>
+            <span class="skill"><span class="skill-dot"></span>CSS3</span>
+            <span class="skill"><span class="skill-dot"></span>JavaScript</span>
+            <span class="skill"><span class="skill-dot"></span>Vue</span>
+            <span class="skill"><span class="skill-dot"></span>Responsive</span>
+            <span class="skill"><span class="skill-dot"></span>Animation</span>
+            <span class="skill"><span class="skill-dot"></span>Flexbox</span>
+            <span class="skill"><span class="skill-dot"></span>Grid</span>
+          </div>
+        </div>
+
+        <!-- ── NASTRO 2: Backend & Database (scorre ←→ — direzione opposta) ── -->
+        <div class="marquee marquee-reverse">
+          <div class="marquee-track">
+            <!-- 8 chip × 4 ripetizioni = 32 chip totali -->
+            <span class="skill"><span class="skill-dot"></span>Node.js</span>
+            <span class="skill"><span class="skill-dot"></span>Express</span>
+            <span class="skill"><span class="skill-dot"></span>REST API</span>
+            <span class="skill"><span class="skill-dot"></span>MySQL</span>
+            <span class="skill"><span class="skill-dot"></span>SQLite</span>
+            <span class="skill"><span class="skill-dot"></span>Python</span>
+            <span class="skill"><span class="skill-dot"></span>Java</span>
+            <span class="skill"><span class="skill-dot"></span>JWT</span>
+
+            <span class="skill"><span class="skill-dot"></span>Node.js</span>
+            <span class="skill"><span class="skill-dot"></span>Express</span>
+            <span class="skill"><span class="skill-dot"></span>REST API</span>
+            <span class="skill"><span class="skill-dot"></span>MySQL</span>
+            <span class="skill"><span class="skill-dot"></span>SQLite</span>
+            <span class="skill"><span class="skill-dot"></span>Python</span>
+            <span class="skill"><span class="skill-dot"></span>Java</span>
+            <span class="skill"><span class="skill-dot"></span>JWT</span>
+
+            <span class="skill"><span class="skill-dot"></span>Node.js</span>
+            <span class="skill"><span class="skill-dot"></span>Express</span>
+            <span class="skill"><span class="skill-dot"></span>REST API</span>
+            <span class="skill"><span class="skill-dot"></span>MySQL</span>
+            <span class="skill"><span class="skill-dot"></span>SQLite</span>
+            <span class="skill"><span class="skill-dot"></span>Python</span>
+            <span class="skill"><span class="skill-dot"></span>Java</span>
+            <span class="skill"><span class="skill-dot"></span>JWT</span>
+
+            <span class="skill"><span class="skill-dot"></span>Node.js</span>
+            <span class="skill"><span class="skill-dot"></span>Express</span>
+            <span class="skill"><span class="skill-dot"></span>REST API</span>
+            <span class="skill"><span class="skill-dot"></span>MySQL</span>
+            <span class="skill"><span class="skill-dot"></span>SQLite</span>
+            <span class="skill"><span class="skill-dot"></span>Python</span>
+            <span class="skill"><span class="skill-dot"></span>Java</span>
+            <span class="skill"><span class="skill-dot"></span>JWT</span>
+          </div>
+        </div>
+
+        <!-- ── NASTRO 3: Tools (scorre →←, come il primo) ── -->
+        <div class="marquee">
+          <div class="marquee-track">
+            <!-- 7 chip × 4 ripetizioni = 28 chip totali -->
+            <span class="skill"><span class="skill-dot"></span>Git</span>
+            <span class="skill"><span class="skill-dot"></span>GitHub</span>
+            <span class="skill"><span class="skill-dot"></span>VS Code</span>
+            <span class="skill"><span class="skill-dot"></span>Docker</span>
+            <span class="skill"><span class="skill-dot"></span>Figma</span>
+            <span class="skill"
+              ><span class="skill-dot"></span>Thunder Client</span
+            >
+            <span class="skill"><span class="skill-dot"></span>Power BI</span>
+
+            <span class="skill"><span class="skill-dot"></span>Git</span>
+            <span class="skill"><span class="skill-dot"></span>GitHub</span>
+            <span class="skill"><span class="skill-dot"></span>VS Code</span>
+            <span class="skill"><span class="skill-dot"></span>Docker</span>
+            <span class="skill"><span class="skill-dot"></span>Figma</span>
+            <span class="skill"
+              ><span class="skill-dot"></span>Thunder Client</span
+            >
+            <span class="skill"><span class="skill-dot"></span>Power BI</span>
+
+            <span class="skill"><span class="skill-dot"></span>Git</span>
+            <span class="skill"><span class="skill-dot"></span>GitHub</span>
+            <span class="skill"><span class="skill-dot"></span>VS Code</span>
+            <span class="skill"><span class="skill-dot"></span>Docker</span>
+            <span class="skill"><span class="skill-dot"></span>Figma</span>
+            <span class="skill"
+              ><span class="skill-dot"></span>Thunder Client</span
+            >
+            <span class="skill"><span class="skill-dot"></span>Power BI</span>
+
+            <span class="skill"><span class="skill-dot"></span>Git</span>
+            <span class="skill"><span class="skill-dot"></span>GitHub</span>
+            <span class="skill"><span class="skill-dot"></span>VS Code</span>
+            <span class="skill"><span class="skill-dot"></span>Docker</span>
+            <span class="skill"><span class="skill-dot"></span>Figma</span>
+            <span class="skill"
+              ><span class="skill-dot"></span>Thunder Client</span
+            >
+            <span class="skill"><span class="skill-dot"></span>Power BI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- script in fondo al body: a questo punto tutta la pagina esiste già
+         e il JS può trovare gli elementi senza problemi -->
+    <script src="script.js"></script>
+  </body>
+</html>
