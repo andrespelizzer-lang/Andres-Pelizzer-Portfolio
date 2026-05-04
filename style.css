@@ -56,23 +56,130 @@ body {
 }
 
 /* ════════════════════════════════════════════
-   GRAIN OVERLAY
-   pseudo-elemento sopra tutta la pagina che aggiunge
-   una texture sottilissima — toglie la sensazione "piatto digitale".
-   pointer-events: none così non blocca i click,
-   è puramente decorativo.
+   GRAIN OVERLAY — texture sottile di "rumore" sopra tutta la pagina
+
+   Cosa fa visivamente:
+   Aggiunge un effetto "pulviscolo" leggerissimo sopra tutto il sito,
+   tipo il grano della pellicola fotografica vecchia. È quasi invisibile
+   (2.5% di opacità) ma fa la differenza: senza, il nero del background
+   sembra "piatto digitale" — con, sembra "nero vivo" come nei film.
+   È un dettaglio premium che usano portfolio e siti di agenzia.
+
+   Cosa è una "texture di rumore frattale":
+   "Rumore" in grafica significa puntini casuali sparsi su una superficie,
+   tipo il "fruscio" della TV vecchia quando non c'era segnale.
+   "Frattale" significa che il pattern si ripete in scale diverse —
+   cioè se zoomi un pezzo del rumore, vedi pattern simili a livelli
+   più piccoli. È il modo in cui in natura si formano nuvole, montagne,
+   venature del legno: caos organizzato.
+   "Generata matematicamente" significa che il rumore non è un'immagine
+   disegnata da qualcuno — è il risultato di una formula matematica
+   che il browser calcola al volo.
+
+   Perché non usiamo una PNG di rumore:
+   1) Performance — zero richieste HTTP, niente file da scaricare
+   2) Qualità — un'immagine matematica è perfetta a qualsiasi zoom,
+      una PNG diventerebbe sgranata su monitor 4K
+   3) Peso — il codice qui sotto pesa ~300 caratteri,
+      una PNG equivalente sarebbe 5-10 KB
 ══════════════════════════════════════════════ */
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-}
+  /* ::before è uno PSEUDO-ELEMENTO — un elemento "finto" che il CSS
+     crea automaticamente attaccato al body. È come se avessi scritto
+     un <div> invisibile come primo figlio del body, ma senza toccare
+     l'HTML. Si usa proprio per cose decorative come questa. */
 
+  content: "";
+  /* OBBLIGATORIO per gli pseudo-elementi.
+     Senza "content", lo pseudo-elemento non esiste affatto.
+     Lo lasciamo vuoto perché non vogliamo testo, vogliamo solo
+     la sua "scatola" su cui applicare il background. */
+
+  position: fixed;
+  /* Lo ancoriamo al viewport (la finestra del browser), NON alla pagina.
+     Significa: mentre scrolli, lui rimane fermo. La texture rimane
+     uguale ovunque tu scrolli, dà continuità all'esperienza. */
+
+  inset: 0;
+  /* Scorciatoia per: top: 0; right: 0; bottom: 0; left: 0;
+     Combinato con position: fixed → copre TUTTO lo schermo,
+     dal bordo superiore a quello inferiore, sinistra a destra. */
+
+  pointer-events: none;
+  /* Disabilita le interazioni del mouse su questo elemento.
+     SENZA questa riga, lo pseudo-elemento intercetterebbe tutti i click —
+     sta sopra a tutto, quindi se cliccassi un bottone, cliccheresti
+     prima sulla texture e il bottone non funzionerebbe.
+     Con "none", i click "attraversano" come se la texture non esistesse. */
+
+  z-index: 1;
+  /* Ordine di sovrapposizione. Più alto = più davanti.
+     z-index: 1 → sta SOPRA il contenuto delle sezioni,
+     ma SOTTO la nav (che ha z-index: 100) e SOTTO il menu mobile (1050).
+     Risultato: la texture è ovunque ma non copre la nav. */
+
+  opacity: 0.025;
+  /* Trasparenza al 2.5%. Quasi invisibile.
+     L'obiettivo è che si SENTA ma non si VEDA chiaramente —
+     se metti opacity: 0.1 il rumore diventa fastidioso,
+     se metti 0.005 sparisce del tutto. 0.025 è il punto giusto. */
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* QUI C'È IL TRUCCO INTELLIGENTE:
+     normalmente background-image si scrive così:
+       background-image: url("immagine.png");
+     e il browser scarica un file da disco o da internet.
+
+     Qui invece NON c'è nessun file. C'è un "data URL":
+     un modo per scrivere l'immagine direttamente nel CSS come testo.
+
+     Il formato è: data:[tipo],[contenuto]
+     - "data:image/svg+xml" → dice "questa è un'immagine SVG"
+     - "%3Csvg..." → è il codice SVG dell'immagine, dove
+       %3C e %3E sono le versioni "URL-encoded" di < e >
+       (un URL non può contenere < direttamente, va codificato).
+
+     Tradotto in SVG vero, l'immagine è questa:
+       <svg viewBox='0 0 256 256'>
+         <filter id='n'>
+           <feTurbulence type='fractalNoise'
+                         baseFrequency='0.9'
+                         numOctaves='4'
+                         stitchTiles='stitch'/>
+         </filter>
+         <rect width='100%' height='100%' filter='url(#n)'/>
+       </svg>
+
+     Cosa fa questo SVG:
+     - Crea un FILTRO chiamato "n" che usa feTurbulence —
+       una funzione SVG nativa che genera rumore frattale (la texture
+       a puntini casuali tipo grano della pellicola)
+     - Crea un RETTANGOLO che riempie tutto e applica il filtro
+
+     I parametri:
+     - baseFrequency='0.9' → quanto è "fitto" il rumore.
+       Valori più alti = puntini più piccoli e fitti.
+       Valori bassi = macchie più grandi.
+     - numOctaves='4' → quanti livelli di dettaglio sovrapposti.
+       Più alto = rumore più ricco e dettagliato.
+     - stitchTiles='stitch' → fa in modo che i bordi del rumore
+       si "uniscano" perfettamente quando viene ripetuto in tile,
+       senza linee visibili.
+
+     Tutto questo viene calcolato dal browser al volo —
+     zero file da scaricare, zero richieste HTTP,
+     l'immagine "esiste" solo dentro la stringa qui sopra. */
+
+  background-size: 200px 200px;
+  /* Dice al browser di mostrare l'immagine a 200×200 pixel.
+     Siccome lo schermo è più grande, il background si RIPETE
+     come un mosaico/tile (è il comportamento default di background-image).
+
+     Tile più piccoli (200px) = grana più FINE, simile a polvere.
+     Tile più grandi (800px) = pattern più MARCATO, simile a macchie.
+
+     200px è il valore tipico per un grain effect elegante. */
+}
 /* ════════════════════════════════════════════
    DECO LINE
    linea verticale fissa sul bordo destro della pagina.
