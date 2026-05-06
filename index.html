@@ -225,9 +225,12 @@
             </p>
           </div>
 
-          <!-- pannello laterale "at a glance" -->
+          <!-- pannello laterale "at a glance" — redesigned terminal card -->
           <aside class="about-side reveal delay-3">
-            <div class="side-key">At a glance</div>
+            <div class="side-header">
+              <span class="side-tag">[ profile ]</span>
+              <span class="side-dot"></span>
+            </div>
             <ul class="about-list">
               <li><span>Education</span><span>ITS Digital Academy</span></li>
               <li><span>Background</span><span>Liceo Scientifico</span></li>
@@ -239,22 +242,52 @@
               </li>
               <li><span>Based in</span><span>Treviso, Italy</span></li>
             </ul>
+            <div class="side-footer">↑ updated 2026</div>
           </aside>
         </div>
 
-        <!-- 3 stats in fila — sotto entrambe le colonne, full width -->
+        <!-- 3 stat cards interattive — cliccabili per espandere dettagli -->
         <div class="about-stats reveal delay-3">
-          <div class="stat">
-            <span class="stat-key">Timeline</span>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-key">Timeline</span>
+              <span class="stat-toggle">+</span>
+            </div>
             <span class="stat-val">First year<br />at ITS Academy</span>
+            <div class="stat-detail">
+              <div class="stat-detail-inner">
+                <p>Sep 2025 – Jun 2026 · Treviso</p>
+                <p>
+                  Full stack curriculum: HTML, CSS, JS, Node.js, Express, MySQL.
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="stat">
-            <span class="stat-key">Focus</span>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-key">Focus</span>
+              <span class="stat-toggle">+</span>
+            </div>
             <span class="stat-val">Backend &<br />full stack</span>
+            <div class="stat-detail">
+              <div class="stat-detail-inner">
+                <p>REST API design · three-layer architecture</p>
+                <p>routes → controllers → queries · MySQL schema design.</p>
+              </div>
+            </div>
           </div>
-          <div class="stat">
-            <span class="stat-key">Internship</span>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-key">Internship</span>
+              <span class="stat-toggle">+</span>
+            </div>
             <span class="stat-val">Stealth S.R.L.<br />May 2026</span>
+            <div class="stat-detail">
+              <div class="stat-detail-inner">
+                <p>Custom software house · Villorba, Treviso</p>
+                <p>Web, mobile, AI projects · 150+ clients.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

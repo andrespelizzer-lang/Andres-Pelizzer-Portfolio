@@ -691,6 +691,35 @@ const projectObserver = new IntersectionObserver(
 /* Osserviamo tutti i progetti */
 projects.forEach((project) => projectObserver.observe(project));
 
+/* ════════════════════════════════════════════════════════════════
+   8. STAT CARDS — espansione interattiva al click
+
+   Cosa fa visivamente:
+   Le 3 card Timeline / Focus / Internship nella sezione About
+   sono cliccabili. Cliccando una card, si espande mostrando
+   dettagli extra; il + ruota a diventare ×; il bordo diventa accent.
+   Cliccando di nuovo, si richiude. Cliccando un'altra card,
+   la precedente si chiude e quella nuova si apre.
+
+   Tecnica:
+   Toggle della classe "open" con chiusura automatica delle altre.
+═══════════════════════════════════════════════════════════════════ */
+document.querySelectorAll(".stat-card").forEach((card) => {
+  card.addEventListener("click", () => {
+    const isOpen = card.classList.contains("open");
+
+    /* chiude tutte le card aperte prima di aprire quella cliccata */
+    document.querySelectorAll(".stat-card.open").forEach((c) => {
+      c.classList.remove("open");
+    });
+
+    /* se era chiusa, la apre; se era già aperta, rimane chiusa (toggle) */
+    if (!isOpen) {
+      card.classList.add("open");
+    }
+  });
+});
+
 /* ══════════════════════════════════════════════════════════════════
    FINE DEL FILE
 
