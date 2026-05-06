@@ -693,17 +693,25 @@ section {
 }
 
 /* ════════════════════════════════════════════
-   ABOUT — editorial layout
-   3 zone: meta in cima, citazione grande, body a 2 colonne
+   ABOUT — editorial article layout
+   - Larghezza generosa (1100px) per non sembrare strozzato
+   - Citazione in OUTLINE (come ANDRES nell'hero) — leggera, non opprimente
+   - Body a 2 colonne sbilanciate 60/40: testo + pannello laterale
+   - Stats in fila full-width come "footer" della sezione
+   - Tooltip CSS puri sulle parole verdi tratteggiate
 ══════════════════════════════════════════════ */
 
 #about {
-  max-width: 1300px;
-  margin: 0 auto; /* centra orizzontalmente:
-                     0 sopra/sotto, auto a destra/sinistra */
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-/* ── META TOP — riga sottile sopra la citazione ── */
+/* contenitore: serve solo per allineare al centro */
+.about-narrow {
+  width: 100%;
+}
+
+/* ── META STRIP ── */
 .about-meta-top {
   display: flex;
   align-items: center;
@@ -711,7 +719,7 @@ section {
   margin-bottom: 3rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--dim);
-  max-width: 200px;
+  max-width: 220px;
 }
 
 .meta-label {
@@ -727,54 +735,62 @@ section {
   color: var(--muted);
 }
 
-/* ── CITAZIONE GRANDE ──
-   Stesso DNA del nome hero ma più piccola.
-   line-height 1.1 + padding-bottom 0.2em: serve per dare aria
-   ai discendenti del corsivo Syne (g, y, p) che tagliavano. */
+/* ── CITAZIONE in OUTLINE (come ANDRES nell'hero) ──
+   color: transparent + -webkit-text-stroke fa il contorno solo.
+   La parte ".quote-accent" rimane piena verde per contrasto interno. */
 .about-quote {
   font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: clamp(2rem, 5.5vw, 4.5rem);
-  line-height: 1.1;
+  font-size: clamp(2.2rem, 6vw, 5.5rem);
+  line-height: 1.05;
   letter-spacing: -0.03em;
-  color: var(--text);
-  max-width: 22ch;
   margin-bottom: 5rem;
   padding-bottom: 0.2em;
+
+  /* il trucco: testo trasparente con contorno —
+     leggero come l'aria, ma comunque grande e d'impatto */
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--text);
 }
 
 .quote-accent {
+  /* la seconda parte della frase resta PIENA verde —
+     è il "punto saliente" della citazione, deve catturare l'occhio */
   color: var(--accent);
   font-style: italic;
+  -webkit-text-stroke: 0; /* annulla il contorno per questa porzione */
 }
 
-/* ── CORPO 2 COLONNE 50/50 ── */
+/* ── BODY: 2 colonne sbilanciate 60/40 ──
+   col sinistra = paragrafi (porzione narrativa).
+   col destra = pannello "at a glance" (porzione informativa).  */
 .about-body {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 4rem;
   align-items: start;
+  margin-bottom: 5rem;
 }
 
-/* ── PARAGRAFI ── */
+.about-text {
+  /* solo contenitore dei paragrafi — nessuno styling speciale */
+}
+
 .about-para {
-  font-size: 0.78rem;
-  line-height: 1.9;
+  font-size: 0.8rem;
+  line-height: 1.95;
   color: var(--text);
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.6rem;
 }
 
-/* <em> diventa Syne corsivo verde, leggermente più grande
-   per bilanciare otticamente con il DM Mono intorno */
 .about-para em {
   font-family: "Syne", sans-serif;
   font-style: italic;
   font-weight: 400;
   color: var(--accent);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
 }
 
-/* <strong> resta DM Mono ma con underline accent */
 .about-para strong {
   color: var(--text);
   font-weight: 400;
@@ -782,12 +798,65 @@ section {
   padding-bottom: 1px;
 }
 
-/* ── STATS — 3 mini-card chiave/valore affiancate ── */
+/* ── PANNELLO LATERALE "at a glance" ──
+   border-left accent verde + sfondo verdino quasi invisibile —
+   stesso DNA del live system dell'hero. */
+.about-side {
+  padding: 1.4rem 1.4rem 1rem;
+  border: 1px solid var(--dim);
+  border-left: 2px solid var(--accent);
+  background: rgba(200, 255, 0, 0.025);
+  position: sticky;
+  top: 6rem; /* opzionale: rimane visibile mentre scrolli i paragrafi */
+}
+
+.side-key {
+  font-size: 0.5rem;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--dim);
+}
+
+/* ── LISTA "at a glance" ── */
+.about-list {
+  list-style: none;
+}
+
+.about-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--dim);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+}
+
+.about-list li:last-child {
+  border-bottom: none;
+}
+
+.about-list li span:first-child {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  flex-shrink: 0;
+}
+
+.about-list li span:last-child {
+  color: var(--text);
+  text-align: right;
+}
+
+/* ── STATS — 3 cards in fila, full width ── */
 .about-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  padding-top: 2rem;
+  padding-top: 2.5rem;
   border-top: 1px solid var(--dim);
 }
 
@@ -797,7 +866,6 @@ section {
   gap: 0.4rem;
 }
 
-/* la "chiave" piccola in cima */
 .stat-key {
   font-size: 0.5rem;
   letter-spacing: 0.22em;
@@ -805,41 +873,76 @@ section {
   text-transform: uppercase;
 }
 
-/* il valore vero, leggibile */
 .stat-val {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   letter-spacing: 0.05em;
   color: var(--text);
   line-height: 1.6;
 }
 
-/* ── LISTA DETTAGLI ── */
-.about-list {
-  list-style: none;
-  border-top: 1px solid var(--dim);
+/* ════════════════════════════════════════════
+   ABOUT — KEY WORDS interattive con tooltip
+   Le parole verdi tratteggiate hanno un piccolo riquadro
+   informativo che appare al hover. CSS puro, niente JS.
+══════════════════════════════════════════════ */
+
+.key-word {
+  color: var(--accent);
+  border-bottom: 1px dashed var(--accent);
+  padding-bottom: 1px;
+  cursor: help;
+  position: relative;
+  font-style: normal;
 }
 
-.about-list li {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--dim);
+.key-word .tip {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 8px;
+
+  width: 260px;
+  padding: 0.7rem 0.9rem;
+  background: #0d0d0d;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+
+  font-family: "DM Mono", monospace;
   font-size: 0.6rem;
-  letter-spacing: 0.1em;
-}
-
-/* primo span = label (uppercase, grigio, spaziato),
-   ultimo span = valore (bianco) — selezionati per posizione */
-.about-list li span:first-child {
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-}
-
-.about-list li span:last-child {
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
   color: var(--text);
+  font-style: normal;
+  text-transform: none;
+
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+
+  z-index: 10;
 }
 
+.key-word:hover .tip {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.key-word .tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 1.2rem;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--accent);
+}
 /* ════════════════════════════════════════════
    PROJECTS — sticky scroll layout
    Due metà affiancate:
@@ -1223,6 +1326,37 @@ section {
     padding: 0.4rem 0.8rem;
     margin-right: 1.2rem;
   }
+  /* About: stats vanno in colonna su mobile */
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  /* About: 2 colonne diventano 1 su tablet/mobile */
+  .about-body {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-side {
+    position: static; /* niente sticky su mobile */
+  }
+
+  /* stats in colonna su mobile */
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* tooltip stretto, non sfora */
+  .key-word .tip {
+    width: min(260px, calc(100vw - 3rem));
+    font-size: 0.55rem;
+  }
+
+  /* citazione outline meno spessa su mobile (1.2px su schermi piccoli è troppo) */
+  .about-quote {
+    -webkit-text-stroke-width: 1px;
+  }
 }
 
 /* ════════════════════════════════════════════
@@ -1259,5 +1393,10 @@ section {
   /* sezioni: padding più stretto su mobile */
   section {
     padding: 5rem 1.4rem 3rem;
+  }
+  /* tooltip su mobile: più stretto e allineato al centro */
+  .key-word .tip {
+    width: min(260px, calc(100vw - 3rem));
+    font-size: 0.55rem;
   }
 }

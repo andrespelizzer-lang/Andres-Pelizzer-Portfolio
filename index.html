@@ -144,77 +144,118 @@
         <div class="section-line"></div>
       </div>
 
-      <!-- meta strip in cima, stile rivista -->
-      <div class="about-meta-top reveal">
-        <span class="meta-label">Profile</span>
-        <span class="meta-value">19 · Treviso · Italy</span>
-      </div>
-
-      <!-- citazione grande — pezzo forte della sezione -->
-      <h2 class="about-quote reveal delay-1">
-        I want to know how things work —
-        <span class="quote-accent">then build them.</span>
-      </h2>
-
-      <!-- corpo a due colonne -->
-      <div class="about-body">
-        <div class="about-col-left">
-          <p class="about-para reveal delay-2">
-            Hi, I'm Andres. I'm 19, based in Treviso, and I'm in my first year
-            of the <em>ITS Web Stack Full Developer</em> program at
-            <strong>Mario Volpato Academy</strong>.
-          </p>
-          <p class="about-para reveal delay-2">
-            I came here straight from a scientific high school with no real
-            coding background — just curiosity. I picked ITS over university
-            because I wanted the most direct path to building real things. So
-            far, the part that surprised me most has been the backend: writing
-            APIs with Node.js and Express, watching requests flow through routes
-            and middleware, designing relational schemas in MySQL.
-          </p>
-
-          <!-- 3 mini-card chiave/valore al posto dei numeri grandi -->
-          <div class="about-stats reveal delay-3">
-            <div class="stat">
-              <span class="stat-key">Timeline</span>
-              <span class="stat-val">First year<br />at ITS Academy</span>
-            </div>
-            <div class="stat">
-              <span class="stat-key">Focus</span>
-              <span class="stat-val">Backend &<br />full stack</span>
-            </div>
-            <div class="stat">
-              <span class="stat-key">Internship</span>
-              <span class="stat-val">Stealth S.R.L.<br />May 2026</span>
-            </div>
-          </div>
+      <div class="about-narrow">
+        <!-- meta strip — sottile in cima -->
+        <div class="about-meta-top reveal">
+          <span class="meta-label">Profile</span>
+          <span class="meta-value">19 · Treviso · Italy</span>
         </div>
 
-        <div class="about-col-right">
-          <p class="about-para reveal delay-2">
-            Outside of code, I play <em>tennis</em> — have done for years. I
-            follow the pro circuit closely, and I'm drawn to the analytics side
-            of the sport. I'm also generally curious about how the world works:
-            politics, economics, the systems behind everyday things.
-            Programming, for me, is part of that same instinct — taking
-            something opaque and making it transparent.
-          </p>
+        <!-- citazione GRANDE in OUTLINE — fa atmosfera, non blocca -->
+        <h2 class="about-quote reveal delay-1">
+          I want to know how things work —
+          <span class="quote-accent">then build them.</span>
+        </h2>
 
-          <!-- lista dettagli editoriale: label a sinistra, valore a destra -->
-          <ul class="about-list reveal delay-3">
-            <li><span>Education</span><span>ITS Digital Academy</span></li>
-            <li>
-              <span>Background</span
-              ><span>Liceo Scientifico — Scienze Applicate</span>
-            </li>
-            <li>
-              <span>Internship</span><span>Stealth S.R.L. — May 2026</span>
-            </li>
-            <li>
-              <span>Stack</span><span>Node.js · Express · MySQL · JS</span>
-            </li>
-            <li><span>Based in</span><span>Treviso, Italy</span></li>
-          </ul>
+        <!-- corpo a 2 colonne sbilanciate: paragrafi 60% + pannello 40% -->
+        <div class="about-body">
+          <div class="about-text reveal delay-2">
+            <p class="about-para">
+              Hi, I'm Andres. I'm 19, based in Treviso, and I'm in my first year
+              of
+              <span class="key-word">
+                ITS Web Stack Full Developer
+                <span class="tip"
+                  >Two-year program at Mario Volpato Academy covering HTML, CSS,
+                  JavaScript, Node.js, Express, MySQL and hosting.</span
+                >
+              </span>
+              .
+            </p>
+
+            <p class="about-para">
+              I came here straight from a
+              <span class="key-word">
+                scientific high school
+                <span class="tip"
+                  >Liceo Scientifico — Scienze Applicate, in San Donà di Piave.
+                  Strong math and physics base, no programming.</span
+                >
+              </span>
+              with no real coding background — just curiosity. I picked ITS over
+              university because I wanted the most direct path to building real
+              things. The part that surprised me most has been the
+              <span class="key-word">
+                backend
+                <span class="tip"
+                  >Building REST APIs with Node.js and Express, designing MySQL
+                  schemas, three-layer architecture: server.js → routes →
+                  queries.</span
+                >
+              </span>
+              : writing APIs, watching requests flow through routes and
+              middleware.
+            </p>
+
+            <p class="about-para">
+              Outside of code, I play
+              <span class="key-word">
+                tennis
+                <span class="tip"
+                  >Following the pro circuit closely — Sinner especially. Drawn
+                  to the analytics side: stats, betting math, game theory.</span
+                >
+              </span>
+              and I'm generally curious about how the world works: politics,
+              economics, the systems behind everyday things. Programming, for
+              me, is part of that same instinct — taking something opaque and
+              making it transparent.
+            </p>
+
+            <p class="about-para">
+              Starting May 2026 I'll be interning at
+              <span class="key-word">
+                Stealth S.R.L.
+                <span class="tip"
+                  >Custom software house in Villorba (Treviso). Founded 2018.
+                  Web, mobile, AI projects. 150+ clients.</span
+                >
+              </span>
+              , a custom software house in Villorba.
+            </p>
+          </div>
+
+          <!-- pannello laterale "at a glance" -->
+          <aside class="about-side reveal delay-3">
+            <div class="side-key">At a glance</div>
+            <ul class="about-list">
+              <li><span>Education</span><span>ITS Digital Academy</span></li>
+              <li><span>Background</span><span>Liceo Scientifico</span></li>
+              <li>
+                <span>Internship</span><span>Stealth S.R.L. — May 2026</span>
+              </li>
+              <li>
+                <span>Stack</span><span>Node.js · Express · MySQL · JS</span>
+              </li>
+              <li><span>Based in</span><span>Treviso, Italy</span></li>
+            </ul>
+          </aside>
+        </div>
+
+        <!-- 3 stats in fila — sotto entrambe le colonne, full width -->
+        <div class="about-stats reveal delay-3">
+          <div class="stat">
+            <span class="stat-key">Timeline</span>
+            <span class="stat-val">First year<br />at ITS Academy</span>
+          </div>
+          <div class="stat">
+            <span class="stat-key">Focus</span>
+            <span class="stat-val">Backend &<br />full stack</span>
+          </div>
+          <div class="stat">
+            <span class="stat-key">Internship</span>
+            <span class="stat-val">Stealth S.R.L.<br />May 2026</span>
+          </div>
         </div>
       </div>
     </section>
