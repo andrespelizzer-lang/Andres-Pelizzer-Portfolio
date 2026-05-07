@@ -1,10 +1,6 @@
 /* ════════════════════════════════════════════
-   RESET
-   * prende tutti gli elementi.
-   ::before e ::after sono pseudo-elementi finti creati dal CSS,
-   li azzeriamo per sicurezza.
-   box-sizing: border-box fa sì che padding e border siano
-   INCLUSI nella larghezza dichiarata, non aggiunti sopra.
+   RESET — azzera margin, padding, e box-sizing
+   per tutti gli elementi della pagina.
 ══════════════════════════════════════════════ */
 *,
 *::before,
@@ -16,175 +12,54 @@
 
 /* ════════════════════════════════════════════
    VARIABILI GLOBALI
-   :root è l'elemento radice della pagina (<html>).
-   Le variabili definite qui sono accessibili ovunque
-   con var(--nome). Cambi un valore qui, cambia in tutto il CSS.
+   :root = elemento radice del documento.
+   Le variabili definite qui sono usabili ovunque
+   con var(--nome).
 ══════════════════════════════════════════════ */
 :root {
+  /* PALETTE */
   --bg: #080808; /* sfondo — quasi nero */
   --text: #ebebeb; /* testo principale — bianco sporco */
-  --muted: #4a4a4a; /* testo secondario — grigio medio */
-  --dim: #1e1e1e; /* grigio scurissimo — per bordi sottili */
-  --accent: #c8ff00; /* verde lime — colore di accento */
+  --muted: #4a4a4a; /* testo secondario */
+  --dim: #1e1e1e; /* bordi sottili */
+  --accent: #c8ff00; /* verde lime — colore identitario */
 
-  /* clamp(min, ideale, max): padding orizzontale che si adatta
-     allo schermo senza media query.
-     min 1.5rem, ideale 5vw, max 5rem */
-  --pad-x: clamp(1.5rem, 5vw, 5rem);
+  /* SPACING */
+  --pad-x: clamp(1.5rem, 5vw, 5rem); /* padding orizzontale adattivo */
+  --max-w: 1200px; /* larghezza max contenuto — uniforme su tutte le sezioni */
 }
 
 /* ════════════════════════════════════════════
    BASE
 ══════════════════════════════════════════════ */
 html {
-  /* scroll fluido quando si clicca un link tipo href="#about" */
   scroll-behavior: smooth;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-
-  /* DM Mono è il font principale.
-     "monospace" è il fallback se DM Mono non carica */
   font-family: "DM Mono", monospace;
   font-weight: 300;
-
-  /* nasconde la scrollbar orizzontale che potrebbe apparire
-     quando elementi animati escono temporaneamente dal bordo */
   overflow-x: hidden;
 }
 
 /* ════════════════════════════════════════════
-   GRAIN OVERLAY — texture sottile di "rumore" sopra tutta la pagina
-
-   Cosa fa visivamente:
-   Aggiunge un effetto "pulviscolo" leggerissimo sopra tutto il sito,
-   tipo il grano della pellicola fotografica vecchia. È quasi invisibile
-   (2.5% di opacità) ma fa la differenza: senza, il nero del background
-   sembra "piatto digitale" — con, sembra "nero vivo" come nei film.
-   È un dettaglio premium che usano portfolio e siti di agenzia.
-
-   Cosa è una "texture di rumore frattale":
-   "Rumore" in grafica significa puntini casuali sparsi su una superficie,
-   tipo il "fruscio" della TV vecchia quando non c'era segnale.
-   "Frattale" significa che il pattern si ripete in scale diverse —
-   cioè se zoomi un pezzo del rumore, vedi pattern simili a livelli
-   più piccoli. È il modo in cui in natura si formano nuvole, montagne,
-   venature del legno: caos organizzato.
-   "Generata matematicamente" significa che il rumore non è un'immagine
-   disegnata da qualcuno — è il risultato di una formula matematica
-   che il browser calcola al volo.
-
-   Perché non usiamo una PNG di rumore:
-   1) Performance — zero richieste HTTP, niente file da scaricare
-   2) Qualità — un'immagine matematica è perfetta a qualsiasi zoom,
-      una PNG diventerebbe sgranata su monitor 4K
-   3) Peso — il codice qui sotto pesa ~300 caratteri,
-      una PNG equivalente sarebbe 5-10 KB
+   GRAIN OVERLAY — texture sottile sopra tutto
 ══════════════════════════════════════════════ */
 body::before {
-  /* ::before è uno PSEUDO-ELEMENTO — un elemento "finto" che il CSS
-     crea automaticamente attaccato al body. È come se avessi scritto
-     un <div> invisibile come primo figlio del body, ma senza toccare
-     l'HTML. Si usa proprio per cose decorative come questa. */
-
   content: "";
-  /* OBBLIGATORIO per gli pseudo-elementi.
-     Senza "content", lo pseudo-elemento non esiste affatto.
-     Lo lasciamo vuoto perché non vogliamo testo, vogliamo solo
-     la sua "scatola" su cui applicare il background. */
-
   position: fixed;
-  /* Lo ancoriamo al viewport (la finestra del browser), NON alla pagina.
-     Significa: mentre scrolli, lui rimane fermo. La texture rimane
-     uguale ovunque tu scrolli, dà continuità all'esperienza. */
-
   inset: 0;
-  /* Scorciatoia per: top: 0; right: 0; bottom: 0; left: 0;
-     Combinato con position: fixed → copre TUTTO lo schermo,
-     dal bordo superiore a quello inferiore, sinistra a destra. */
-
   pointer-events: none;
-  /* Disabilita le interazioni del mouse su questo elemento.
-     SENZA questa riga, lo pseudo-elemento intercetterebbe tutti i click —
-     sta sopra a tutto, quindi se cliccassi un bottone, cliccheresti
-     prima sulla texture e il bottone non funzionerebbe.
-     Con "none", i click "attraversano" come se la texture non esistesse. */
-
   z-index: 1;
-  /* Ordine di sovrapposizione. Più alto = più davanti.
-     z-index: 1 → sta SOPRA il contenuto delle sezioni,
-     ma SOTTO la nav (che ha z-index: 100) e SOTTO il menu mobile (1050).
-     Risultato: la texture è ovunque ma non copre la nav. */
-
   opacity: 0.025;
-  /* Trasparenza al 2.5%. Quasi invisibile.
-     L'obiettivo è che si SENTA ma non si VEDA chiaramente —
-     se metti opacity: 0.1 il rumore diventa fastidioso,
-     se metti 0.005 sparisce del tutto. 0.025 è il punto giusto. */
-
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* QUI C'È IL TRUCCO INTELLIGENTE:
-     normalmente background-image si scrive così:
-       background-image: url("immagine.png");
-     e il browser scarica un file da disco o da internet.
-
-     Qui invece NON c'è nessun file. C'è un "data URL":
-     un modo per scrivere l'immagine direttamente nel CSS come testo.
-
-     Il formato è: data:[tipo],[contenuto]
-     - "data:image/svg+xml" → dice "questa è un'immagine SVG"
-     - "%3Csvg..." → è il codice SVG dell'immagine, dove
-       %3C e %3E sono le versioni "URL-encoded" di < e >
-       (un URL non può contenere < direttamente, va codificato).
-
-     Tradotto in SVG vero, l'immagine è questa:
-       <svg viewBox='0 0 256 256'>
-         <filter id='n'>
-           <feTurbulence type='fractalNoise'
-                         baseFrequency='0.9'
-                         numOctaves='4'
-                         stitchTiles='stitch'/>
-         </filter>
-         <rect width='100%' height='100%' filter='url(#n)'/>
-       </svg>
-
-     Cosa fa questo SVG:
-     - Crea un FILTRO chiamato "n" che usa feTurbulence —
-       una funzione SVG nativa che genera rumore frattale (la texture
-       a puntini casuali tipo grano della pellicola)
-     - Crea un RETTANGOLO che riempie tutto e applica il filtro
-
-     I parametri:
-     - baseFrequency='0.9' → quanto è "fitto" il rumore.
-       Valori più alti = puntini più piccoli e fitti.
-       Valori bassi = macchie più grandi.
-     - numOctaves='4' → quanti livelli di dettaglio sovrapposti.
-       Più alto = rumore più ricco e dettagliato.
-     - stitchTiles='stitch' → fa in modo che i bordi del rumore
-       si "uniscano" perfettamente quando viene ripetuto in tile,
-       senza linee visibili.
-
-     Tutto questo viene calcolato dal browser al volo —
-     zero file da scaricare, zero richieste HTTP,
-     l'immagine "esiste" solo dentro la stringa qui sopra. */
-
   background-size: 200px 200px;
-  /* Dice al browser di mostrare l'immagine a 200×200 pixel.
-     Siccome lo schermo è più grande, il background si RIPETE
-     come un mosaico/tile (è il comportamento default di background-image).
-
-     Tile più piccoli (200px) = grana più FINE, simile a polvere.
-     Tile più grandi (800px) = pattern più MARCATO, simile a macchie.
-
-     200px è il valore tipico per un grain effect elegante. */
 }
+
 /* ════════════════════════════════════════════
-   DECO LINE
-   linea verticale fissa sul bordo destro della pagina.
-   Il gradient la fa dissolvere sopra e sotto invece di tagliare netto.
-   Parte con height: 0 e cresce dopo 2s.
+   DECO LINE — linea verticale destra (desktop)
 ══════════════════════════════════════════════ */
 .deco-line {
   position: fixed;
@@ -211,11 +86,7 @@ body::before {
 }
 
 /* ════════════════════════════════════════════
-   NAV
-   position: fixed: rimane in cima anche quando scrolli.
-   z-index alto: sta sopra a tutto il resto.
-   La transition + classe .hidden la fa scivolare via
-   quando scrolli verso il basso (gestita dal JS).
+   NAV — fissa in alto, scivola via scrollando giù
 ══════════════════════════════════════════════ */
 nav {
   position: fixed;
@@ -224,17 +95,11 @@ nav {
   right: 0;
   z-index: 100;
   padding: 2rem var(--pad-x);
-
-  /* flexbox: logo a sinistra, links a destra */
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  /* parte invisibile, appare dopo che le animazioni hero sono finite */
   opacity: 0;
   animation: fadeIn 0.6s ease 1.9s forwards;
-
-  /* per la classe .hidden quando scrolli giù */
   transition: transform 0.35s ease;
 }
 
@@ -242,7 +107,7 @@ nav.hidden {
   transform: translateY(-100%);
 }
 
-/* ── LOGO ── */
+/* logo: contiene il LEITMOTIV — il prompt $ */
 .nav-logo {
   font-family: "DM Mono", monospace;
   font-weight: 400;
@@ -251,17 +116,26 @@ nav.hidden {
   color: var(--text);
   text-decoration: none;
   transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* il prompt $ verde — elemento ricorrente del sito */
+.nav-prompt,
+.prompt-mark {
+  color: var(--accent);
+  font-weight: 400;
 }
 
 .nav-logo:hover {
   color: var(--accent);
 }
 
-/* ── LINKS DESKTOP ── */
 .nav-links {
   display: flex;
   gap: 2.2rem;
-  list-style: none; /* toglie i pallini di default dell'ul */
+  list-style: none;
 }
 
 .nav-links a {
@@ -278,13 +152,10 @@ nav.hidden {
 }
 
 /* ════════════════════════════════════════════
-   HAMBURGER (visibile solo su mobile via media query)
-   Le 3 <span> sono le 3 lineette.
-   Quando .open: la prima ruota, la seconda sparisce,
-   la terza ruota in senso opposto → forma una X.
+   HAMBURGER — visibile solo mobile via media query
 ══════════════════════════════════════════════ */
 .hamburger {
-  display: none; /* nascosto di default — appare nella media query mobile */
+  display: none;
   flex-direction: column;
   gap: 5px;
   background: none;
@@ -315,11 +186,9 @@ nav.hidden {
 
 /* ════════════════════════════════════════════
    MOBILE MENU — pannello che scivola da destra
-   Parte translateX(100%) cioè fuori dallo schermo a destra.
-   Quando .open → translateX(0) → entra in vista.
 ══════════════════════════════════════════════ */
 .mobile-menu {
-  display: none; /* attivato nella media query mobile */
+  display: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -370,14 +239,13 @@ nav.hidden {
 
 .mobile-menu-footer {
   font-size: 0.55rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   color: var(--muted);
   text-transform: uppercase;
 }
 
-/* backdrop scuro che oscura il resto della pagina quando il menu è aperto */
 .mobile-backdrop {
-  display: none; /* attivato nella media query mobile */
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 1040;
@@ -393,11 +261,18 @@ nav.hidden {
 }
 
 /* ════════════════════════════════════════════
-   HERO
+   SECTION BASE — tutte le sezioni allineate
 ══════════════════════════════════════════════ */
-#hero {
-  max-width: 1200px;
+section {
+  padding: 7rem var(--pad-x) 4rem;
+  max-width: var(--max-w);
   margin: 0 auto;
+}
+
+/* eccezione: hero ha padding diverso, niente max-width restrittiva
+   per dare al nome ANDRES PELIZZER tutta la larghezza */
+#hero {
+  max-width: var(--max-w);
   min-height: 100vh;
   padding: 7rem var(--pad-x) 2rem;
   display: flex;
@@ -405,7 +280,113 @@ nav.hidden {
   position: relative;
 }
 
-/* ── TOP ROW: indice a sinistra, status a destra ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-bottom: 4rem;
+}
+
+.section-index {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--dim);
+}
+
+/* ════════════════════════════════════════════
+   REVEAL — animazione entrata su scroll
+══════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal.delay-1 {
+  transition-delay: 0.1s;
+}
+.reveal.delay-2 {
+  transition-delay: 0.2s;
+}
+.reveal.delay-3 {
+  transition-delay: 0.3s;
+}
+.reveal.delay-4 {
+  transition-delay: 0.4s;
+}
+
+/* ════════════════════════════════════════════
+   KEYFRAMES globali
+══════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lineGrow {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════ */
+
 .hero-top-row {
   display: flex;
   justify-content: space-between;
@@ -423,7 +404,6 @@ nav.hidden {
   text-transform: uppercase;
 }
 
-/* pallino verde che pulsa */
 .status-dot {
   display: inline-block;
   width: 6px;
@@ -434,7 +414,6 @@ nav.hidden {
   animation: pulse 2.4s ease-in-out infinite;
 }
 
-/* linea che cresce da 0 a 100% */
 .hero-line {
   width: 0;
   height: 1px;
@@ -442,10 +421,6 @@ nav.hidden {
   animation: lineGrow 0.9s ease 0.6s forwards;
 }
 
-/* ── NOME GRANDE ──
-   flex: 1 → questo blocco occupa tutto lo spazio
-   tra la linea e la riga inferiore. Tiene il nome
-   centrato verticalmente. */
 .hero-name-block {
   flex: 1;
   display: flex;
@@ -454,43 +429,44 @@ nav.hidden {
   padding: 2rem 0;
 }
 
+/* ANDRES e PELIZZER come h1 (semantica/SEO) */
 .hero-first,
 .hero-last {
   font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: clamp(2.6rem, 10.5vw, 8.5rem);
+  font-size: clamp(2.6rem, 10.5vw, 7.5rem); /* max ridotto: PELIZZER (8 char) più lungo di ANDRES */
   line-height: 0.88;
   letter-spacing: -0.03em;
-  /* overflow: hidden è il segreto della curtain reveal —
-     nasconde lo span interno quando parte sotto il bordo */
-  overflow: hidden;
   display: block;
 }
 
-/* ANDRES — solo contorno verde */
 .hero-first span {
   display: block;
   color: transparent;
   -webkit-text-stroke: 1.5px var(--accent);
-  /* parte fuori dal bordo, sale su con l'animazione */
-  transform: translateY(105%);
-  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+  clip-path: inset(0 -100px 110% 0); /* right negativo = non clippa mai a destra */
+  animation: curtainReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
 }
 
-/* PELIZZER — bianco pieno, leggermente rientrato per tensione editoriale */
 .hero-last {
-  padding-left: clamp(0.5rem, 3vw, 4rem);
+  padding-left: clamp(0.5rem, 2vw, 3rem); /* indent leggermente ridotto per dare più spazio a PELIZZER */
 }
+
 .hero-last span {
   display: block;
   color: var(--text);
-  transform: translateY(105%);
-  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+  clip-path: inset(0 -100px 110% 0);
+  animation: curtainReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
 }
 
-/* ── LIVE SYSTEM PANEL ──
-   border-left accent: richiama il verde del nome.
-   background quasi trasparente: sfumatura verde leggerissima. */
+/* reveal dal basso: il testo "sale" visivamente nella sua posizione finale.
+   inset(top right bottom left) — right: -100px impedisce qualsiasi taglio orizzontale */
+@keyframes curtainReveal {
+  to {
+    clip-path: inset(0 -100px -20% 0);
+  }
+}
+
 .live-system {
   margin-bottom: 1.2rem;
   padding: 0.9rem 1.2rem;
@@ -523,7 +499,6 @@ nav.hidden {
   color: var(--text);
 }
 
-/* ── HERO BOTTOM: meta a sinistra, bottoni a destra ── */
 .hero-bottom {
   display: flex;
   justify-content: space-between;
@@ -554,7 +529,6 @@ nav.hidden {
   background: var(--dim);
 }
 
-/* ── BOTTONI ── */
 .hero-cta {
   display: flex;
   gap: 0.8rem;
@@ -578,142 +552,14 @@ nav.hidden {
 .btn:hover {
   color: var(--text);
   border-color: rgba(235, 235, 235, 0.3);
-  /* il bottone si solleva di 2px → effetto "alzarsi" */
   transform: translateY(-2px);
 }
 
 /* ════════════════════════════════════════════
-   SECTION HEADER (riusabile per tutte le sezioni)
-══════════════════════════════════════════════ */
-section {
-  padding: 7rem var(--pad-x) 4rem;
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 1.4rem;
-  margin-bottom: 4rem;
-}
-
-.section-index {
-  font-size: 0.6rem;
-  letter-spacing: 0.22em;
-  color: var(--muted);
-  text-transform: uppercase;
-  white-space: nowrap; /* non va a capo */
-}
-
-/* la linea occupa tutto lo spazio rimanente */
-.section-line {
-  flex: 1;
-  height: 1px;
-  background: var(--dim);
-}
-
-/* ════════════════════════════════════════════
-   REVEAL ANIMATION (riusabile)
-   Stato iniziale: invisibile e spostato 30px in basso.
-   Il JS aggiunge la classe .revealed quando l'elemento
-   entra nel viewport — il CSS fa il resto.
-══════════════════════════════════════════════ */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* delay sfalsati: ogni elemento parte un po' dopo l'altro */
-.reveal.delay-1 {
-  transition-delay: 0.1s;
-}
-.reveal.delay-2 {
-  transition-delay: 0.2s;
-}
-.reveal.delay-3 {
-  transition-delay: 0.3s;
-}
-.reveal.delay-4 {
-  transition-delay: 0.4s;
-}
-
-/* ════════════════════════════════════════════
-   KEYFRAMES — animazioni globali
+   ABOUT — flusso verticale, no colonne
 ══════════════════════════════════════════════ */
 
-/* sale di 15px e appare */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* solo opacità */
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-/* cresce da 0 a 100% di larghezza */
-@keyframes lineGrow {
-  to {
-    width: 100%;
-  }
-}
-
-/* sale dal bordo inferiore — usato per la curtain reveal del nome */
-@keyframes slideUp {
-  to {
-    transform: translateY(0);
-  }
-}
-
-/* pulsazione infinita per il pallino status */
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(0.8);
-  }
-}
-
-/* ════════════════════════════════════════════
-   ABOUT — editorial article layout
-   - Larghezza generosa (1100px) per non sembrare strozzato
-   - Citazione in OUTLINE (come ANDRES nell'hero) — leggera, non opprimente
-   - Body a 2 colonne sbilanciate 60/40: testo + pannello laterale
-   - Stats in fila full-width come "footer" della sezione
-   - Tooltip CSS puri sulle parole verdi tratteggiate
-══════════════════════════════════════════════ */
-
-#about {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* contenitore: serve solo per allineare al centro */
-.about-narrow {
-  width: 100%;
-}
-
-/* ── META STRIP ── */
+/* meta strip */
 .about-meta-top {
   display: flex;
   align-items: center;
@@ -737,52 +583,37 @@ section {
   color: var(--muted);
 }
 
-/* ── CITAZIONE in OUTLINE (come ANDRES nell'hero) ──
-   color: transparent + -webkit-text-stroke fa il contorno solo.
-   La parte ".quote-accent" rimane piena verde per contrasto interno. */
+/* citazione outline — leggera, di impatto */
 .about-quote {
   font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: clamp(2.2rem, 6vw, 5.5rem);
+  font-size: clamp(2.2rem, 5.5vw, 4.8rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
   padding-bottom: 0.2em;
-
-  /* il trucco: testo trasparente con contorno —
-     leggero come l'aria, ma comunque grande e d'impatto */
   color: transparent;
   -webkit-text-stroke: 1.2px var(--text);
 }
 
 .quote-accent {
-  /* la seconda parte della frase resta PIENA verde —
-     è il "punto saliente" della citazione, deve catturare l'occhio */
   color: var(--accent);
   font-style: italic;
-  -webkit-text-stroke: 0; /* annulla il contorno per questa porzione */
+  -webkit-text-stroke: 0;
 }
 
-/* ── BODY: 2 colonne sbilanciate 60/40 ──
-   col sinistra = paragrafi (porzione narrativa).
-   col destra = pannello "at a glance" (porzione informativa).  */
-.about-body {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 4rem;
-  align-items: start;
-  margin-bottom: 5rem;
-}
-
+/* paragrafi — limitati a 780px per leggibilità ottimale
+   (65-75 caratteri per riga = standard tipografico) */
 .about-text {
-  /* solo contenitore dei paragrafi — nessuno styling speciale */
+  max-width: 780px;
+  margin-bottom: 4rem;
 }
 
 .about-para {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   line-height: 1.95;
   color: var(--text);
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.8rem;
 }
 
 .about-para em {
@@ -790,201 +621,10 @@ section {
   font-style: italic;
   font-weight: 400;
   color: var(--accent);
-  font-size: 0.92rem;
+  font-size: 0.94rem;
 }
 
-.about-para strong {
-  color: var(--text);
-  font-weight: 400;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 1px;
-}
-
-/* ── PANNELLO LATERALE — terminal profile card ──
-   Design intenzionalmente diverso dal browser dei progetti:
-   niente border-left verde, niente sfondo verdino.
-   Dot grid + white border + header stile terminale. */
-.about-side {
-  padding: 0;
-  border: 1px solid rgba(235, 235, 235, 0.12);
-  border-top: 2px solid rgba(235, 235, 235, 0.4);
-  background-color: var(--bg);
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.07) 1px,
-    transparent 1px
-  );
-  background-size: 18px 18px;
-  position: sticky;
-  top: 6rem;
-  overflow: hidden;
-}
-
-.side-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1.2rem;
-  border-bottom: 1px solid rgba(235, 235, 235, 0.08);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.side-tag {
-  font-size: 0.5rem;
-  letter-spacing: 0.28em;
-  color: var(--text);
-  text-transform: uppercase;
-}
-
-.side-dot {
-  width: 5px;
-  height: 5px;
-  background: rgba(235, 235, 235, 0.3);
-  border-radius: 50%;
-}
-
-.side-footer {
-  padding: 0.55rem 1.2rem;
-  border-top: 1px solid rgba(235, 235, 235, 0.06);
-  font-size: 0.46rem;
-  letter-spacing: 0.22em;
-  color: var(--muted);
-  background: rgba(0, 0, 0, 0.15);
-}
-
-/* ── LISTA "at a glance" ── */
-.about-list {
-  list-style: none;
-}
-
-.about-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.62rem 1.2rem;
-  border-bottom: 1px solid rgba(235, 235, 235, 0.06);
-  font-size: 0.56rem;
-  letter-spacing: 0.08em;
-  transition: background 0.15s;
-}
-
-.about-list li:hover {
-  background: rgba(255, 255, 255, 0.025);
-}
-
-.about-list li:last-child {
-  border-bottom: none;
-}
-
-.about-list li span:first-child {
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  flex-shrink: 0;
-}
-
-.about-list li span:last-child {
-  color: var(--text);
-  text-align: right;
-}
-
-/* ── STATS — 3 card interattive, cliccabili per espandere ── */
-.about-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--dim);
-}
-
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding: 1.2rem;
-  border: 1px solid var(--dim);
-  cursor: pointer;
-  position: relative;
-  transition:
-    border-color 0.3s ease,
-    background 0.3s ease;
-}
-
-.stat-card:hover {
-  border-color: rgba(235, 235, 235, 0.2);
-}
-
-.stat-card.open {
-  border-color: var(--accent);
-  background: rgba(200, 255, 0, 0.04);
-}
-
-.stat-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.stat-key {
-  font-size: 0.5rem;
-  letter-spacing: 0.22em;
-  color: var(--accent);
-  text-transform: uppercase;
-}
-
-.stat-toggle {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1;
-  transition:
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    color 0.25s ease;
-  user-select: none;
-}
-
-.stat-card.open .stat-toggle {
-  transform: rotate(45deg);
-  color: var(--accent);
-}
-
-.stat-val {
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  color: var(--text);
-  line-height: 1.6;
-}
-
-.stat-detail {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.stat-card.open .stat-detail {
-  max-height: 140px;
-}
-
-.stat-detail-inner {
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--dim);
-}
-
-.stat-detail-inner p {
-  font-size: 0.56rem;
-  line-height: 1.75;
-  color: var(--muted);
-}
-
-.stat-card.open .stat-detail-inner {
-  border-top-color: rgba(200, 255, 0, 0.3);
-}
-
-/* ════════════════════════════════════════════
-   ABOUT — KEY WORDS interattive con tooltip
-   Le parole verdi tratteggiate hanno un piccolo riquadro
-   informativo che appare al hover. CSS puro, niente JS.
-══════════════════════════════════════════════ */
-
+/* ── KEY WORDS con tooltip al hover ── */
 .key-word {
   color: var(--accent);
   border-bottom: 1px dashed var(--accent);
@@ -998,30 +638,26 @@ section {
   position: absolute;
   bottom: 100%;
   left: 0;
-  margin-bottom: 8px;
-
-  width: 260px;
-  padding: 0.7rem 0.9rem;
+  margin-bottom: 10px;
+  width: 280px;
+  padding: 0.8rem 1rem;
   background: #0d0d0d;
   border: 1px solid var(--accent);
   border-radius: 4px;
-
   font-family: "DM Mono", monospace;
   font-size: 0.6rem;
   font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 0.05em;
+  line-height: 1.65;
+  letter-spacing: 0.04em;
   color: var(--text);
   font-style: normal;
   text-transform: none;
-
   opacity: 0;
   transform: translateY(8px);
   pointer-events: none;
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
-
   z-index: 10;
 }
 
@@ -1042,60 +678,182 @@ section {
   border-right: 6px solid transparent;
   border-top: 6px solid var(--accent);
 }
-/* ════════════════════════════════════════════
-   PROJECTS — sticky scroll layout
-   Due metà affiancate:
-   - sinistra (frame): sticky, rimane fissa mentre scrolli
-   - destra (content): scorre normalmente
-══════════════════════════════════════════════ */
-#projects {
-  max-width: 1200px;
-  margin: 0 auto;
+
+/* ── DATA STRIP — striscia orizzontale di info ── */
+.data-strip {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--dim);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4rem;
 }
 
+.data-item {
+  flex: 1;
+  min-width: 160px;
+  padding: 1.2rem 1.4rem;
+  border-right: 1px solid var(--dim);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: background 0.25s ease;
+}
+
+.data-item:last-child {
+  border-right: none;
+}
+
+.data-item:hover {
+  background: rgba(200, 255, 0, 0.03);
+}
+
+.data-key {
+  font-size: 0.48rem;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.data-val {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* ── STAT CARDS CLICCABILI ── */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.stat-card {
+  padding: 1.3rem 1.4rem;
+  border: 1px solid var(--dim);
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    background 0.3s,
+    transform 0.3s;
+  overflow: hidden;
+  user-select: none;
+}
+
+.stat-card:hover {
+  border-color: rgba(200, 255, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.stat-card.open {
+  border-color: var(--accent);
+  background: rgba(200, 255, 0, 0.025);
+  transform: translateY(0);
+}
+
+.stat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.stat-key {
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+/* il + che diventa × ruotando */
+.stat-toggle {
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition:
+    color 0.2s,
+    transform 0.3s;
+  line-height: 1;
+}
+
+.stat-card:hover .stat-toggle {
+  color: var(--accent);
+}
+
+.stat-card.open .stat-toggle {
+  color: var(--accent);
+  transform: rotate(45deg);
+}
+
+.stat-val {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* dettaglio espandibile */
+.stat-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stat-card.open .stat-detail {
+  max-height: 200px;
+}
+
+.stat-detail-inner {
+  padding-top: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--dim);
+}
+
+.stat-detail-inner p {
+  font-size: 0.65rem;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.04em;
+}
+
+/* ════════════════════════════════════════════
+   PROJECTS — sticky desktop, stack mobile
+══════════════════════════════════════════════ */
 .projects-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: start; /* importante per sticky:
-                         senza questo le colonne si stirerebbero
-                         e sticky non funzionerebbe correttamente */
+  align-items: start;
 }
 
-/* ── COLONNA SINISTRA — sticky frame ── */
 .projects-frame {
   position: sticky;
-  top: 8rem; /* a quanto si "incolla" dall'alto.
-                8rem dà respiro alla nav che è in cima */
+  top: 8rem;
   align-self: start;
 }
 
-/* ── COLONNA DESTRA — contenuto scrollabile ──
-   Le schede progetto al suo interno hanno un grande spazio
-   verticale per dare tempo al frame sticky di "vivere" */
 .projects-content {
   display: flex;
   flex-direction: column;
-  gap: 8rem; /* tanto spazio tra le schede:
-                così quando una scheda esce dallo schermo,
-                l'altra arriva al centro e cambia il frame */
+  gap: 8rem;
 }
 
-/* ── BROWSER FRAME ──
-   Container che imita una finestra browser.
-   border-radius arrotonda gli angoli, il border lo separa dallo sfondo,
-   overflow: hidden taglia l'immagine se sborda. */
+/* immagine inline mobile — nascosta su desktop */
+.project-image-mobile {
+  display: none;
+}
+
+/* browser frame */
 .browser {
   border: 1px solid var(--dim);
   border-radius: 10px;
   overflow: hidden;
   background: #0d0d0d;
-  /* box-shadow sottile per far "staccare" il frame dallo sfondo —
-     dà un senso di profondità */
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
-/* ── BROWSER BAR (top, dove ci sono i pallini e l'URL) ── */
 .browser-bar {
   display: flex;
   align-items: center;
@@ -1105,10 +863,6 @@ section {
   border-bottom: 1px solid var(--dim);
 }
 
-/* ── 3 PALLINI macOS ──
-   .browser-dots è il container, ogni span dentro è un pallino.
-   :nth-child(N) seleziona l'N-esimo figlio:
-   1° rosso (close) — 2° giallo (minimize) — 3° verde (maximize) */
 .browser-dots {
   display: flex;
   gap: 6px;
@@ -1131,8 +885,6 @@ section {
   background: #28c840;
 }
 
-/* ── URL BAR ──
-   flex: 1 le fa occupare tutto lo spazio rimanente sulla riga */
 .browser-url {
   flex: 1;
   text-align: center;
@@ -1146,9 +898,6 @@ section {
   border-radius: 4px;
 }
 
-/* ── VIEWPORT (dove sta l'immagine del progetto) ──
-   aspect-ratio 16/10: rapporto fisso schermo laptop,
-   il riquadro non cambia altezza quando l'immagine cambia */
 .browser-viewport {
   aspect-ratio: 16 / 10;
   overflow: hidden;
@@ -1158,24 +907,18 @@ section {
 .browser-viewport img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* riempie l'area senza deformare l'immagine */
-  display: block; /* toglie 4px sotto le immagini di default
-                     (è una stranezza HTML antica) */
-  transition: opacity 0.4s ease; /* per quando il JS cambia immagine
-                                    vogliamo una fade smooth, non uno scatto */
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.4s ease;
 }
 
-/* ════════════════════════════════════════════
-   PROJECTS — singola scheda progetto
-══════════════════════════════════════════════ */
-
+/* singolo progetto */
 .project {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* "01 / 02" piccolo in cima */
 .project-num {
   font-size: 0.55rem;
   letter-spacing: 0.25em;
@@ -1183,17 +926,15 @@ section {
   text-transform: uppercase;
 }
 
-/* TITOLO — Syne come tutti i titoli del sito */
 .project-title {
   font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--text);
 }
 
-/* sottotitolo: anno + tipo progetto */
 .project-year {
   font-size: 0.6rem;
   letter-spacing: 0.18em;
@@ -1201,7 +942,6 @@ section {
   text-transform: uppercase;
 }
 
-/* paragrafo descrittivo */
 .project-desc {
   font-size: 0.78rem;
   line-height: 1.9;
@@ -1209,10 +949,6 @@ section {
   margin-top: 0.5rem;
 }
 
-/* ── STACK LIST ──
-   Trasforma l'<ul> in una riga di "tag" inline.
-   list-style: none toglie i pallini.
-   flex + flex-wrap: vanno a capo se non c'è spazio. */
 .project-stack {
   list-style: none;
   display: flex;
@@ -1221,7 +957,6 @@ section {
   margin-top: 0.5rem;
 }
 
-/* ogni <li> diventa un piccolo "chip" con bordo */
 .project-stack li {
   font-size: 0.55rem;
   letter-spacing: 0.18em;
@@ -1230,9 +965,16 @@ section {
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--dim);
   border-radius: 4px;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
 }
 
-/* ── LINKS in fondo (View live, GitHub) ── */
+.project-stack li:hover {
+  border-color: rgba(200, 255, 0, 0.3);
+  color: var(--text);
+}
+
 .project-links {
   display: flex;
   gap: 1.5rem;
@@ -1244,7 +986,7 @@ section {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text);
-  text-decoration: none; /* toglie la sottolineatura blu di default */
+  text-decoration: none;
   border-bottom: 1px solid var(--accent);
   padding-bottom: 2px;
   transition:
@@ -1257,115 +999,361 @@ section {
 }
 
 /* ════════════════════════════════════════════
-   SKILLS — marquee infinito orizzontale
-   3 nastri sovrapposti che scorrono in direzioni alterne.
-   Ogni nastro contiene i suoi chip ripetuti 4 volte:
-   l'animazione trasla del -25% e così il loop sembra infinito
-   senza buchi.
+   SKILLS — terminal CLI (centrepiece leitmotiv)
 ══════════════════════════════════════════════ */
-
-#skills {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.skills-marquees {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-/* ── MARQUEE — singolo nastro ──
-   overflow: hidden taglia tutto quello che sborda dai bordi:
-   senza questo vedresti il nastro "uscire" dal contenitore.
-   border + padding: aspetto editoriale, contiene il nastro. */
-.marquee {
+.terminal {
+  border: 1px solid var(--dim);
+  border-radius: 10px;
   overflow: hidden;
-  border-top: 1px solid var(--dim);
-  border-bottom: 1px solid var(--dim);
-  padding: 1.2rem 0;
+  background: #0a0a0a;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
-/* ── TRACK — il nastro che scorre veramente ──
-   white-space: nowrap impedisce ai chip di andare a capo.
-   width: max-content fa sì che il track sia largo quanto serve
-   per contenere TUTTI i suoi chip in riga, anche se sborda. */
-.marquee-track {
+.terminal-bar {
   display: flex;
   align-items: center;
-  white-space: nowrap;
-  width: max-content;
-  /* l'animazione fa scorrere il nastro all'infinito */
-  animation: marqueeScroll 25s linear infinite;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #111;
+  border-bottom: 1px solid var(--dim);
 }
 
-/* ── KEYFRAMES MARQUEE ──
-   trasla il nastro del -25% della sua larghezza.
-   Visto che il contenuto è ripetuto 4 volte (4 copie identiche),
-   quando arriva al -25% sta mostrando esattamente il punto
-   da cui era partito → l'occhio non vede il salto → loop infinito. */
-@keyframes marqueeScroll {
-  from {
-    transform: translateX(0);
-  }
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dots span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #333;
+}
+
+.terminal-dots span:nth-child(1) {
+  background: #ff5f57;
+}
+.terminal-dots span:nth-child(2) {
+  background: #febc2e;
+}
+.terminal-dots span:nth-child(3) {
+  background: #28c840;
+}
+
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.terminal-body {
+  padding: 1.8rem 2rem 2rem;
+  font-size: 0.75rem;
+  line-height: 2.2;
+  min-height: 400px;
+}
+
+/* ── BLOCCHI COMANDO con animazione sequenziale ── */
+.cmd-block {
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: cmdAppear 0.5s ease forwards;
+}
+
+.cmd-block:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.cmd-block:nth-child(2) {
+  animation-delay: 1.2s;
+}
+.cmd-block:nth-child(3) {
+  animation-delay: 2.1s;
+}
+.cmd-block:nth-child(4) {
+  animation-delay: 3s;
+}
+.cmd-block:nth-child(5) {
+  animation-delay: 3.9s;
+}
+
+@keyframes cmdAppear {
   to {
-    transform: translateX(-25%);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* il secondo nastro va in direzione opposta:
-   animation-direction: reverse inverte l'animazione */
-.marquee-reverse .marquee-track {
-  animation-direction: reverse;
-}
-
-/* su hover il nastro si ferma — utile per leggere bene */
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-/* ── SINGOLO CHIP "skill" ──
-   inline-flex per allineare il pallino col testo,
-   gap piccolo tra dot e testo */
-.skill {
-  display: inline-flex;
+.cmd-line {
+  display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.cmd-prompt {
+  color: var(--accent);
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.cmd-text {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.cmd-flag {
+  color: var(--accent);
+}
+
+.cmd-output {
+  padding-left: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.cmd-arrow {
+  color: var(--muted);
+  margin-right: 0.3rem;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.skill-chip {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text);
-  padding: 0.5rem 1rem;
+  padding: 0.35rem 0.75rem;
   border: 1px solid var(--dim);
-  border-radius: 4px;
-  flex-shrink: 0; /* impedisce ai chip di "schiacciarsi"
-                     se il browser prova a comprimerli */
-  /* margin-right invece di gap sul track:
-     così l'ultimo chip ha lo stesso spazio del primo della copia successiva
-     → il loop è matematicamente perfetto, senza buchi visibili */
-  margin-right: 2rem;
+  border-radius: 3px;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+  cursor: default;
 }
 
-/* il pallino accent dentro ogni chip */
-.skill-dot {
-  width: 6px;
-  height: 6px;
+.skill-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(200, 255, 0, 0.04);
+}
+
+.cmd-comment {
+  color: var(--muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  padding-left: 1.1rem;
+  margin-top: 0.2rem;
+  font-style: italic;
+}
+
+.cmd-summary {
+  padding-left: 1.1rem;
+  margin-top: 0.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.cmd-summary strong {
+  color: var(--accent);
+  font-weight: 400;
+}
+
+.cmd-final {
+  padding-left: 1.1rem;
+  margin-top: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* cursore lampeggiante alla fine */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
   background: var(--accent);
-  border-radius: 50%;
-  flex-shrink: 0;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+/* ════════════════════════════════════════════
+   CONTACT — sezione 005
+   Layout 2 colonne: titolo grande sinistra, link destra.
+══════════════════════════════════════════════ */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.contact-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 6vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--text);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.2em;
+}
+
+.contact-accent {
+  color: var(--accent);
+  font-style: italic;
+  -webkit-text-stroke: 0;
+}
+
+.contact-intro {
+  font-size: 0.82rem;
+  line-height: 1.95;
+  color: var(--text);
+  margin-bottom: 2rem;
+  max-width: 480px;
+}
+
+.contact-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid var(--dim);
+  border-left: 2px solid var(--accent);
+  background: rgba(200, 255, 0, 0.02);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  max-width: 480px;
+}
+
+.contact-status .status-dot {
+  margin-right: 0;
+}
+
+/* ── CONTACT RIGHT — link contatto ── */
+.contact-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contact-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--dim);
+  font-size: 0.7rem;
+}
+
+/* singolo link contatto: griglia 3 colonne */
+.contact-link {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--dim);
+  border-radius: 4px;
+  text-decoration: none;
+  transition:
+    border-color 0.25s,
+    background 0.25s,
+    transform 0.25s;
+}
+
+.contact-link:hover {
+  border-color: var(--accent);
+  background: rgba(200, 255, 0, 0.025);
+  transform: translateX(4px);
+}
+
+.link-key {
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.link-val {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link-arrow {
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition:
+    color 0.25s,
+    transform 0.25s;
+}
+
+.contact-link:hover .link-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* ════════════════════════════════════════════
+   FOOTER — chiusura del sito
+══════════════════════════════════════════════ */
+.site-footer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 3rem var(--pad-x);
+}
+
+.footer-line {
+  height: 1px;
+  background: var(--dim);
+  margin-bottom: 2rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.footer-text {
+  color: var(--muted);
 }
 
 /* ════════════════════════════════════════════
    TABLET — max 800px
-   Sovrascrive solo quello che cambia rispetto al desktop.
 ══════════════════════════════════════════════ */
 @media (max-width: 800px) {
-  /* nasconde la linea decorativa laterale */
   .deco-line {
     display: none;
   }
 
-  /* nav: sostituisce link con hamburger */
   .nav-links {
     display: none;
   }
@@ -1379,7 +1367,6 @@ section {
     display: block;
   }
 
-  /* hero: nome più piccolo, layout più compatto */
   .hero-first,
   .hero-last {
     font-size: clamp(2.4rem, 13vw, 5rem);
@@ -1387,11 +1374,11 @@ section {
   }
 
   .hero-first span {
-    -webkit-text-stroke: 1px var(--accent); /* stroke più sottile */
+    -webkit-text-stroke: 1px var(--accent);
   }
 
   .hero-name-block {
-    flex: 0; /* non si espande verticalmente — su tablet creava troppo vuoto */
+    flex: 0;
     padding: 1.2rem 0;
   }
 
@@ -1414,42 +1401,109 @@ section {
     gap: 1rem;
   }
 
-  /* skills: marquee più veloce su mobile per compensare lo schermo stretto */
-  .marquee-track {
-    animation-duration: 18s;
+  /* About */
+  .about-quote {
+    -webkit-text-stroke-width: 1px;
   }
 
-  /* chip un po' più piccoli su tablet */
-  .skill {
-    font-size: 0.62rem;
-    padding: 0.4rem 0.8rem;
-    margin-right: 1.2rem;
-  }
-  /* About: 2 colonne diventano 1 su tablet/mobile */
-  .about-body {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+  .data-strip {
+    flex-direction: column;
   }
 
-  .about-side {
-    position: static; /* niente sticky su mobile */
+  .data-item {
+    border-right: none;
+    border-bottom: 1px solid var(--dim);
+    min-width: auto;
   }
 
-  /* stat card in colonna su mobile */
+  .data-item:last-child {
+    border-bottom: none;
+  }
+
   .about-stats {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.8rem;
   }
 
-  /* tooltip stretto, non sfora */
   .key-word .tip {
-    width: min(260px, calc(100vw - 3rem));
+    width: min(280px, calc(100vw - 3rem));
     font-size: 0.55rem;
   }
 
-  /* citazione outline meno spessa su mobile (1.2px su schermi piccoli è troppo) */
-  .about-quote {
+  /* Projects: stack verticale, niente sticky.
+     Browser frame nascosto, ogni progetto mostra immagine inline. */
+  .projects-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .projects-frame {
+    display: none; /* nasconde browser sticky su mobile */
+  }
+
+  .projects-content {
+    gap: 5rem;
+  }
+
+  .project-image-mobile {
+    display: block;
+    border: 1px solid var(--dim);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background: #0d0d0d;
+  }
+
+  .project-image-mobile img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Skills terminal */
+  .terminal-body {
+    padding: 1.4rem 1.2rem 1.6rem;
+    font-size: 0.68rem;
+  }
+
+  .skill-chip {
+    font-size: 0.58rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .cmd-output,
+  .cmd-comment,
+  .cmd-summary,
+  .cmd-final {
+    padding-left: 0.6rem;
+  }
+
+  /* Contact */
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact-title {
     -webkit-text-stroke-width: 1px;
+  }
+
+  .contact-link {
+    grid-template-columns: 70px 1fr auto;
+    gap: 0.7rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .link-val {
+    font-size: 0.62rem;
+  }
+
+  /* Footer */
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
   }
 }
 
@@ -1457,8 +1511,6 @@ section {
    MOBILE — max 430px
 ══════════════════════════════════════════════ */
 @media (max-width: 430px) {
-  /* svh invece di vh: tiene conto della barra browser
-     che appare/scompare su mobile, evitando salti */
   #hero {
     padding: 5rem 1.4rem 2rem;
     min-height: 100svh;
@@ -1469,7 +1521,6 @@ section {
     font-size: clamp(2rem, 14.5vw, 3.5rem);
   }
 
-  /* top row in colonna, separatore via, bottoni in colonna */
   .hero-top-row {
     flex-direction: column;
     align-items: flex-start;
@@ -1484,13 +1535,38 @@ section {
     flex-direction: column;
   }
 
-  /* sezioni: padding più stretto su mobile */
   section {
     padding: 5rem 1.4rem 3rem;
   }
-  /* tooltip su mobile: più stretto e allineato al centro */
-  .key-word .tip {
-    width: min(260px, calc(100vw - 3rem));
-    font-size: 0.55rem;
+
+  /* Skills terminal — chip ancora più piccoli */
+  .terminal-body {
+    padding: 1rem 0.8rem 1.4rem;
+    font-size: 0.62rem;
+    line-height: 2;
+  }
+
+  .skill-chip {
+    font-size: 0.52rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .terminal-title {
+    display: none; /* terminal title nascosto su mobile, troppo stretto */
+  }
+
+  /* Contact link — ancora più compatto */
+  .contact-link {
+    grid-template-columns: auto;
+    gap: 0.4rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .link-arrow {
+    display: none;
+  }
+
+  .footer-line {
+    margin-bottom: 1.5rem;
   }
 }

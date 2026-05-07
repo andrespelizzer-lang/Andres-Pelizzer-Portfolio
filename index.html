@@ -3,41 +3,129 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Andres Pelizzer</title>
 
-    <!-- preconnect: apre subito la connessione con i server Google
-         per i font.
-         Il primo link punta al dominio dei CSS dei font.
-         Il secondo punta al dominio dei file font veri e propri.
-         Senza www. e senza path completi — solo il dominio. -->
+    <!-- ════════════════════════════════════════════
+         SEO META TAGS — fondamentali per Google e i social
+
+         title: appare nei risultati Google e nel tab del browser.
+                ~50-60 caratteri ideali, include nome + ruolo + città.
+
+         description: appare sotto il titolo nei risultati Google.
+                      ~150-160 caratteri ideali. Deve essere
+                      una frase invitante che descrive il sito.
+    ════════════════════════════════════════════ -->
+    <title>Andres Pelizzer — Web Full Stack Developer · Treviso</title>
+    <meta
+      name="description"
+      content="Portfolio di Andres Pelizzer, Web Full Stack Developer di Treviso. Studente ITS Web Stack a Mario Volpato Academy. Frontend con HTML/CSS/JS, backend con Node.js, Express e MySQL."
+    />
+    <meta
+      name="keywords"
+      content="web developer, full stack, frontend, backend, Node.js, Express, MySQL, Treviso, ITS, Mario Volpato, portfolio, JavaScript, HTML, CSS"
+    />
+    <meta name="author" content="Andres Pelizzer" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- canonical: dice a Google "questo è l'URL ufficiale del sito".
+         Importante per evitare duplicati nei risultati di ricerca.
+         Sostituisci con l'URL definitivo quando deployi. -->
+    <link rel="canonical" href="https://andrespelizzer.com/" />
+
+    <!-- ════════════════════════════════════════════
+         OPEN GRAPH — usato da Facebook, LinkedIn, WhatsApp
+         quando qualcuno condivide il link del sito.
+         Definisce come appare l'anteprima.
+    ════════════════════════════════════════════ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://andrespelizzer.com/" />
+    <meta
+      property="og:title"
+      content="Andres Pelizzer — Web Full Stack Developer"
+    />
+    <meta
+      property="og:description"
+      content="Portfolio personale. Frontend & backend, vanilla web stack, dark minimal design."
+    />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- TWITTER CARD — usato da Twitter/X per le anteprime -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Andres Pelizzer — Web Full Stack Developer"
+    />
+    <meta
+      name="twitter:description"
+      content="Portfolio personale. Frontend & backend, vanilla web stack."
+    />
+
+    <!-- favicon: l'icona piccola nel tab del browser.
+         emoji come SVG inline → zero richieste HTTP, sempre pronto. -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23080808'/%3E%3Ctext x='50' y='68' font-family='monospace' font-size='60' font-weight='bold' fill='%23c8ff00' text-anchor='middle'%3E%24%3C/text%3E%3C/svg%3E"
+    />
+
+    <!-- ════════════════════════════════════════════
+         SCHEMA.ORG — dati strutturati per Google
+         Aiuta Google a capire chi sei e cosa fai.
+         Può apparire come "rich snippet" nei risultati.
+    ════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Andres Pelizzer",
+        "jobTitle": "Web Full Stack Developer",
+        "description": "Studente ITS Web Stack Full Developer alla Mario Volpato Academy. Specializzato in frontend e backend con vanilla JavaScript, Node.js, Express e MySQL.",
+        "url": "https://andrespelizzer.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Treviso",
+          "addressCountry": "IT"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "ITS Digital Academy Mario Volpato"
+        },
+        "knowsAbout": [
+          "HTML5",
+          "CSS3",
+          "JavaScript",
+          "Node.js",
+          "Express",
+          "MySQL",
+          "REST API",
+          "Web Development"
+        ]
+      }
+    </script>
+
+    <!-- preconnect ai domini Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- caricamento font:
-         Syne pesi 400 700 800 — l'800 è per i titoloni,
-                                  400 e 700 servono per il corsivo nei paragrafi
-         DM Mono pesi 300 400, sia normale che corsivo (ital) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap"
       rel="stylesheet"
     />
 
-    <!-- foglio di stile principale — DOPO i font così può usarli subito -->
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <!-- linea decorativa verticale fissa sul bordo destro,
-         visibile solo su desktop, parte dopo il caricamento -->
+    <!-- linea decorativa verticale destra (solo desktop) -->
     <div class="deco-line"></div>
 
-    <!-- ════════════════════════════
+    <!-- ════════════════════════════════════════════
          NAV — barra fissa in alto
-    ════════════════════════════ -->
+    ════════════════════════════════════════════ -->
     <nav>
-      <a href="#hero" class="nav-logo">Andres Pelizzer</a>
+      <a href="#hero" class="nav-logo">
+        <!-- LEITMOTIV: il prompt $ ricorre come marchio personale.
+             Sostituisce le iniziali tradizionali "AP". -->
+        <span class="nav-prompt">$</span> andres
+      </a>
 
-      <!-- link desktop: nascosti su mobile via media query -->
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Work</a></li>
@@ -45,9 +133,6 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <!-- bottone hamburger: nascosto su desktop, visibile solo su mobile.
-           Le tre <span> sono le tre lineette,
-           via JS aggiungiamo la classe "open" che le trasforma in X -->
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span>
         <span></span>
@@ -55,7 +140,6 @@
       </button>
     </nav>
 
-    <!-- pannello mobile che scivola da destra quando l'hamburger è aperto -->
     <div class="mobile-menu" id="mobileMenu">
       <div class="mobile-menu-inner">
         <nav class="mobile-nav-links">
@@ -64,189 +148,195 @@
           <a href="#skills" class="mobile-link">Skills</a>
           <a href="#contact" class="mobile-link">Contact</a>
         </nav>
-        <div class="mobile-menu-footer">Andres Pelizzer © 2026</div>
+        <div class="mobile-menu-footer">
+          <span class="prompt-mark">$</span> andres pelizzer · 2026
+        </div>
       </div>
     </div>
 
-    <!-- backdrop scuro: cliccando fuori dal menu lo chiude -->
     <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
-    <!-- ════════════════════════════
-         HERO — prima sezione
-    ════════════════════════════ -->
-    <section id="hero">
-      <!-- riga in cima: indice a sinistra, status a destra -->
-      <div class="hero-top-row">
-        <span class="hero-index">001 — Introduction</span>
-        <span class="hero-status">
-          <span class="status-dot"></span>Open to opportunities
-        </span>
-      </div>
+    <!-- ════════════════════════════════════════════
+         HERO — prima sezione (id="hero")
+         Tag <main> per la sezione principale (semantica/SEO).
+    ════════════════════════════════════════════ -->
+    <main>
+      <section id="hero" aria-label="Introduction">
+        <div class="hero-top-row">
+          <span class="hero-index">001 — Introduction</span>
+          <span class="hero-status">
+            <span class="status-dot"></span>Open to opportunities
+          </span>
+        </div>
 
-      <!-- linea decorativa orizzontale che cresce in animazione -->
-      <div class="hero-line"></div>
+        <div class="hero-line"></div>
 
-      <!-- blocco nome — ANDRES outline accent, PELIZZER bianco pieno.
-           Lo span esterno ha overflow:hidden,
-           lo span interno parte da sotto e sale (curtain reveal) -->
-      <div class="hero-name-block">
-        <span class="hero-first"><span>ANDRES</span></span>
-        <span class="hero-last"><span>PELIZZER</span></span>
-      </div>
+        <!-- nome grande con curtain reveal -->
+        <div class="hero-name-block">
+          <h1 class="hero-first"><span>ANDRES</span></h1>
+          <h1 class="hero-last"><span>PELIZZER</span></h1>
+        </div>
 
-      <!-- pannello live system con uptime e stack che cambia ogni 1.8s -->
-      <div class="live-system">
-        <div class="sys-item">
-          <span class="sys-label">Status</span>
-          <span class="sys-value">● Online</span>
+        <!-- pannello live system -->
+        <div class="live-system">
+          <div class="sys-item">
+            <span class="sys-label">Status</span>
+            <span class="sys-value">● Online</span>
+          </div>
+          <div class="sys-item">
+            <span class="sys-label">Location</span>
+            <span class="sys-value">Treviso, IT</span>
+          </div>
+          <div class="sys-item">
+            <span class="sys-label">Role</span>
+            <span class="sys-value">Full Stack Dev</span>
+          </div>
+          <div class="sys-item">
+            <span class="sys-label">Uptime</span>
+            <span class="sys-value" id="uptime">00:00:00</span>
+          </div>
+          <div class="sys-item">
+            <span class="sys-label">Stack</span>
+            <span class="sys-value" id="stackCycle">HTML</span>
+          </div>
         </div>
-        <div class="sys-item">
-          <span class="sys-label">Location</span>
-          <span class="sys-value">Treviso, IT</span>
-        </div>
-        <div class="sys-item">
-          <span class="sys-label">Role</span>
-          <span class="sys-value">Full Stack Dev</span>
-        </div>
-        <div class="sys-item">
-          <span class="sys-label">Uptime</span>
-          <!-- id="uptime": il JS lo trova e aggiorna ogni secondo -->
-          <span class="sys-value" id="uptime">00:00:00</span>
-        </div>
-        <div class="sys-item">
-          <span class="sys-label">Stack</span>
-          <!-- id="stackCycle": il JS cicla le tecnologie -->
-          <span class="sys-value" id="stackCycle">HTML</span>
-        </div>
-      </div>
 
-      <!-- riga inferiore: meta a sinistra, bottoni a destra,
-           separati dal nome dalla border-top grigia -->
-      <div class="hero-bottom">
-        <div class="hero-meta">
-          <span class="hero-role">Web Full Stack Dev</span>
-          <span class="hero-sep"></span>
-          <span class="hero-location">Treviso, IT</span>
+        <div class="hero-bottom">
+          <div class="hero-meta">
+            <span class="hero-role">Web Full Stack Dev</span>
+            <span class="hero-sep"></span>
+            <span class="hero-location">Treviso, IT</span>
+          </div>
+          <div class="hero-cta">
+            <a href="#projects" class="btn">See my work</a>
+            <a href="#contact" class="btn">Get in touch</a>
+          </div>
         </div>
-        <div class="hero-cta">
-          <a href="#projects" class="btn">See my work</a>
-          <a href="#contact" class="btn">Get in touch</a>
+      </section>
+
+      <!-- ════════════════════════════════════════════
+           ABOUT — sezione 002
+           Flusso verticale, data strip orizzontale,
+           stat cards cliccabili. Niente colonne!
+      ════════════════════════════════════════════ -->
+      <section id="about" aria-label="About me">
+        <div class="section-header">
+          <!-- LEITMOTIV: prefisso $ prima dell'indice della sezione.
+               Riprende il prompt della nav e del terminal degli skills. -->
+          <span class="section-index">
+            <span class="prompt-mark">$</span> 002 — About
+          </span>
+          <div class="section-line"></div>
         </div>
-      </div>
-    </section>
 
-    <!-- ════════════════════════════
-         ABOUT — editorial layout
-    ════════════════════════════ -->
-    <section id="about">
-      <div class="section-header">
-        <span class="section-index">002 — About</span>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="about-narrow">
-        <!-- meta strip — sottile in cima -->
+        <!-- meta strip in cima -->
         <div class="about-meta-top reveal">
           <span class="meta-label">Profile</span>
           <span class="meta-value">19 · Treviso · Italy</span>
         </div>
 
-        <!-- citazione GRANDE in OUTLINE — fa atmosfera, non blocca -->
+        <!-- citazione outline (come ANDRES nell'hero) -->
         <h2 class="about-quote reveal delay-1">
           I want to know how things work —
           <span class="quote-accent">then build them.</span>
         </h2>
 
-        <!-- corpo a 2 colonne sbilanciate: paragrafi 60% + pannello 40% -->
-        <div class="about-body">
-          <div class="about-text reveal delay-2">
-            <p class="about-para">
-              Hi, I'm Andres. I'm 19, based in Treviso, and I'm in my first year
-              of
-              <span class="key-word">
-                ITS Web Stack Full Developer
-                <span class="tip"
-                  >Two-year program at Mario Volpato Academy covering HTML, CSS,
-                  JavaScript, Node.js, Express, MySQL and hosting.</span
-                >
-              </span>
-              .
-            </p>
+        <!-- paragrafi narrativi con tooltip sulle keyword verdi -->
+        <div class="about-text reveal delay-2">
+          <p class="about-para">
+            Hi, I'm Andres. I'm 19, based in Treviso, and I'm in my first year
+            of
+            <span class="key-word">
+              ITS Web Stack Full Developer
+              <span class="tip"
+                >Two-year program at Mario Volpato Academy covering HTML, CSS,
+                JavaScript, Node.js, Express, MySQL and hosting. Currently in
+                the first year.</span
+              >
+            </span>
+            .
+          </p>
 
-            <p class="about-para">
-              I came here straight from a
-              <span class="key-word">
-                scientific high school
-                <span class="tip"
-                  >Liceo Scientifico — Scienze Applicate, in San Donà di Piave.
-                  Strong math and physics base, no programming.</span
-                >
-              </span>
-              with no real coding background — just curiosity. I picked ITS over
-              university because I wanted the most direct path to building real
-              things. The part that surprised me most has been the
-              <span class="key-word">
-                backend
-                <span class="tip"
-                  >Building REST APIs with Node.js and Express, designing MySQL
-                  schemas, three-layer architecture: server.js → routes →
-                  queries.</span
-                >
-              </span>
-              : writing APIs, watching requests flow through routes and
-              middleware.
-            </p>
+          <p class="about-para">
+            I came here straight from a
+            <span class="key-word">
+              scientific high school
+              <span class="tip"
+                >Liceo Scientifico — Scienze Applicate, in San Donà di Piave.
+                Strong math and physics base, no programming background.</span
+              >
+            </span>
+            with no real coding background — just curiosity. I picked ITS over
+            university because I wanted the most direct path to building real
+            things. The part that surprised me most has been the
+            <span class="key-word">
+              backend
+              <span class="tip"
+                >Building REST APIs with Node.js and Express, designing MySQL
+                schemas, three-layer architecture: server.js → routes →
+                queries.</span
+              >
+            </span>
+            : writing APIs, watching requests flow through routes and
+            middleware.
+          </p>
 
-            <p class="about-para">
-              Outside of code, I play
-              <span class="key-word">
-                tennis
-                <span class="tip"
-                  >Following the pro circuit closely — Sinner especially. Drawn
-                  to the analytics side: stats, betting math, game theory.</span
-                >
-              </span>
-              and I'm generally curious about how the world works: politics,
-              economics, the systems behind everyday things. Programming, for
-              me, is part of that same instinct — taking something opaque and
-              making it transparent.
-            </p>
+          <p class="about-para">
+            Outside of code, I play
+            <span class="key-word">
+              tennis
+              <span class="tip"
+                >Following the pro circuit closely — Sinner especially. Drawn to
+                the analytics side: stats, probabilistic models, game
+                theory.</span
+              >
+            </span>
+            and I'm generally curious about how the world works: politics,
+            economics, the systems behind everyday things. Programming, for me,
+            is part of that same instinct — taking something opaque and making
+            it transparent.
+          </p>
 
-            <p class="about-para">
-              Starting May 2026 I'll be interning at
-              <span class="key-word">
-                Stealth S.R.L.
-                <span class="tip"
-                  >Custom software house in Villorba (Treviso). Founded 2018.
-                  Web, mobile, AI projects. 150+ clients.</span
-                >
-              </span>
-              , a custom software house in Villorba.
-            </p>
-          </div>
-
-          <!-- pannello laterale "at a glance" — redesigned terminal card -->
-          <aside class="about-side reveal delay-3">
-            <div class="side-header">
-              <span class="side-tag">[ profile ]</span>
-              <span class="side-dot"></span>
-            </div>
-            <ul class="about-list">
-              <li><span>Education</span><span>ITS Digital Academy</span></li>
-              <li><span>Background</span><span>Liceo Scientifico</span></li>
-              <li>
-                <span>Internship</span><span>Stealth S.R.L. — May 2026</span>
-              </li>
-              <li>
-                <span>Stack</span><span>Node.js · Express · MySQL · JS</span>
-              </li>
-              <li><span>Based in</span><span>Treviso, Italy</span></li>
-            </ul>
-            <div class="side-footer">↑ updated 2026</div>
-          </aside>
+          <p class="about-para">
+            Starting June 2026 I'll be interning at
+            <span class="key-word">
+              Stealth S.R.L.
+              <span class="tip"
+                >Custom software house in Villorba (Treviso). Founded 2018. Web,
+                mobile, AI projects. 150+ clients. Supervisor: Alberto
+                Mazzariol.</span
+              >
+            </span>
+            , a custom software house in Villorba. It's the part of this year
+            I'm most looking forward to.
+          </p>
         </div>
 
-        <!-- 3 stat cards interattive — cliccabili per espandere dettagli -->
+        <!-- ── DATA STRIP — striscia orizzontale di info ── -->
+        <div class="data-strip reveal delay-3">
+          <div class="data-item">
+            <span class="data-key">Education</span>
+            <span class="data-val">ITS Digital Academy</span>
+          </div>
+          <div class="data-item">
+            <span class="data-key">Background</span>
+            <span class="data-val">Liceo Scientifico</span>
+          </div>
+          <div class="data-item">
+            <span class="data-key">Internship</span>
+            <span class="data-val">Stealth S.R.L.</span>
+          </div>
+          <div class="data-item">
+            <span class="data-key">Stack</span>
+            <span class="data-val">Node · Express · MySQL</span>
+          </div>
+          <div class="data-item">
+            <span class="data-key">Based in</span>
+            <span class="data-val">Treviso, Italy</span>
+          </div>
+        </div>
+
+        <!-- ── STAT CARDS CLICCABILI ── -->
         <div class="about-stats reveal delay-3">
           <div class="stat-card">
             <div class="stat-card-header">
@@ -256,13 +346,15 @@
             <span class="stat-val">First year<br />at ITS Academy</span>
             <div class="stat-detail">
               <div class="stat-detail-inner">
-                <p>Sep 2025 – Jun 2026 · Treviso</p>
+                <p>Sep 2025 – Jun 2027 · Treviso</p>
                 <p>
                   Full stack curriculum: HTML, CSS, JS, Node.js, Express, MySQL.
+                  Halfway to internship phase.
                 </p>
               </div>
             </div>
           </div>
+
           <div class="stat-card">
             <div class="stat-card-header">
               <span class="stat-key">Focus</span>
@@ -272,271 +364,445 @@
             <div class="stat-detail">
               <div class="stat-detail-inner">
                 <p>REST API design · three-layer architecture</p>
-                <p>routes → controllers → queries · MySQL schema design.</p>
+                <p>
+                  Node.js + Express · MySQL schema design · vanilla JS frontend.
+                </p>
               </div>
             </div>
           </div>
+
           <div class="stat-card">
             <div class="stat-card-header">
               <span class="stat-key">Internship</span>
               <span class="stat-toggle">+</span>
             </div>
-            <span class="stat-val">Stealth S.R.L.<br />May 2026</span>
+            <span class="stat-val">Stealth S.R.L.<br />June 2026</span>
             <div class="stat-detail">
               <div class="stat-detail-inner">
                 <p>Custom software house · Villorba, Treviso</p>
-                <p>Web, mobile, AI projects · 150+ clients.</p>
+                <p>
+                  Web, mobile, AI projects. 150+ clients. Six months on-site.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ════════════════════════════
-         PROJECTS — sticky scroll showcase
-         Sinistra: browser frame fisso (sticky) con immagine progetto
-         Destra: contenuto scrollabile con le schede progetto
-    ════════════════════════════ -->
-    <section id="projects">
-      <div class="section-header">
-        <span class="section-index">003 — Projects</span>
-        <div class="section-line"></div>
-      </div>
+      <!-- ════════════════════════════════════════════
+           PROJECTS — sezione 003
+           Sticky scroll su desktop, stack verticale su mobile
+           con immagine inline in ogni card.
+      ════════════════════════════════════════════ -->
+      <section id="projects" aria-label="Projects">
+        <div class="section-header">
+          <span class="section-index">
+            <span class="prompt-mark">$</span> 003 — Projects
+          </span>
+          <div class="section-line"></div>
+        </div>
 
-      <div class="projects-layout">
-        <!-- COLONNA SINISTRA: finto browser sticky -->
-        <div class="projects-frame">
-          <div class="browser">
-            <!-- barra superiore con pallini macOS + URL -->
-            <div class="browser-bar">
-              <div class="browser-dots">
-                <span></span><span></span><span></span>
+        <div class="projects-layout">
+          <!-- COLONNA SINISTRA: browser sticky (visibile solo desktop) -->
+          <div class="projects-frame">
+            <div class="browser">
+              <div class="browser-bar">
+                <div class="browser-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="browser-url" id="browserUrl">
+                  https://diventa.com
+                </div>
               </div>
-              <!-- id="browserUrl": il JS aggiorna questo testo
-                   quando cambia il progetto in vista -->
-              <div class="browser-url" id="browserUrl">https://diventa.com</div>
+              <div class="browser-viewport">
+                <img
+                  id="projectImage"
+                  src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1280&q=80"
+                  alt="Diventa project screenshot"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- COLONNA DESTRA: 4 progetti reali -->
+          <div class="projects-content">
+            <!-- PROGETTO 1 — Diventa -->
+            <article
+              class="project"
+              data-image="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1280&q=80"
+              data-url="https://diventa.com"
+            >
+              <!-- immagine inline (visibile solo mobile) -->
+              <div class="project-image-mobile">
+                <img
+                  src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1280&q=80"
+                  alt="Diventa screenshot"
+                />
+              </div>
+              <span class="project-num">01 / 04</span>
+              <h3 class="project-title">Diventa</h3>
+              <span class="project-year"
+                >Feb — Mar 2026 · Multi-page website</span
+              >
+              <p class="project-desc">
+                Multi-page responsive website built from a Figma design. Layout
+                in pure HTML5 and CSS3 with Flexbox and Grid, fully adaptive
+                across three breakpoints.
+              </p>
+              <ul class="project-stack">
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>Flexbox / Grid</li>
+                <li>Responsive</li>
+                <li>Figma</li>
+              </ul>
+              <div class="project-links">
+                <a href="#" class="project-link">View live →</a>
+                <a href="#" class="project-link">GitHub →</a>
+              </div>
+            </article>
+
+            <!-- PROGETTO 2 — Mini JSONPlaceholder -->
+            <article
+              class="project"
+              data-image="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1280&q=80"
+              data-url="https://github.com/andrespelizzer/mini-jsonplaceholder"
+            >
+              <div class="project-image-mobile">
+                <img
+                  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1280&q=80"
+                  alt="Mini JSONPlaceholder API screenshot"
+                />
+              </div>
+              <span class="project-num">02 / 04</span>
+              <h3 class="project-title">Mini JSONPlaceholder</h3>
+              <span class="project-year">Apr 2026 — ongoing · REST API</span>
+              <p class="project-desc">
+                Full CRUD REST API built with Node.js and Express. Features
+                Express Router, nested routes, pagination, X-Total-Count
+                headers, and helper functions. Tested with Thunder Client.
+              </p>
+              <ul class="project-stack">
+                <li>Node.js</li>
+                <li>Express</li>
+                <li>REST API</li>
+                <li>MySQL</li>
+                <li>Thunder Client</li>
+              </ul>
+              <div class="project-links">
+                <a href="#" class="project-link">GitHub →</a>
+              </div>
+            </article>
+
+            <!-- PROGETTO 3 — GameHub -->
+            <article
+              class="project"
+              data-image="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1280&q=80"
+              data-url="https://github.com/andrespelizzer/gamehub"
+            >
+              <div class="project-image-mobile">
+                <img
+                  src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1280&q=80"
+                  alt="GameHub desktop app screenshot"
+                />
+              </div>
+              <span class="project-num">03 / 04</span>
+              <h3 class="project-title">GameHub</h3>
+              <span class="project-year">Dec 2025 — ongoing · Desktop app</span>
+              <p class="project-desc">
+                Desktop application for e-sports tournament management built in
+                Java with Swing. Layered architecture separating UI, business
+                logic, and data persistence. Group project at ITS.
+              </p>
+              <ul class="project-stack">
+                <li>Java</li>
+                <li>Swing</li>
+                <li>OOP</li>
+                <li>Layered architecture</li>
+              </ul>
+              <div class="project-links">
+                <a href="#" class="project-link">GitHub →</a>
+              </div>
+            </article>
+
+            <!-- PROGETTO 4 — Portfolio (questo sito) -->
+            <article
+              class="project"
+              data-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&q=80"
+              data-url="https://andrespelizzer.com"
+            >
+              <div class="project-image-mobile">
+                <img
+                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&q=80"
+                  alt="Portfolio website screenshot"
+                />
+              </div>
+              <span class="project-num">04 / 04</span>
+              <h3 class="project-title">Portfolio</h3>
+              <span class="project-year"
+                >Mar 2026 — ongoing · Personal site</span
+              >
+              <p class="project-desc">
+                This website. Built from scratch in vanilla HTML, CSS and
+                JavaScript. No frameworks. Custom animations, parallax effects,
+                sticky scroll showcase, and a fully responsive editorial layout.
+              </p>
+              <ul class="project-stack">
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>Animations</li>
+                <li>Responsive</li>
+              </ul>
+              <div class="project-links">
+                <a href="#" class="project-link">View live →</a>
+                <a href="#" class="project-link">GitHub →</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════
+           SKILLS — sezione 004 (terminal CLI)
+           Centrepiece del leitmotiv: il terminale è IL marchio.
+      ════════════════════════════════════════════ -->
+      <section id="skills" aria-label="Skills">
+        <div class="section-header">
+          <span class="section-index">
+            <span class="prompt-mark">$</span> 004 — Skills
+          </span>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="terminal reveal">
+          <div class="terminal-bar">
+            <div class="terminal-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="terminal-title">andres@portfolio — skills</span>
+          </div>
+
+          <div class="terminal-body">
+            <!-- COMANDO 1: Frontend -->
+            <div class="cmd-block">
+              <div class="cmd-line">
+                <span class="cmd-prompt">$</span>
+                <span class="cmd-text">
+                  andres <span class="cmd-flag">--skills</span> frontend
+                </span>
+              </div>
+              <div class="cmd-output">
+                <span class="cmd-arrow">→</span>
+                <span class="skill-chip">HTML5</span>
+                <span class="skill-chip">CSS3</span>
+                <span class="skill-chip">JavaScript</span>
+                <span class="skill-chip">Vue</span>
+                <span class="skill-chip">Responsive</span>
+                <span class="skill-chip">Flexbox</span>
+                <span class="skill-chip">Grid</span>
+                <span class="skill-chip">Animations</span>
+              </div>
+              <div class="cmd-comment">
+                # DOM manipulation · async/await · fetch API · keyframes
+              </div>
             </div>
 
-            <!-- viewport con l'immagine del progetto.
-                 id="projectImage": il JS aggiorna il src in fade -->
-            <div class="browser-viewport">
-              <img
-                id="projectImage"
-                src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1280&q=80"
-                alt="Project screenshot"
-              />
+            <!-- COMANDO 2: Backend -->
+            <div class="cmd-block">
+              <div class="cmd-line">
+                <span class="cmd-prompt">$</span>
+                <span class="cmd-text">
+                  andres <span class="cmd-flag">--skills</span> backend
+                </span>
+              </div>
+              <div class="cmd-output">
+                <span class="cmd-arrow">→</span>
+                <span class="skill-chip">Node.js</span>
+                <span class="skill-chip">Express</span>
+                <span class="skill-chip">REST API</span>
+                <span class="skill-chip">JWT</span>
+                <span class="skill-chip">Middleware</span>
+              </div>
+              <div class="cmd-comment">
+                # routing · three-layer architecture · CRUD · Thunder Client
+              </div>
+            </div>
+
+            <!-- COMANDO 3: Database -->
+            <div class="cmd-block">
+              <div class="cmd-line">
+                <span class="cmd-prompt">$</span>
+                <span class="cmd-text">
+                  andres <span class="cmd-flag">--skills</span> database
+                </span>
+              </div>
+              <div class="cmd-output">
+                <span class="cmd-arrow">→</span>
+                <span class="skill-chip">MySQL</span>
+                <span class="skill-chip">SQLite</span>
+                <span class="skill-chip">Schema design</span>
+                <span class="skill-chip">Normalization</span>
+              </div>
+              <div class="cmd-comment">
+                # foreign keys · 1NF–3NF · junction tables · relational models
+              </div>
+            </div>
+
+            <!-- COMANDO 4: Languages -->
+            <div class="cmd-block">
+              <div class="cmd-line">
+                <span class="cmd-prompt">$</span>
+                <span class="cmd-text">
+                  andres <span class="cmd-flag">--skills</span> languages
+                </span>
+              </div>
+              <div class="cmd-output">
+                <span class="cmd-arrow">→</span>
+                <span class="skill-chip">Python</span>
+                <span class="skill-chip">Java</span>
+                <span class="skill-chip">JavaScript</span>
+              </div>
+              <div class="cmd-comment">
+                # OOP · Swing · standard library · file I/O
+              </div>
+            </div>
+
+            <!-- COMANDO 5: Tools -->
+            <div class="cmd-block">
+              <div class="cmd-line">
+                <span class="cmd-prompt">$</span>
+                <span class="cmd-text">
+                  andres <span class="cmd-flag">--skills</span> tools
+                </span>
+              </div>
+              <div class="cmd-output">
+                <span class="cmd-arrow">→</span>
+                <span class="skill-chip">Git</span>
+                <span class="skill-chip">GitHub</span>
+                <span class="skill-chip">VS Code</span>
+                <span class="skill-chip">Docker</span>
+                <span class="skill-chip">Figma</span>
+                <span class="skill-chip">Power BI</span>
+              </div>
+
+              <div class="cmd-summary">
+                Total: <strong>24 skills</strong> across 5 categories · updated
+                2026
+              </div>
+
+              <!-- prompt finale con cursore lampeggiante -->
+              <div class="cmd-final">
+                <span class="cmd-prompt">$</span>
+                <span class="cursor"></span>
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <!-- COLONNA DESTRA: schede progetto scrollabili -->
-        <div class="projects-content">
-          <!-- PROGETTO 1.
-               data-image e data-url vengono letti dal JS
-               quando questo .project entra nel viewport. -->
-          <article
-            class="project"
-            data-project="1"
-            data-image="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1280&q=80"
-            data-url="https://diventa.com"
-          >
-            <span class="project-num">01 / 02</span>
-            <h3 class="project-title">Diventa</h3>
-            <span class="project-year">2026 — Multi page website</span>
-            <p class="project-desc">
-              Multi-page responsive website built from a Figma design. Layout in
-              pure HTML5 and CSS3 with Flexbox and Grid, fully adaptive across
-              three breakpoints.
+      <!-- ════════════════════════════════════════════
+           CONTACT — sezione 005
+           Layout 2 colonne: titolo grande outline a sinistra,
+           contatti a destra. Status indicator + 3 link diretti.
+      ════════════════════════════════════════════ -->
+      <section id="contact" aria-label="Contact">
+        <div class="section-header">
+          <span class="section-index">
+            <span class="prompt-mark">$</span> 005 — Contact
+          </span>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="contact-layout">
+          <!-- COLONNA SINISTRA: titolo outline + invito -->
+          <div class="contact-left reveal">
+            <h2 class="contact-title">
+              Let's
+              <span class="contact-accent">build</span>
+              something.
+            </h2>
+            <p class="contact-intro">
+              Available for internships, collaborations, or just a chat about
+              code, tennis, or how things work.
             </p>
-            <ul class="project-stack">
-              <li>HTML5</li>
-              <li>CSS3</li>
-              <li>Flexbox / Grid</li>
-              <li>Responsive</li>
-            </ul>
-            <div class="project-links">
-              <a href="#" class="project-link">View live →</a>
-              <a href="#" class="project-link">GitHub →</a>
+
+            <!-- status indicator: stesso pattern del hero -->
+            <div class="contact-status">
+              <span class="status-dot"></span>
+              <span
+                >Currently open to opportunities · Internship from June
+                2026</span
+              >
             </div>
-          </article>
+          </div>
 
-          <!-- PROGETTO 2 -->
-          <article
-            class="project"
-            data-project="2"
-            data-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&q=80"
-            data-url="https://andrespelizzer.com"
-          >
-            <span class="project-num">02 / 02</span>
-            <h3 class="project-title">Portfolio</h3>
-            <span class="project-year">2026 — Personal site</span>
-            <p class="project-desc">
-              Personal portfolio site built from scratch in vanilla HTML, CSS
-              and JavaScript. No frameworks. Custom animations, parallax, and a
-              fully responsive editorial layout.
-            </p>
-            <ul class="project-stack">
-              <li>HTML5</li>
-              <li>CSS3</li>
-              <li>JavaScript</li>
-              <li>Animations</li>
-            </ul>
-            <div class="project-links">
-              <a href="#" class="project-link">View live →</a>
-              <a href="#" class="project-link">GitHub →</a>
+          <!-- COLONNA DESTRA: 3 link contatto -->
+          <div class="contact-right reveal delay-1">
+            <!-- LEITMOTIV: prompt-style come comando da terminale -->
+            <div class="contact-prompt">
+              <span class="cmd-prompt">$</span>
+              <span class="cmd-text"
+                >connect <span class="cmd-flag">--with</span></span
+              >
             </div>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <!-- ════════════════════════════
-         SKILLS — marquee infinito
-         3 nastri sovrapposti, direzioni alterne.
-         Ogni track ha 4 ripetizioni dei chip → loop senza buchi.
-    ════════════════════════════ -->
-    <section id="skills">
-      <div class="section-header">
-        <span class="section-index">004 — Skills</span>
-        <div class="section-line"></div>
-      </div>
+            <a
+              href="mailto:andrespelizzer@gmail.com"
+              class="contact-link"
+              aria-label="Send email to Andres"
+            >
+              <span class="link-key">Email</span>
+              <span class="link-val">andrespelizzer@gmail.com</span>
+              <span class="link-arrow">→</span>
+            </a>
 
-      <div class="skills-marquees">
-        <!-- ── NASTRO 1: Frontend (scorre →←) ── -->
-        <div class="marquee">
-          <div class="marquee-track">
-            <!-- 8 chip × 4 ripetizioni = 32 chip totali -->
-            <span class="skill"><span class="skill-dot"></span>HTML5</span>
-            <span class="skill"><span class="skill-dot"></span>CSS3</span>
-            <span class="skill"><span class="skill-dot"></span>JavaScript</span>
-            <span class="skill"><span class="skill-dot"></span>Vue</span>
-            <span class="skill"><span class="skill-dot"></span>Responsive</span>
-            <span class="skill"><span class="skill-dot"></span>Animation</span>
-            <span class="skill"><span class="skill-dot"></span>Flexbox</span>
-            <span class="skill"><span class="skill-dot"></span>Grid</span>
+            <a
+              href="https://github.com/andrespelizzer-lang"
+              class="contact-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Andres on GitHub"
+            >
+              <span class="link-key">GitHub</span>
+              <span class="link-val">@andrespelizzer-lang</span>
+              <span class="link-arrow">→</span>
+            </a>
 
-            <span class="skill"><span class="skill-dot"></span>HTML5</span>
-            <span class="skill"><span class="skill-dot"></span>CSS3</span>
-            <span class="skill"><span class="skill-dot"></span>JavaScript</span>
-            <span class="skill"><span class="skill-dot"></span>Vue</span>
-            <span class="skill"><span class="skill-dot"></span>Responsive</span>
-            <span class="skill"><span class="skill-dot"></span>Animation</span>
-            <span class="skill"><span class="skill-dot"></span>Flexbox</span>
-            <span class="skill"><span class="skill-dot"></span>Grid</span>
-
-            <span class="skill"><span class="skill-dot"></span>HTML5</span>
-            <span class="skill"><span class="skill-dot"></span>CSS3</span>
-            <span class="skill"><span class="skill-dot"></span>JavaScript</span>
-            <span class="skill"><span class="skill-dot"></span>Vue</span>
-            <span class="skill"><span class="skill-dot"></span>Responsive</span>
-            <span class="skill"><span class="skill-dot"></span>Animation</span>
-            <span class="skill"><span class="skill-dot"></span>Flexbox</span>
-            <span class="skill"><span class="skill-dot"></span>Grid</span>
-
-            <span class="skill"><span class="skill-dot"></span>HTML5</span>
-            <span class="skill"><span class="skill-dot"></span>CSS3</span>
-            <span class="skill"><span class="skill-dot"></span>JavaScript</span>
-            <span class="skill"><span class="skill-dot"></span>Vue</span>
-            <span class="skill"><span class="skill-dot"></span>Responsive</span>
-            <span class="skill"><span class="skill-dot"></span>Animation</span>
-            <span class="skill"><span class="skill-dot"></span>Flexbox</span>
-            <span class="skill"><span class="skill-dot"></span>Grid</span>
+            <a
+              href="https://linkedin.com/in/andres-pelizzer"
+              class="contact-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Andres on LinkedIn"
+            >
+              <span class="link-key">LinkedIn</span>
+              <span class="link-val">in/andres-pelizzer</span>
+              <span class="link-arrow">→</span>
+            </a>
           </div>
         </div>
+      </section>
+    </main>
 
-        <!-- ── NASTRO 2: Backend & Database (scorre ←→ — direzione opposta) ── -->
-        <div class="marquee marquee-reverse">
-          <div class="marquee-track">
-            <!-- 8 chip × 4 ripetizioni = 32 chip totali -->
-            <span class="skill"><span class="skill-dot"></span>Node.js</span>
-            <span class="skill"><span class="skill-dot"></span>Express</span>
-            <span class="skill"><span class="skill-dot"></span>REST API</span>
-            <span class="skill"><span class="skill-dot"></span>MySQL</span>
-            <span class="skill"><span class="skill-dot"></span>SQLite</span>
-            <span class="skill"><span class="skill-dot"></span>Python</span>
-            <span class="skill"><span class="skill-dot"></span>Java</span>
-            <span class="skill"><span class="skill-dot"></span>JWT</span>
-
-            <span class="skill"><span class="skill-dot"></span>Node.js</span>
-            <span class="skill"><span class="skill-dot"></span>Express</span>
-            <span class="skill"><span class="skill-dot"></span>REST API</span>
-            <span class="skill"><span class="skill-dot"></span>MySQL</span>
-            <span class="skill"><span class="skill-dot"></span>SQLite</span>
-            <span class="skill"><span class="skill-dot"></span>Python</span>
-            <span class="skill"><span class="skill-dot"></span>Java</span>
-            <span class="skill"><span class="skill-dot"></span>JWT</span>
-
-            <span class="skill"><span class="skill-dot"></span>Node.js</span>
-            <span class="skill"><span class="skill-dot"></span>Express</span>
-            <span class="skill"><span class="skill-dot"></span>REST API</span>
-            <span class="skill"><span class="skill-dot"></span>MySQL</span>
-            <span class="skill"><span class="skill-dot"></span>SQLite</span>
-            <span class="skill"><span class="skill-dot"></span>Python</span>
-            <span class="skill"><span class="skill-dot"></span>Java</span>
-            <span class="skill"><span class="skill-dot"></span>JWT</span>
-
-            <span class="skill"><span class="skill-dot"></span>Node.js</span>
-            <span class="skill"><span class="skill-dot"></span>Express</span>
-            <span class="skill"><span class="skill-dot"></span>REST API</span>
-            <span class="skill"><span class="skill-dot"></span>MySQL</span>
-            <span class="skill"><span class="skill-dot"></span>SQLite</span>
-            <span class="skill"><span class="skill-dot"></span>Python</span>
-            <span class="skill"><span class="skill-dot"></span>Java</span>
-            <span class="skill"><span class="skill-dot"></span>JWT</span>
-          </div>
+    <!-- ════════════════════════════════════════════
+         FOOTER — chiusura del sito
+         Stile terminal-end: chiude la "session"
+         e dà un senso di completezza.
+    ════════════════════════════════════════════ -->
+    <footer class="site-footer">
+      <div class="footer-line"></div>
+      <div class="footer-content">
+        <div class="footer-left">
+          <span class="cmd-prompt">$</span>
+          <span class="footer-text">session ended · 2026</span>
         </div>
-
-        <!-- ── NASTRO 3: Tools (scorre →←, come il primo) ── -->
-        <div class="marquee">
-          <div class="marquee-track">
-            <!-- 7 chip × 4 ripetizioni = 28 chip totali -->
-            <span class="skill"><span class="skill-dot"></span>Git</span>
-            <span class="skill"><span class="skill-dot"></span>GitHub</span>
-            <span class="skill"><span class="skill-dot"></span>VS Code</span>
-            <span class="skill"><span class="skill-dot"></span>Docker</span>
-            <span class="skill"><span class="skill-dot"></span>Figma</span>
-            <span class="skill"
-              ><span class="skill-dot"></span>Thunder Client</span
-            >
-            <span class="skill"><span class="skill-dot"></span>Power BI</span>
-
-            <span class="skill"><span class="skill-dot"></span>Git</span>
-            <span class="skill"><span class="skill-dot"></span>GitHub</span>
-            <span class="skill"><span class="skill-dot"></span>VS Code</span>
-            <span class="skill"><span class="skill-dot"></span>Docker</span>
-            <span class="skill"><span class="skill-dot"></span>Figma</span>
-            <span class="skill"
-              ><span class="skill-dot"></span>Thunder Client</span
-            >
-            <span class="skill"><span class="skill-dot"></span>Power BI</span>
-
-            <span class="skill"><span class="skill-dot"></span>Git</span>
-            <span class="skill"><span class="skill-dot"></span>GitHub</span>
-            <span class="skill"><span class="skill-dot"></span>VS Code</span>
-            <span class="skill"><span class="skill-dot"></span>Docker</span>
-            <span class="skill"><span class="skill-dot"></span>Figma</span>
-            <span class="skill"
-              ><span class="skill-dot"></span>Thunder Client</span
-            >
-            <span class="skill"><span class="skill-dot"></span>Power BI</span>
-
-            <span class="skill"><span class="skill-dot"></span>Git</span>
-            <span class="skill"><span class="skill-dot"></span>GitHub</span>
-            <span class="skill"><span class="skill-dot"></span>VS Code</span>
-            <span class="skill"><span class="skill-dot"></span>Docker</span>
-            <span class="skill"><span class="skill-dot"></span>Figma</span>
-            <span class="skill"
-              ><span class="skill-dot"></span>Thunder Client</span
-            >
-            <span class="skill"><span class="skill-dot"></span>Power BI</span>
-          </div>
+        <div class="footer-right">
+          <span class="footer-text">Andres Pelizzer · Treviso, IT</span>
         </div>
       </div>
-    </section>
+    </footer>
 
-    <!-- script in fondo al body: a questo punto tutta la pagina esiste già
-         e il JS può trovare gli elementi senza problemi -->
     <script src="script.js"></script>
   </body>
 </html>
