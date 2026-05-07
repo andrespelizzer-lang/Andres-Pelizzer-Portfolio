@@ -34,7 +34,7 @@
 ══════════════════════════════════════════════ */
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden; /* necessario: body da solo non basta — elementi fixed/clip-path negativi sfuggono all'html */
+  overflow-x: clip; /* clip invece di hidden — non rompe position:sticky */
 }
 
 body {
@@ -42,7 +42,7 @@ body {
   color: var(--text);
   font-family: "DM Mono", monospace;
   font-weight: 300;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ════════════════════════════════════════════
@@ -436,7 +436,11 @@ section {
 .hero-last {
   font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: clamp(2.6rem, 10.5vw, 7.5rem); /* max ridotto: PELIZZER (8 char) più lungo di ANDRES */
+  font-size: clamp(
+    2.6rem,
+    10.5vw,
+    7.5rem
+  ); /* max ridotto: PELIZZER (8 char) più lungo di ANDRES */
   line-height: 0.88;
   letter-spacing: -0.03em;
   display: block;
@@ -446,12 +450,18 @@ section {
   display: block;
   color: transparent;
   -webkit-text-stroke: 1.5px var(--accent);
-  clip-path: inset(0 -100px 110% 0); /* right negativo = non clippa mai a destra */
+  clip-path: inset(
+    0 -100px 110% 0
+  ); /* right negativo = non clippa mai a destra */
   animation: curtainReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
 }
 
 .hero-last {
-  padding-left: clamp(0.5rem, 2vw, 3rem); /* indent leggermente ridotto per dare più spazio a PELIZZER */
+  padding-left: clamp(
+    0.5rem,
+    2vw,
+    3rem
+  ); /* indent leggermente ridotto per dare più spazio a PELIZZER */
 }
 
 .hero-last span {
@@ -836,6 +846,7 @@ section {
    quando l'elemento viene prima del contenuto scorrevole. */
 .projects-frame {
   grid-column: 2;
+  grid-row: 1;
   position: -webkit-sticky;
   position: sticky;
   top: 8rem;
@@ -845,6 +856,7 @@ section {
 /* content nella colonna SINISTRA — secondo nel DOM, primo visivamente */
 .projects-content {
   grid-column: 1;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   gap: 6rem;
@@ -1387,7 +1399,11 @@ section {
 
   .hero-first,
   .hero-last {
-    font-size: clamp(2rem, 8vw, 3.2rem); /* max abbassato: 5rem→3.2rem evita overflow di PELIZZER */
+    font-size: clamp(
+      2rem,
+      8vw,
+      3.2rem
+    ); /* max abbassato: 5rem→3.2rem evita overflow di PELIZZER */
     line-height: 1;
   }
 
@@ -1542,7 +1558,11 @@ section {
 
   .hero-first,
   .hero-last {
-    font-size: clamp(1.6rem, 9vw, 2.8rem); /* ridotto ulteriormente su telefono */
+    font-size: clamp(
+      1.6rem,
+      9vw,
+      2.8rem
+    ); /* ridotto ulteriormente su telefono */
   }
 
   .hero-top-row {
