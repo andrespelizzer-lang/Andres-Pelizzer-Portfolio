@@ -830,16 +830,25 @@ section {
   align-items: start;
 }
 
+/* frame nella colonna DESTRA — primo nel DOM, secondo visivamente.
+   grid-column: 2 lo sposta a destra senza cambiare l'ordine nel DOM:
+   l'ordine DOM è importante perché position:sticky funziona meglio
+   quando l'elemento viene prima del contenuto scorrevole. */
 .projects-frame {
+  grid-column: 2;
+  position: -webkit-sticky;
   position: sticky;
   top: 8rem;
   align-self: start;
 }
 
+/* content nella colonna SINISTRA — secondo nel DOM, primo visivamente */
 .projects-content {
+  grid-column: 1;
   display: flex;
   flex-direction: column;
-  gap: 8rem;
+  gap: 6rem;
+  min-width: 0; /* previene overflow del testo nella colonna */
 }
 
 /* immagine inline mobile — nascosta su desktop */

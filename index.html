@@ -403,7 +403,8 @@
         </div>
 
         <div class="projects-layout">
-          <!-- COLONNA SINISTRA: browser sticky (visibile solo desktop) -->
+          <!-- browser sticky — PRIMO nel DOM per far funzionare position:sticky in grid.
+               Viene spostato visivamente nella colonna destra via grid-column in CSS. -->
           <div class="projects-frame">
             <div class="browser">
               <div class="browser-bar">
@@ -424,7 +425,7 @@
             </div>
           </div>
 
-          <!-- COLONNA DESTRA: 4 progetti reali -->
+          <!-- lista progetti — SECONDA nel DOM, spostata visivamente a sinistra via grid-column -->
           <div class="projects-content">
             <!-- PROGETTO 1 — Diventa -->
             <article
