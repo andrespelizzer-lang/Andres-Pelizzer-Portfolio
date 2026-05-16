@@ -1,77 +1,78 @@
 # Portfolio — Andres Pelizzer
 
-## Contesto del progetto
+## Project context
 
-Questo è il portfolio personale di Andres Pelizzer, studente del primo anno
-del percorso ITS Web Stack Full Developer presso ITS Digital Academy Mario Volpato
-(San Donà di Piave). Nato il 25/11/2006, abita a Monastier di Treviso (TV).
+Personal portfolio for Andres Pelizzer, first-year student in the ITS Web Stack
+Full Developer program at ITS Digital Academy Mario Volpato (San Donà di Piave).
+Born 25/11/2006, lives in Monastier di Treviso (TV).
 
-Stage in arrivo a **Stealth S.R.L.** di Villorba a **inizio giugno 2026**.
+Upcoming internship at **MTS Informatica** (Treviso area) — likely starting **end of May / early June 2026**.
+Stack at MTS: Angular, .NET, .NET MAUI.
 
-Il sito serve a presentarsi per lo stage e per opportunità future.
-**Deadline interna: metà maggio 2026.**
+The site's purpose is to present himself for the internship and future opportunities.
+**Internal deadline: mid-May 2026.**
 
-## Stack tecnologico
+## Tech stack
 
-- **Frontend puro**: HTML5, CSS3, JavaScript vanilla
-- **Nessun framework**: niente React, Vue, Tailwind, Bootstrap, jQuery
-- **Nessun build step**: niente Webpack, Vite, npm install
-- **Font**: Syne (titoli) + DM Mono (body) da Google Fonts
-- **Deploy**: GitHub + (in futuro) GitHub Pages o Vercel
+- **Pure frontend**: HTML5, CSS3, vanilla JavaScript
+- **No frameworks**: no React, Vue, Tailwind, Bootstrap, jQuery
+- **No build step**: no Webpack, Vite, npm install
+- **Fonts**: Syne (headings) + DM Mono (body) via Google Fonts
+- **Deploy**: GitHub + (later) GitHub Pages or Vercel
 
-## File del progetto
+## Project files
 
-- `index.html` — struttura completa, single page
-- `style.css` — tutti gli stili
-- `script.js` — tutto il JS in 7 blocchi numerati
-- `CLAUDE.md` — questo file
+- `index.html` — full structure, single page
+- `style.css` — all styles
+- `script.js` — all JS in numbered blocks
+- `CLAUDE.md` — this file
 - `.git/` — repository
-- `README.md` — descrizione pubblica
+- `README.md` — public description
 
-### Bio / Presentazione
+### Bio / Presentation
 
-> Studente del primo anno del percorso ITS Web Stack Full Developer presso ITS Digital
-> Academy Mario Volpato. Appassionato di sviluppo full-stack: front-end con HTML, CSS e
-> JavaScript (attenzione al design e UX), back-end con Node.js, Express e MySQL.
-> Interesse per l'integrazione dell'AI nelle applicazioni web.
+> First-year student in the ITS Web Stack Full Developer program at ITS Digital
+> Academy Mario Volpato. Passionate about full-stack development: front-end with
+> HTML, CSS, and JavaScript (with attention to design and UX), back-end with
+> Node.js, Express, and MySQL. Interested in integrating AI into web applications.
 >
-> Punti di forza: curiosità tecnica, cura del dettaglio nel design e nel codice,
-> capacità di apprendimento autonomo.
+> Strengths: technical curiosity, attention to detail in design and code,
+> ability to learn independently.
 
-### Progetti da mostrare nel portfolio
+### Projects to showcase
 
-| Progetto                 | Periodo         | Descrizione                                                                                                             |
-| ------------------------ | --------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **Mini JSONPlaceholder** | apr 2026 – oggi | REST API completa in Node.js/Express. CRUD con Express Router, route annidate, test con Thunder Client.                 |
-| **Portfolio personale**  | mar 2026 – oggi | Sito in vanilla HTML/CSS/JS. Dark minimal, accento lime, Syne + DM Mono, CSS keyframes, responsive, Git/GitHub.         |
-| **Sito "Diventa"**       | feb–mar 2026    | Sito istituzionale multi-pagina da design Figma. Flexbox + Grid, media queries.                                         |
-| **GameHub**              | dic 2025 – oggi | App desktop Java (Swing) per gestione tornei e-sports. Architettura a livelli (UI / logica / dati). Progetto di gruppo. |
+| Project                  | Period         | Description                                                                                                           |
+| ------------------------ | -------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Mini JSONPlaceholder** | Apr 2026 – now | Full REST API in Node.js/Express. CRUD with Express Router, nested routes, tested with Thunder Client.                |
+| **Personal portfolio**   | Mar 2026 – now | Vanilla HTML/CSS/JS site. Dark minimal, lime accent, Syne + DM Mono, CSS keyframes, responsive, Git/GitHub.           |
+| **"Diventa" website**    | Feb–Mar 2026   | Multi-page institutional site from Figma design. Flexbox + Grid, media queries.                                       |
+| **GameHub**              | Dec 2025 – now | Java desktop app (Swing) for e-sports tournament management. Layered architecture (UI / logic / data). Group project. |
 
-### Skills tecniche (verificate dal corso)
+### Technical skills (verified through coursework)
 
 **Front-end**
 
-- HTML5 semantico
-- CSS3: Flexbox, Grid, responsive design, media queries, animazioni keyframes
-- JavaScript: DOM manipulation, eventi, async/await, fetch API
-- Vue.js (base)
+- Semantic HTML5
+- CSS3: Flexbox, Grid, responsive design, media queries, keyframe animations
+- JavaScript: DOM manipulation, events, async/await, fetch API
+- Vue.js (basics)
 
 **Back-end**
 
 - Node.js
-- Express.js: routing, middleware, REST API design, autenticazione JWT
+- Express.js: routing, middleware, REST API design, JWT authentication
 
 **Database**
 
-- MySQL: schema, foreign key, relazioni, normalizzazione (1NF–3NF)
+- MySQL: schema design, foreign keys, relationships, normalization (1NF–3NF)
 - SQLite
 
-**Altri linguaggi / paradigmi**
+**Other languages / paradigms**
 
-- Python: OOP, Standard Library, gestione file
-- Java: OOP, Swing, architettura a livelli
+- Python: OOP, Standard Library, file handling
+- Java: OOP, Swing, layered architecture
 
-**Strumenti**
+**Tools**
 
 - Git / GitHub
 - Docker / Docker Compose
@@ -79,40 +80,38 @@ Il sito serve a presentarsi per lo stage e per opportunità future.
 - Figma
 - Power BI
 
-**Lingue**
+**Languages**
 
-- Italiano (madrelingua)
-- Inglese (B2)
+- Italian (native)
+- English (B2)
 
-### Interessi (da usare nella sezione About)
+### Interests (for the About section)
 
-- Tennis (pratica regolare + analisi statistica)
-- Intelligenza artificiale e funzionamento "dietro le quinte" di hardware e software
+- Tennis (regular practice + statistical analysis)
+- Artificial intelligence and understanding how hardware/software work "behind the scenes"
 
 ---
 
-## Convenzioni
+## Conventions
 
-### Lingua
+### Language
 
-- **Commenti nel codice**: italiano
-- **Contenuto del sito**: inglese
-- **Comunicazione con Andres**: italiano
+- **Code comments**: Italian (these are study notes — do not remove existing ones)
+- **Website content**: English
+- **Communication with Andres**: Italian
 
-### Stile codice
+### Code style
 
-- **Indentazione**: 2 spazi
-- **CSS**: variabili `--nome` in `:root`, mai colori hardcodati
-- **CSS**: BEM-like ma rilassato (`.about-quote`, `.project-card`, `.skill-dot`)
-- **JS**: `const` di default, `let` solo se la variabile cambia, mai `var`
-- **JS**: arrow function `() => {}` preferite quando non serve `this`
-- **HTML**: semantico (`<section>`, `<article>`, `<button>`, `<nav>`, non `<div>` ovunque)
+- **Indentation**: 2 spaces
+- **CSS**: variables `--name` in `:root`, never hardcoded colors
+- **CSS**: BEM-like but relaxed (`.about-quote`, `.project-card`, `.skill-dot`)
+- **JS**: `const` by default, `let` only when reassignment is needed, never `var`
+- **JS**: arrow functions `() => {}` preferred when `this` isn't needed
+- **HTML**: semantic (`<section>`, `<article>`, `<button>`, `<nav>`, not `<div>` everywhere)
 
-### Pattern già stabiliti
+### Design system
 
-Fai come meglio credi tu
-
-### Palette
+**Palette**
 
 - `--bg: #080808`
 - `--text: #ebebeb`
@@ -120,130 +119,180 @@ Fai come meglio credi tu
 - `--dim: #1e1e1e`
 - `--accent: #c8ff00`
 
----
+**Fonts**
 
-## Cose da NON fare
+- Headings: Syne (Google Fonts)
+- Body / mono: DM Mono (Google Fonts)
 
-- Non aggiungere dipendenze (no npm, no librerie esterne)
-- Non riscrivere file esistenti senza prima mostrarmi il piano
-- Non cambiare la palette o i font senza chiedere
-- Non usare `localStorage` o `sessionStorage`
-- Non rimuovere commenti italiani esistenti — sono lì per studio
+**Visual identity**
 
----
+- Logo: "AP" monogram where the tennis racket forms both letters — the handle
+  is the left leg of the A, the racket head (oval with strings) becomes the P.
+  Lime green (#c8ff00) racket on white letters, or all-lime variant.
+  The logo PNG file (`logo.png`) is in the project root, with transparent background.
+  In the nav: logo mark + "andres pelizzer" text next to it (or below, whichever fits).
+- Recurring elements (used as separators, hover accents, backgrounds, buttons):
+  1. **Ball trajectory**: dashed curved lines with dot endpoints — like a ball
+     flight path tracked by a system. Used as section separators.
+  2. **Ball seam curve**: the S-shaped curve from a tennis ball surface — used
+     as a graphic accent on hover states, card borders, decorative touches.
+  3. **Court lines**: thin straight lines reminiscent of tennis court markings —
+     used for layout structure, grid lines, subtle background patterns.
+  4. **Gradient/texture**: lime-to-transparent gradients and dot patterns for
+     depth and movement — used in backgrounds and section transitions.
+- Aesthetic: dark minimal, high contrast, lime accent on near-black
 
-## Modalità di lavoro con Andres
+**Navigation**
 
-### Livello di autonomia
+- Sticky: the nav must remain fixed at the top at all times (never hides on scroll)
+- Solid background: `--bg` (#080808) so content scrolls behind/under the nav
+- Same behavior as christiancolonna.com — always visible, opaque, content disappears under it
 
-Andres mi ha dato livello "professionista junior":
+### Comment style
 
-- Posso scrivere codice direttamente — non devo dargli solo hint
-- Devo SEMPRE spiegare il piano PRIMA di scrivere
-- Devo SEMPRE spiegare le scelte tecniche fatte DOPO aver scritto
-- Lui rivede tutto e può chiedere modifiche
-
-### Workflow per ogni task
-
-1. **Riformulo** il task con parole mie per essere sicuro di aver capito
-2. **Espongo il piano** in 2-5 punti numerati
-3. **Aspetto OK** prima di scrivere codice (o "procedi" se è banale)
-4. **Scrivo** il codice
-5. **Spiego le scelte** — perché ho scelto X invece di Y, eventuali trade-off
-
-### Spiegazioni tecniche
-
-Andres sta imparando, quindi:
-
-- Quando uso una proprietà CSS o un metodo JS che non gli ho ancora spiegato,
-  aggiungo un commento inline che lo spiega
-- Se faccio qualcosa di "intermedio/avanzato" (es: IntersectionObserver,
-  cubic-bezier, regex), do una mini-lezione di 3-4 righe nel commento
-- Italiano sempre. Se non sa una parola tecnica, la spiego.
-
-### Stile dei commenti
-
-Stile usato finora — da mantenere:
+Maintain this established pattern:
 
 ```css
 /* ════════════════════════════════════════════
-   NOME SEZIONE — descrizione breve di cosa fa.
-   Eventuali note tecniche su trucchi o pattern usati.
+   SECTION NAME — brief description of what it does.
+   Optional technical notes about tricks or patterns used.
    ════════════════════════════════════════════ */
 
-.classe {
-  proprietà: valore; /* spiegazione del perché */
+.class {
+  property: value; /* explanation of why */
 }
 ```
 
 ```javascript
 /* ════════════════════════════════════════════
-   N. NOME BLOCCO
+   N. BLOCK NAME
 
-   Cosa fa visivamente:
+   What it does visually:
    ...
 
-   Perché serve:
+   Why it's needed:
    ...
 
-   Tecnica usata:
+   Technique used:
    ...
    ════════════════════════════════════════════ */
 
-const x = ...; // commento inline che spiega il perché
+const x = ...; // inline comment explaining why
 ```
 
 ---
 
-## Comandi utili
+## Do NOT
+
+- Add dependencies (no npm, no external libraries)
+- Rewrite existing files without showing the plan first
+- Change the palette or fonts without asking
+- Use `localStorage` or `sessionStorage`
+- Remove existing Italian comments — they're there for learning
+
+---
+
+## Working with Andres
+
+### Autonomy level
+
+Andres has set the level to "junior professional":
+
+- You can write code directly — no need to give hints only
+- You MUST ALWAYS explain the plan BEFORE writing
+- You MUST ALWAYS explain technical choices AFTER writing
+- He reviews everything and can request changes
+
+### Workflow for each task
+
+1. **Restate** the task in your own words to confirm understanding
+2. **Present the plan** in 2–5 numbered points
+3. **Wait for OK** before writing code (or "go ahead" if trivial)
+4. **Write** the code
+5. **Explain choices** — why X instead of Y, any trade-offs
+
+### Technical explanations
+
+Andres is learning, so:
+
+- When using a CSS property or JS method he hasn't seen before,
+  add an inline comment explaining it
+- For "intermediate/advanced" concepts (e.g. IntersectionObserver,
+  cubic-bezier, regex), add a 3–4 line mini-lesson in the comment
+- Always in Italian. If he doesn't know a technical term, explain it.
+
+---
+
+## Current project state
+
+### Completed sections
+
+- [x] 001 — Hero (live system bar, parallax, curtain reveal)
+  - Responsive: done and working well
+  - Logo: replace `$` with the AP monogram (racket-based, see Visual Identity).
+    The logo is `logo.png` (transparent background) in the project root. In the nav,
+    show the logo image + "andres pelizzer" text.
+  - Nav: make it sticky (position: fixed, top: 0, z-index high), solid --bg
+    background, content scrolls under it. Never auto-hide on scroll.
+    Add appropriate padding-top to the hero section to compensate for fixed nav height.
+  - Mobile hamburger menu: needs complete redesign (fullscreen overlay, large
+    Syne links numbered 001–004, lime accents, "Open to work" status at bottom,
+    social links GH/LI — remove "Andres Pelizzer 2026" text)
+  - Typography: slightly increase font sizes of smaller elements (section label,
+    status bar, bottom bar, CTA buttons) across all breakpoints — phone, tablet,
+    and desktop. They currently feel a bit too small. Don't touch the main
+    "ANDRES PELIZZER" heading, that's fine.
+- [x] 002 — About (tooltip, Now card, stat cards)
+  - Has a sticky element similar to section 003 — needs differentiation
+  - Content still generic — update with real CV text
+- [x] 003 — Projects (card layout)
+  - Structure is decent, may need refinements
+  - Images are Unsplash placeholders — replace with real project screenshots
+- [x] 004 — Skills (3 infinite marquees)
+  - Andres doesn't like this section — redesign completely, use your judgment
+- [ ] 005 — Contact (to build from scratch, free creative direction)
+
+### Known bugs / to review
+
+- General responsiveness to verify across all breakpoints
+- Project images are placeholder Unsplash, need real screenshots
+- Missing Contact section
+- About content still generic
+
+### Future wishes
+
+- Recurring visual elements are now defined (see Visual Identity section):
+  ball trajectory separators, seam curves as accents, court line patterns,
+  lime gradient textures. Implement these progressively across sections
+  as they are built or revised. Reference: the brand board image provided
+  by Andres (AP monogram + elements).
+
+---
+
+## Resources
+
+- Design reference: Elan 42 (quality level to aim for)
+- Peer comparison: christiancolonna.com
+- GitHub repo: https://github.com/andrespelizzer-lang/Andres-Pelizzer-Portfolio.git
+
+---
+
+## Git commands
 
 ```bash
-# vedere lo stato del repo
+# check repo status
 git status
 
-# vedere le modifiche fatte
+# see changes
 git diff
 
-# salvare e pushare
+# save and push
 git add .
-git commit -m "descrizione"
+git commit -m "description"
 git push
 
-# scaricare modifiche da altro PC
+# pull changes from another PC
 git pull
 ```
 
----
-
-Appena io ti dico pusha, tu pushi sul mio git hub.
-
-## Stato attuale del progetto
-
-### Sezioni completate
-
-- [x] 001 — Hero (con live system, parallax, curtain reveal). Questa sezione va bene cosi. Forse la cambieremo in futuro con un leitmotiv personale. Però è la migliore per me . Rendila responsiva mi raccomando. Ovviamente tipo se provi a renderla responsiva e si bugga, cambia te qualcosa , ti lascio il permesso basta che venga bene bene e bello da vedere.
-- [x] 002 — About (in revisione: tooltip C, Now card, stat cards cliccabili). Questo qua devi gestire un po meglio dato che c'è un riquadro sticky come la terza sezione quindi magari cambia qualcosa. Mi racocomando cambia bene e se è necessario cambia anche altre cose basta che si distingua dalla terza sezione manetendo comunque il filo logico.
-- [x] 003 — Projects . ovviamente da migliorare e da mettere i progetti veri . Però la struttura non è male, forse cambia qualcosa, ma vedi tu cosa ritieni necessario.
-- [x] 004 — Skills (3 marquee infiniti). Questa invece proprio non mi piace è da cambgiare tutta e falla te a tuo piacimento.
-- [ ] 005 — Contact (da fare), fai come vuoi .
-
-### Bug noti / da rivedere
-
-- Responsività generale da verificare su tutti i breakpoint
-- Le immagini dei progetti sono placeholder Unsplash, da sostituire con screenshot reali
-- Manca sezione Contact
-- Contenuto About ancora generico — aggiornare con testi reali dal CV
-
-### Cose che vorrei in futuro
-
-- Un "leitmotiv personale" tipo il reattore di Christian Colonna —
-  qualcosa che mi rappresenti e torni in tutto il sito
-  (da decidere alla fine)
-
----
-
-## Risorse
-
-- Design reference: Elan 42 (livello qualità da puntare)
-- Sito compagno per confronto: christiancolonna.com
-- Repository GitHub: [https://github.com/andrespelizzer-lang/Andres-Pelizzer-Portfolio.git](https://github.com/andrespelizzer-lang/Andres-Pelizzer-Portfolio.git)
+When told to push, push to the GitHub repo.
