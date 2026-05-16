@@ -85,34 +85,12 @@ setInterval(() => {
 }, 1800);
 
 /* ════════════════════════════════════════════════════════════════
-   3. NAV HIDE ON SCROLL
-   Nasconde la nav scrollando giù, la mostra scrollando su.
-   Pattern usato da Apple, Stripe, GitHub.
+   3. RIFERIMENTO ALLA NAV
+   La nav è sempre visibile: sfondo solido, non si nasconde mai.
+   Il riferimento viene usato nel blocco 5 per gestire l'overlay mobile.
 ═══════════════════════════════════════════════════════════════════ */
 
-const nav = document.querySelector("nav");
-let lastY = 0; /* ultima posizione di scroll */
-
-window.addEventListener(
-  "scroll",
-  () => {
-    const y = window.scrollY;
-
-    /* y > lastY  → posizione attuale > ultima = stiamo andando GIÙ
-       y > 80     → siamo abbastanza lontani dall'inizio
-       Entrambi veri → nascondi nav */
-    if (y > lastY && y > 80) {
-      nav.classList.add("hidden");
-    } else {
-      nav.classList.remove("hidden");
-    }
-
-    lastY = y; /* aggiorna per il prossimo confronto */
-  },
-  /* { passive: true }: dice al browser che non bloccheremo lo scroll.
-     Permette ottimizzazioni di performance — scroll più fluido. */
-  { passive: true },
-);
+const nav = document.querySelector("nav"); /* usato nel blocco 5 */
 
 /* ════════════════════════════════════════════════════════════════
    4. PARALLAX + MOUSE MOVEMENT SUL NOME
@@ -164,42 +142,51 @@ document.addEventListener("mousemove", (e) => {
 });
 
 /* ════════════════════════════════════════════════════════════════
-   5. HAMBURGER MENU
-   Apertura/chiusura menu mobile. Tre elementi sincronizzati:
-   l'hamburger diventa X, il pannello scivola dentro, il backdrop appare.
+   5. HAMBURGER MENU — overlay fullscreen
+   La nav rimane visibile sopra l'overlay (z-index: 1060 via .menu-open).
+   I link appaiono uno a uno con uno stagger animato all'apertura.
 ═══════════════════════════════════════════════════════════════════ */
 
 const hamburger = document.getElementById("hamburger");
 const mobileMenu = document.getElementById("mobileMenu");
-const backdrop = document.getElementById("mobileBackdrop");
+const mobileLinks = mobileMenu.querySelectorAll(".mobile-link");
 
 function openMenu() {
   hamburger.classList.add("open");
   mobileMenu.classList.add("open");
-  backdrop.classList.add("show");
-  /* Blocca lo scroll della pagina sotto: il menu è "modale". */
+  nav.classList.add("menu-open"); /* porta la nav sopra l'overlay */
   document.body.style.overflow = "hidden";
+
+  /* stagger: ogni link appare con un ritardo crescente.
+     forEach riceve (elemento, indice) → i = 0,1,2,3.
+     150ms base + 80ms per link = 150, 230, 310, 390ms */
+  mobileLinks.forEach((link, i) => {
+    setTimeout(() => link.classList.add("visible"), 150 + i * 80);
+  });
 }
 
 function closeMenu() {
   hamburger.classList.remove("open");
   mobileMenu.classList.remove("open");
-  backdrop.classList.remove("show");
-  /* Stringa vuota = ripristina valore default → scroll attivo */
+  nav.classList.remove("menu-open");
   document.body.style.overflow = "";
+
+  /* reset: i link tornano invisible per la prossima apertura */
+  mobileLinks.forEach((link) => link.classList.remove("visible"));
 }
 
-/* Click sull'hamburger: toggle.
-   L'operatore ternario "condizione ? a : b" è un if/else compresso. */
+/* Click sull'hamburger: toggle (operatore ternario = if/else compresso) */
 hamburger.addEventListener("click", () => {
   mobileMenu.classList.contains("open") ? closeMenu() : openMenu();
 });
 
-/* Click sul backdrop scuro → chiude */
-backdrop.addEventListener("click", closeMenu);
+/* Tasto Escape → chiude il menu se aperto */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && mobileMenu.classList.contains("open")) closeMenu();
+});
 
-/* Click su un link del menu → chiude (così naviga senza il menu sopra) */
-document.querySelectorAll(".mobile-link").forEach((link) => {
+/* Click su un link → chiude (così la pagina naviga senza l'overlay sopra) */
+mobileLinks.forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
 

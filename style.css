@@ -87,7 +87,8 @@ body::before {
 }
 
 /* ════════════════════════════════════════════
-   NAV — fissa in alto, scivola via scrollando giù
+   NAV — fissa in alto, sempre visibile.
+   Sfondo solido: il contenuto scorre sotto.
 ══════════════════════════════════════════════ */
 nav {
   position: fixed;
@@ -99,13 +100,14 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--bg); /* sfondo opaco: il contenuto scompare sotto la nav */
   opacity: 0;
   animation: fadeIn 0.6s ease 1.9s forwards;
-  transition: transform 0.35s ease;
 }
 
-nav.hidden {
-  transform: translateY(-100%);
+/* quando l'overlay mobile è aperto, la nav sale sopra l'overlay (z-index: 1050) */
+nav.menu-open {
+  z-index: 1060;
 }
 
 /* logo: contiene il LEITMOTIV — il prompt $ */
@@ -131,6 +133,12 @@ nav.hidden {
 
 .nav-logo:hover {
   color: var(--accent);
+}
+
+.nav-logo-img {
+  height: 26px;
+  width: auto;
+  display: block; /* rimuove il piccolo spazio inline che i browser aggiungono alle img */
 }
 
 .nav-links {
@@ -186,63 +194,185 @@ nav.hidden {
 }
 
 /* ════════════════════════════════════════════
-   MOBILE MENU — pannello che scivola da destra
+   MOBILE MENU — overlay fullscreen
+   Copre tutto lo schermo. La nav (z-index: 1060 via .menu-open)
+   resta visibile sopra, così l'hamburger/X rimane cliccabile.
 ══════════════════════════════════════════════ */
 .mobile-menu {
-  display: none;
+  display: none; /* desktop: completamente nascosto */
   position: fixed;
-  top: 0;
-  right: 0;
-  width: min(75vw, 280px);
-  height: 100%;
+  inset: 0; /* shorthand per top:0 right:0 bottom:0 left:0 */
   z-index: 1050;
-  background: #0d0d0d;
-  border-left: 1px solid var(--dim);
-  transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg);
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none; /* non intercetta click quando chiuso */
+  transition: opacity 0.35s ease;
 }
 
 .mobile-menu.open {
-  transform: translateX(0);
+  opacity: 1;
+  pointer-events: all;
 }
 
+/* linea orizzontale — richiama le linee del campo da tennis */
+.mm-court-line-h {
+  position: absolute;
+  top: 42%;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  height: 1px;
+  background: var(--dim);
+  pointer-events: none;
+}
+
+/* SVG traiettoria palla in alto a destra — dashed lime curve */
+.mm-trajectory {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 130px;
+  height: 220px;
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+/* gradiente lime radiale nell'angolo in basso a destra — effetto profondità */
+.mobile-menu::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle at bottom right,
+    rgba(200, 255, 0, 0.07),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* wrapper del contenuto, sopra gli elementi decorativi */
 .mobile-menu-inner {
+  position: relative;
+  z-index: 1; /* sopra .mm-court-line-h e .mm-trajectory */
   display: flex;
   flex-direction: column;
-  padding: 5rem 2rem 3rem;
   height: 100%;
+  padding: 5.5rem var(--pad-x) 3rem; /* top: clearance sotto la fixed nav */
 }
 
 .mobile-nav-links {
+  flex: 1; /* occupa tutto lo spazio tra top-padding e footer */
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  flex: 1;
+  justify-content: center; /* centra i link verticalmente */
 }
 
+/* ── singolo link: griglia a 3 colonne (numero | nome | freccia) ── */
 .mobile-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.3rem 0;
+  border-bottom: 1px solid var(--dim);
+  text-decoration: none;
+  opacity: 0; /* parte invisible — JS aggiunge .visible con stagger */
+  transform: translateX(-12px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.mobile-link:first-child {
+  border-top: 1px solid var(--dim);
+}
+
+/* stagger: classe aggiunta da JS con setTimeout */
+.mobile-link.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* numero identificativo del link (001, 002, …) */
+.link-num {
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+/* nome della sezione — grande, Syne 800 */
+.link-name {
   font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: clamp(1.5rem, 6vw, 2rem);
-  color: var(--muted);
-  text-decoration: none;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid var(--dim);
-  transition:
-    color 0.2s,
-    padding-left 0.2s;
-}
-
-.mobile-link:hover {
+  font-size: clamp(2rem, 8.5vw, 3rem);
   color: var(--text);
-  padding-left: 6px;
+  line-height: 1;
+  transition: color 0.2s ease;
 }
 
+/* freccia → a destra */
+.link-arr {
+  font-size: 1.3rem;
+  color: var(--muted);
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mobile-link:hover .link-name {
+  color: var(--accent);
+}
+
+.mobile-link:hover .link-arr {
+  color: var(--accent);
+  transform: translateX(5px);
+}
+
+/* ── FOOTER DEL MENU — status + social ── */
 .mobile-menu-footer {
-  font-size: 0.55rem;
-  letter-spacing: 0.18em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--dim);
+}
+
+/* indicatore "Open to work" con status dot */
+.mm-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "DM Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
   color: var(--muted);
   text-transform: uppercase;
+}
+
+/* link sociali GH / LI */
+.mm-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.mm-social-link {
+  font-family: "DM Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.mm-social-link:hover {
+  color: var(--accent);
 }
 
 .mobile-backdrop {
@@ -399,7 +529,7 @@ section {
 
 .hero-index,
 .hero-status {
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   letter-spacing: 0.15em;
   color: var(--muted);
   text-transform: uppercase;
@@ -499,14 +629,14 @@ section {
 }
 
 .sys-label {
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   letter-spacing: 0.2em;
   color: var(--accent);
   text-transform: uppercase;
 }
 
 .sys-value {
-  font-size: 0.62rem;
+  font-size: 0.74rem;
   letter-spacing: 0.1em;
   color: var(--text);
 }
@@ -529,7 +659,7 @@ section {
 
 .hero-role,
 .hero-location {
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
@@ -548,11 +678,11 @@ section {
 
 .btn {
   font-family: "DM Mono", monospace;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 0.7rem 1.4rem;
+  padding: 0.75rem 1.5rem;
   border: 1px solid var(--dim);
   color: var(--muted);
   transition:
@@ -1384,7 +1514,7 @@ section {
     display: flex;
   }
   .mobile-menu {
-    display: block;
+    display: flex; /* flex: serve al layout interno del fullscreen overlay */
   }
   .mobile-backdrop {
     display: block;
