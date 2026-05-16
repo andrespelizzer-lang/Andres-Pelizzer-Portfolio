@@ -190,14 +190,14 @@ nav {
 
 /* ════════════════════════════════════════════
    MOBILE MENU — overlay fullscreen
-   Design minimalista: top bar (replica nav) + link + bottom bar.
-   z-index: 200 → copre la nav (z-index: 100). Nessun decorativo.
+   Layout: top bar 60px (logo + ×) → link area (flex 1) → bottom bar.
+   z-index: 9999 → copre tutto, anche la nav. Niente decorativi.
 ══════════════════════════════════════════════ */
 .mobile-menu {
   display: none; /* desktop: nascosto */
   position: fixed;
   inset: 0;
-  z-index: 200; /* sopra la nav (z-index: 100) */
+  z-index: 9999;
   background: var(--bg);
   flex-direction: column;
   opacity: 0;
@@ -210,16 +210,18 @@ nav {
   pointer-events: all;
 }
 
-/* top bar: identica alla nav in altezza e padding */
+/* TOP BAR — altezza fissa 60px, replica visiva della nav */
 .mm-topbar {
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.4rem var(--pad-x); /* stesso padding della nav */
+  padding: 0 24px;
+  border-bottom: 0.5px solid var(--dim);
   flex-shrink: 0;
 }
 
-/* logo area: logo.png + "Andres Pelizzer" */
+/* logo area: immagine + nome */
 .mm-logo {
   display: flex;
   align-items: center;
@@ -228,7 +230,7 @@ nav {
 }
 
 .mm-logo-img {
-  height: 38px;
+  height: 28px; /* stessa scala della nav desktop */
   width: auto;
   display: block;
 }
@@ -241,54 +243,52 @@ nav {
   letter-spacing: 0.02em;
 }
 
-/* pulsante × di chiusura: cerchio 32px con bordo sottile */
+/* pulsante × — cerchio 32px, × lime 24px centrato */
 .mm-close {
   width: 32px;
   height: 32px;
   border-radius: 50%;
   border: 0.5px solid var(--dim);
   background: none;
-  color: var(--text);
-  font-size: 1.1rem;
+  color: var(--accent);
+  font-size: 24px;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
+  padding: 0;
   transition:
     border-color 0.2s,
-    color 0.2s;
+    transform 0.2s;
 }
 
 .mm-close:hover {
   border-color: var(--accent);
-  color: var(--accent);
+  transform: rotate(90deg);
 }
 
-/* sezione link: occupa tutto lo spazio disponibile */
+/* MIDDLE — area link, occupa lo spazio rimanente. Allineato a SINISTRA. */
 .mm-links {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0 var(--pad-x);
+  padding: 32px 24px;
+  text-align: left;
   overflow-y: auto;
 }
 
-/* singolo link: flex row — numero (DM Mono 11px) + nome (Syne 26px) */
+/* singolo link: numero DM Mono 11px + nome Syne 26px (font-weight 500) */
 .mm-link {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
   padding: 18px 0;
   border-bottom: 0.5px solid rgba(200, 255, 0, 0.06);
   text-decoration: none;
   color: var(--text);
   transition: color 0.2s;
-}
-
-.mm-link:first-child {
-  border-top: 0.5px solid rgba(200, 255, 0, 0.06);
 }
 
 .mm-num {
@@ -303,7 +303,7 @@ nav {
 .mm-name {
   font-family: "Syne", sans-serif;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text);
   transition: color 0.2s;
 }
@@ -313,12 +313,13 @@ nav {
   color: var(--accent);
 }
 
-/* bottom bar: email a sinistra, chip sociali a destra */
+/* BOTTOM — email a sx, chip GH/LI a dx. margin-top: auto la incolla giù. */
 .mm-bottom {
+  margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.2rem var(--pad-x);
+  padding: 20px 24px;
   border-top: 0.5px solid var(--dim);
   flex-shrink: 0;
 }
@@ -335,7 +336,6 @@ nav {
   gap: 0.5rem;
 }
 
-/* chip bordata: GitHub / LinkedIn */
 .mm-chip {
   font-family: "DM Mono", monospace;
   font-size: 10px;
