@@ -87,10 +87,7 @@ setInterval(() => {
 /* ════════════════════════════════════════════════════════════════
    3. RIFERIMENTO ALLA NAV
    La nav è sempre visibile: sfondo solido, non si nasconde mai.
-   Il riferimento viene usato nel blocco 5 per gestire l'overlay mobile.
 ═══════════════════════════════════════════════════════════════════ */
-
-const nav = document.querySelector("nav"); /* usato nel blocco 5 */
 
 /* ════════════════════════════════════════════════════════════════
    4. PARALLAX + MOUSE MOVEMENT SUL NOME
@@ -143,50 +140,45 @@ document.addEventListener("mousemove", (e) => {
 
 /* ════════════════════════════════════════════════════════════════
    5. HAMBURGER MENU — overlay fullscreen
-   La nav rimane visibile sopra l'overlay (z-index: 1060 via .menu-open).
-   I link appaiono uno a uno con uno stagger animato all'apertura.
+   L'overlay ha z-index: 200 e copre completamente la nav (z-index: 100).
+   Il pulsante × nell'overlay chiude il menu.
 ═══════════════════════════════════════════════════════════════════ */
 
 const hamburger = document.getElementById("hamburger");
 const mobileMenu = document.getElementById("mobileMenu");
-const mobileLinks = mobileMenu.querySelectorAll(".mobile-link");
+const mmClose = document.getElementById("mmClose");
+const mmLogoLink = document.getElementById("mmLogoLink");
 
 function openMenu() {
   hamburger.classList.add("open");
   mobileMenu.classList.add("open");
-  nav.classList.add("menu-open"); /* porta la nav sopra l'overlay */
   document.body.style.overflow = "hidden";
-
-  /* stagger: ogni link appare con un ritardo crescente.
-     forEach riceve (elemento, indice) → i = 0,1,2,3.
-     150ms base + 80ms per link = 150, 230, 310, 390ms */
-  mobileLinks.forEach((link, i) => {
-    setTimeout(() => link.classList.add("visible"), 150 + i * 80);
-  });
 }
 
 function closeMenu() {
   hamburger.classList.remove("open");
   mobileMenu.classList.remove("open");
-  nav.classList.remove("menu-open");
   document.body.style.overflow = "";
-
-  /* reset: i link tornano invisible per la prossima apertura */
-  mobileLinks.forEach((link) => link.classList.remove("visible"));
 }
 
-/* Click sull'hamburger: toggle (operatore ternario = if/else compresso) */
+/* hamburger: toggle apri/chiudi */
 hamburger.addEventListener("click", () => {
   mobileMenu.classList.contains("open") ? closeMenu() : openMenu();
 });
 
-/* Tasto Escape → chiude il menu se aperto */
+/* × nell'overlay → chiude */
+mmClose.addEventListener("click", closeMenu);
+
+/* click sul logo nell'overlay → torna all'hero e chiude */
+mmLogoLink.addEventListener("click", closeMenu);
+
+/* Escape → chiude il menu se aperto */
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && mobileMenu.classList.contains("open")) closeMenu();
 });
 
-/* Click su un link → chiude (così la pagina naviga senza l'overlay sopra) */
-mobileLinks.forEach((link) => {
+/* click su un link di navigazione → naviga e chiude l'overlay */
+document.querySelectorAll(".mm-link").forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
 

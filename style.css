@@ -96,18 +96,13 @@ nav {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 2rem var(--pad-x);
+  padding: 1.4rem var(--pad-x);
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: var(--bg); /* sfondo opaco: il contenuto scompare sotto la nav */
   opacity: 0;
   animation: fadeIn 0.6s ease 1.9s forwards;
-}
-
-/* quando l'overlay mobile è aperto, la nav sale sopra l'overlay (z-index: 1050) */
-nav.menu-open {
-  z-index: 1060;
 }
 
 /* logo: contiene il LEITMOTIV — il prompt $ */
@@ -136,7 +131,7 @@ nav.menu-open {
 }
 
 .nav-logo-img {
-  height: 26px;
+  height: 38px;
   width: auto;
   display: block; /* rimuove il piccolo spazio inline che i browser aggiungono alle img */
 }
@@ -195,20 +190,19 @@ nav.menu-open {
 
 /* ════════════════════════════════════════════
    MOBILE MENU — overlay fullscreen
-   Copre tutto lo schermo. La nav (z-index: 1060 via .menu-open)
-   resta visibile sopra, così l'hamburger/X rimane cliccabile.
+   Design minimalista: top bar (replica nav) + link + bottom bar.
+   z-index: 200 → copre la nav (z-index: 100). Nessun decorativo.
 ══════════════════════════════════════════════ */
 .mobile-menu {
-  display: none; /* desktop: completamente nascosto */
+  display: none; /* desktop: nascosto */
   position: fixed;
-  inset: 0; /* shorthand per top:0 right:0 bottom:0 left:0 */
-  z-index: 1050;
+  inset: 0;
+  z-index: 200; /* sopra la nav (z-index: 100) */
   background: var(--bg);
   flex-direction: column;
-  overflow: hidden;
   opacity: 0;
-  pointer-events: none; /* non intercetta click quando chiuso */
-  transition: opacity 0.35s ease;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
 }
 
 .mobile-menu.open {
@@ -216,179 +210,149 @@ nav.menu-open {
   pointer-events: all;
 }
 
-/* linea orizzontale — richiama le linee del campo da tennis */
-.mm-court-line-h {
-  position: absolute;
-  top: 42%;
-  left: var(--pad-x);
-  right: var(--pad-x);
-  height: 1px;
-  background: var(--dim);
-  pointer-events: none;
-}
-
-/* SVG traiettoria palla in alto a destra — dashed lime curve */
-.mm-trajectory {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 130px;
-  height: 220px;
-  opacity: 0.28;
-  pointer-events: none;
-}
-
-/* gradiente lime radiale nell'angolo in basso a destra — effetto profondità */
-.mobile-menu::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(
-    circle at bottom right,
-    rgba(200, 255, 0, 0.07),
-    transparent 70%
-  );
-  pointer-events: none;
-}
-
-/* wrapper del contenuto, sopra gli elementi decorativi */
-.mobile-menu-inner {
-  position: relative;
-  z-index: 1; /* sopra .mm-court-line-h e .mm-trajectory */
+/* top bar: identica alla nav in altezza e padding */
+.mm-topbar {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 5.5rem var(--pad-x) 3rem; /* top: clearance sotto la fixed nav */
-}
-
-.mobile-nav-links {
-  flex: 1; /* occupa tutto lo spazio tra top-padding e footer */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* centra i link verticalmente */
-}
-
-/* ── singolo link: griglia a 3 colonne (numero | nome | freccia) ── */
-.mobile-link {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 1.2rem;
-  padding: 1.3rem 0;
-  border-bottom: 1px solid var(--dim);
-  text-decoration: none;
-  opacity: 0; /* parte invisible — JS aggiunge .visible con stagger */
-  transform: translateX(-12px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-.mobile-link:first-child {
-  border-top: 1px solid var(--dim);
-}
-
-/* stagger: classe aggiunta da JS con setTimeout */
-.mobile-link.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* numero identificativo del link (001, 002, …) */
-.link-num {
-  font-family: "DM Mono", monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.18em;
-  color: var(--accent);
-  text-transform: uppercase;
-}
-
-/* nome della sezione — grande, Syne 800 */
-.link-name {
-  font-family: "Syne", sans-serif;
-  font-weight: 800;
-  font-size: clamp(2rem, 8.5vw, 3rem);
-  color: var(--text);
-  line-height: 1;
-  transition: color 0.2s ease;
-}
-
-/* freccia → a destra */
-.link-arr {
-  font-size: 1.3rem;
-  color: var(--muted);
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.mobile-link:hover .link-name {
-  color: var(--accent);
-}
-
-.mobile-link:hover .link-arr {
-  color: var(--accent);
-  transform: translateX(5px);
-}
-
-/* ── FOOTER DEL MENU — status + social ── */
-.mobile-menu-footer {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-top: 2rem;
-  border-top: 1px solid var(--dim);
+  padding: 1.4rem var(--pad-x); /* stesso padding della nav */
+  flex-shrink: 0;
 }
 
-/* indicatore "Open to work" con status dot */
-.mm-status {
+/* logo area: logo.png + "Andres Pelizzer" */
+.mm-logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: "DM Mono", monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-
-/* link sociali GH / LI */
-.mm-social {
-  display: flex;
-  gap: 1rem;
-}
-
-.mm-social-link {
-  font-family: "DM Mono", monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
   text-decoration: none;
-  transition: color 0.2s;
 }
 
-.mm-social-link:hover {
+.mm-logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.mm-logo-text {
+  font-family: "Syne", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+/* pulsante × di chiusura: cerchio 32px con bordo sottile */
+.mm-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 0.5px solid var(--dim);
+  background: none;
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.mm-close:hover {
+  border-color: var(--accent);
   color: var(--accent);
 }
 
-.mobile-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1040;
-  background: rgba(0, 0, 0, 0.55);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
+/* sezione link: occupa tutto lo spazio disponibile */
+.mm-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--pad-x);
+  overflow-y: auto;
 }
 
-.mobile-backdrop.show {
-  opacity: 1;
-  pointer-events: all;
+/* singolo link: flex row — numero (DM Mono 11px) + nome (Syne 26px) */
+.mm-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 18px 0;
+  border-bottom: 0.5px solid rgba(200, 255, 0, 0.06);
+  text-decoration: none;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.mm-link:first-child {
+  border-top: 0.5px solid rgba(200, 255, 0, 0.06);
+}
+
+.mm-num {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.mm-name {
+  font-family: "Syne", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.mm-link:hover .mm-num,
+.mm-link:hover .mm-name {
+  color: var(--accent);
+}
+
+/* bottom bar: email a sinistra, chip sociali a destra */
+.mm-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem var(--pad-x);
+  border-top: 0.5px solid var(--dim);
+  flex-shrink: 0;
+}
+
+.mm-email {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.mm-chips {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* chip bordata: GitHub / LinkedIn */
+.mm-chip {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 8px;
+  border: 0.5px solid var(--dim);
+  border-radius: 4px;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.mm-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* ════════════════════════════════════════════
@@ -1516,9 +1480,6 @@ section {
   .mobile-menu {
     display: flex; /* flex: serve al layout interno del fullscreen overlay */
   }
-  .mobile-backdrop {
-    display: block;
-  }
 
   /* Hero: min-height auto elimina lo spazio nero che si crea
      quando il nome si rimpicciolisce ma l'hero rimane 100vh */
@@ -1682,7 +1643,7 @@ section {
 ══════════════════════════════════════════════ */
 @media (max-width: 430px) {
   #hero {
-    padding: 5rem 1.4rem 4rem;
+    padding: 7rem 1.4rem 4rem; /* 7rem = 112px: supera l'altezza della nav (≈102px) */
     min-height: auto; /* no spazio nero sotto i bottoni su telefono */
   }
 

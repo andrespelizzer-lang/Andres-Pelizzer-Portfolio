@@ -59,12 +59,10 @@
       content="Portfolio personale. Frontend & backend, vanilla web stack."
     />
 
-    <!-- favicon: l'icona piccola nel tab del browser.
-         emoji come SVG inline → zero richieste HTTP, sempre pronto. -->
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23080808'/%3E%3Ctext x='50' y='68' font-family='monospace' font-size='60' font-weight='bold' fill='%23c8ff00' text-anchor='middle'%3E%24%3C/text%3E%3C/svg%3E"
-    />
+    <!-- favicon: l'icona piccola nel tab del browser e nei risultati Google.
+         Punta a logo.png (monogramma AP con racchetta) nella root del progetto. -->
+    <link rel="icon" href="logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="logo.png" />
 
     <!-- ════════════════════════════════════════════
          SCHEMA.ORG — dati strutturati per Google
@@ -123,7 +121,7 @@
       <a href="#hero" class="nav-logo">
         <!-- Logo AP: monogramma con racchetta da tennis (logo.png).
              Sostituisce il prompt $ come marchio visivo principale. -->
-        <img src="logo.png" alt="AP" class="nav-logo-img"> andres
+        <img src="logo.png" alt="AP" class="nav-logo-img" /> Andres Pelizzer
       </a>
 
       <ul class="nav-links">
@@ -141,53 +139,58 @@
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
-      <!-- linea orizzontale decorativa — richiama le linee del campo da tennis -->
-      <div class="mm-court-line-h" aria-hidden="true"></div>
+      <!-- top bar: stessa altezza e padding della nav -->
+      <div class="mm-topbar">
+        <a href="#hero" class="mm-logo" id="mmLogoLink">
+          <img src="logo.png" alt="AP" class="mm-logo-img" />
+          <span class="mm-logo-text">Andres Pelizzer</span>
+        </a>
+        <button class="mm-close" id="mmClose" aria-label="Chiudi menu"
+          >×</button
+        >
+      </div>
 
-      <!-- traiettoria della palla: curva tratteggiata lime con punti terminali -->
-      <svg class="mm-trajectory" aria-hidden="true" viewBox="0 0 130 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M125,10 C70,60 55,140 8,212" stroke="#c8ff00" stroke-width="1.4" stroke-dasharray="5 7"/>
-        <circle cx="125" cy="10" r="3" fill="#c8ff00"/>
-        <circle cx="8" cy="212" r="3" fill="#c8ff00"/>
-      </svg>
+      <!-- link di navigazione: numero + nome sezione -->
+      <nav class="mm-links">
+        <a href="#about" class="mm-link">
+          <span class="mm-num">001</span>
+          <span class="mm-name">About</span>
+        </a>
+        <a href="#projects" class="mm-link">
+          <span class="mm-num">002</span>
+          <span class="mm-name">Work</span>
+        </a>
+        <a href="#skills" class="mm-link">
+          <span class="mm-num">003</span>
+          <span class="mm-name">Skills</span>
+        </a>
+        <a href="#contact" class="mm-link">
+          <span class="mm-num">004</span>
+          <span class="mm-name">Contact</span>
+        </a>
+      </nav>
 
-      <div class="mobile-menu-inner">
-        <nav class="mobile-nav-links">
-          <a href="#about" class="mobile-link">
-            <span class="link-num">001</span>
-            <span class="link-name">About</span>
-            <span class="link-arr">→</span>
-          </a>
-          <a href="#projects" class="mobile-link">
-            <span class="link-num">002</span>
-            <span class="link-name">Work</span>
-            <span class="link-arr">→</span>
-          </a>
-          <a href="#skills" class="mobile-link">
-            <span class="link-num">003</span>
-            <span class="link-name">Skills</span>
-            <span class="link-arr">→</span>
-          </a>
-          <a href="#contact" class="mobile-link">
-            <span class="link-num">004</span>
-            <span class="link-name">Contact</span>
-            <span class="link-arr">→</span>
-          </a>
-        </nav>
-        <div class="mobile-menu-footer">
-          <div class="mm-status">
-            <span class="status-dot"></span>
-            Open to work
-          </div>
-          <div class="mm-social">
-            <a href="https://github.com/andrespelizzer-lang" target="_blank" rel="noopener noreferrer" class="mm-social-link">GH</a>
-            <a href="https://linkedin.com/in/andres-pelizzer" target="_blank" rel="noopener noreferrer" class="mm-social-link">LI</a>
-          </div>
+      <!-- bottom bar: email + chip GitHub / LinkedIn -->
+      <div class="mm-bottom">
+        <span class="mm-email">andrespelizzer@gmail.com</span>
+        <div class="mm-chips">
+          <a
+            href="https://github.com/andrespelizzer-lang"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mm-chip"
+            >GitHub</a
+          >
+          <a
+            href="https://linkedin.com/in/andres-pelizzer"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mm-chip"
+            >LinkedIn</a
+          >
         </div>
       </div>
     </div>
-
-    <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
     <!-- ════════════════════════════════════════════
          HERO — prima sezione (id="hero")
