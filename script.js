@@ -1,63 +1,34 @@
 /* ══════════════════════════════════════════════════════════════════
    SCRIPT.JS — Tutto il JavaScript del portfolio
 
-   Questo file contiene 8 blocchi indipendenti, uno per ogni
-   "comportamento dinamico" del sito. Ogni blocco è autonomo —
-   se ne togli uno, gli altri continuano a funzionare.
-
-   I 8 blocchi:
-   1. Uptime counter      → conta da quanto è aperta la pagina
-   2. Stack cycle         → cicla tecnologie nel pannello live system
-   3. Nav hide on scroll  → nasconde la nav scrollando giù
-   4. Parallax + mouse    → fa muovere il nome ANDRES PELIZZER
-   5. Hamburger menu      → apertura/chiusura menu mobile
-   6. Reveal on scroll    → fa apparire elementi mentre scrolli
-   7. Project switching   → cambia immagine browser nei projects
-   8. Stat cards toggle   → espande/chiude le 3 card About al click
-
-   Lo script è caricato in fondo al <body>, NON nell'<head>.
-   Importante: se fosse nell'<head> verrebbe eseguito PRIMA che
-   gli elementi HTML esistano, e tutti i getElementById sarebbero null.
+   Blocchi:
+   1. Uptime counter
+   2. Stack cycle
+   3. Nav (sempre visibile)
+   4. Parallax + mouse
+   5. Hamburger menu (FIXATO: usa #mmClose)
+   6. Reveal on scroll
+   7. Project switching + carousel
+   8. Stat cards toggle
 ══════════════════════════════════════════════════════════════════ */
 
 /* ════════════════════════════════════════════════════════════════
    1. UPTIME COUNTER
-   Mostra ore:minuti:secondi nel pannello live system dell'hero.
 ═══════════════════════════════════════════════════════════════════ */
-
-/* Date.now() = timestamp attuale in millisecondi.
-   Lo salviamo all'apertura come riferimento "tempo zero". */
 const startTime = Date.now();
 const uptimeEl = document.getElementById("uptime");
 
 setInterval(() => {
-  /* secondi totali trascorsi dall'apertura */
   const s = Math.floor((Date.now() - startTime) / 1000);
-
-  /* da secondi totali ricaviamo h, m, s.
-     padStart(2, "0"): se la stringa è < 2 caratteri, la riempie
-     con uno "0" all'inizio. Così "5" diventa "05". */
   const h = String(Math.floor(s / 3600)).padStart(2, "0");
   const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
   const sec = String(s % 60).padStart(2, "0");
-
-  /* Aggiorna il testo del <span id="uptime">.
-     I backtick ` ` (template literals) permettono di inserire
-     variabili nella stringa con la sintassi ${variabile}. */
   uptimeEl.textContent = `${h}:${m}:${sec}`;
-}, 1000); /* ogni 1 secondo */
+}, 1000);
 
 /* ════════════════════════════════════════════════════════════════
    2. STACK CYCLE
-   Cicla un array di tecnologie nel pannello live system.
-   Ogni 1.8s: nasconde → cambia testo → mostra
 ═══════════════════════════════════════════════════════════════════ */
-
-/* Due array paralleli: nomi lunghi su desktop, abbreviati su mobile.
-   Su schermi stretti "JavaScript" allarga la riga della status bar e
-   spinge fuori gli altri item: usiamo "JS"/"Node" sotto i 720px.
-   matchMedia + listener: se l'utente ruota o ridimensiona, l'array
-   attivo si aggiorna senza dover ricaricare la pagina. */
 const stacksDesktop = [
   "HTML",
   "CSS",
@@ -84,50 +55,32 @@ mqMobile.addEventListener("change", (e) => {
 });
 
 const stackEl = document.getElementById("stackCycle");
-let si = 0; /* "stack index" — l'indice corrente nell'array */
+let si = 0;
 
 setInterval(() => {
-  /* fase 1: nascondi con animazione "scendi e dissolvi" */
   stackEl.style.opacity = "0";
   stackEl.style.transform = "translateY(6px)";
   stackEl.style.transition = "opacity 0.2s, transform 0.2s";
 
-  /* fase 2: dopo 220ms (quando l'elemento è ormai trasparente)... */
   setTimeout(() => {
-    /* incrementa l'indice. L'operatore % (modulo) fa ricominciare
-       da 0 dopo l'ultimo elemento — così cicliamo all'infinito. */
     si = (si + 1) % stacks.length;
     stackEl.textContent = stacks[si];
-
-    /* fase 3: torna visibile (animato grazie alla transition) */
     stackEl.style.opacity = "1";
     stackEl.style.transform = "translateY(0)";
   }, 220);
 }, 1800);
 
 /* ════════════════════════════════════════════════════════════════
-   3. RIFERIMENTO ALLA NAV
-   La nav è sempre visibile: sfondo solido, non si nasconde mai.
+   3. NAV — sempre visibile, niente hide on scroll
 ═══════════════════════════════════════════════════════════════════ */
 
 /* ════════════════════════════════════════════════════════════════
-   4. PARALLAX + MOUSE MOVEMENT SUL NOME
-
-   Due effetti combinati su ANDRES PELIZZER:
-   - MOUSE: il nome segue leggermente il cursore
-   - SCROLL: il nome sale verso l'alto a velocità diverse
-
-   ANDRES (heroFirst) si muove più lento → sembra "più lontano".
-   PELIZZER (heroLast) si muove più veloce → sembra "più vicino".
-   La differenza crea sensazione di profondità (effetto parallax).
+   4. PARALLAX + MOUSE MOVEMENT
 ═══════════════════════════════════════════════════════════════════ */
-
 const heroFirst = document.querySelector(".hero-first");
 const heroLast = document.querySelector(".hero-last");
-
 let scrollY = 0;
 
-/* Listener scroll che aggiorna scrollY (la usa mousemove) */
 window.addEventListener(
   "scroll",
   () => {
@@ -137,37 +90,22 @@ window.addEventListener(
 );
 
 document.addEventListener("mousemove", (e) => {
-  /* Posizione X del mouse normalizzata tra -7 e +7
-     0 al centro dello schermo, segno per direzione.
-     Il *14 è "l'intensità" del movimento — provato a sentimento. */
   const x = (e.clientX / window.innerWidth - 0.5) * 14;
-
-  /* Y meno intenso (*8) perché c'è già il parallax di scroll */
   const y = (e.clientY / window.innerHeight - 0.5) * 8;
 
-  /* ANDRES: mouse leggero (×0.5) + parallax scroll lento (×0.04).
-     Il segno meno davanti a scrollY: il nome SALE mentre scrolli. */
-  heroFirst.style.transform = `translate(
-    ${x * 0.5}px,
-    ${y * 0.5 - scrollY * 0.04}px
-  )`;
-
-  /* PELIZZER: mouse accentuato (×1.1) + parallax veloce (×0.09) */
-  heroLast.style.transform = `translate(
-    ${x * 1.1}px,
-    ${y * 1.1 - scrollY * 0.09}px
-  )`;
+  heroFirst.style.transform = `translate(${x * 0.5}px, ${y * 0.5 - scrollY * 0.04}px)`;
+  heroLast.style.transform = `translate(${x * 1.1}px, ${y * 1.1 - scrollY * 0.09}px)`;
 });
 
 /* ════════════════════════════════════════════════════════════════
-   5. HAMBURGER MENU — overlay fullscreen
-   L'overlay ha z-index: 200 e copre completamente la nav (z-index: 100).
-   Il pulsante × nell'overlay chiude il menu.
+   5. HAMBURGER MENU
+   FIXATO: il pulsante × usa id="mmClose" con addEventListener.
+   Body overflow bloccato quando il menu è aperto.
 ═══════════════════════════════════════════════════════════════════ */
-
 const hamburger = document.getElementById("hamburger");
 const mobileMenu = document.getElementById("mobileMenu");
 const mmLogoLink = document.getElementById("mmLogoLink");
+const mmClose = document.getElementById("mmClose");
 
 function openMenu() {
   hamburger.classList.add("open");
@@ -181,160 +119,157 @@ function closeMenu() {
   document.body.style.overflow = "";
 }
 
-/* hamburger: toggle apri/chiudi */
 hamburger.addEventListener("click", () => {
   mobileMenu.classList.contains("open") ? closeMenu() : openMenu();
 });
 
-/* funzione globale chiamata dall'onclick inline del nuovo pulsante × */
-function closeMobileMenu() {
-  closeMenu();
+if (mmClose) {
+  mmClose.addEventListener("click", closeMenu);
 }
 
-/* click sul logo nell'overlay → torna all'hero e chiude */
-mmLogoLink.addEventListener("click", closeMenu);
+if (mmLogoLink) {
+  mmLogoLink.addEventListener("click", closeMenu);
+}
 
-/* Escape → chiude il menu se aperto */
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && mobileMenu.classList.contains("open")) closeMenu();
 });
 
-/* click su un link di navigazione → naviga e chiude l'overlay */
 document.querySelectorAll(".mm-link").forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
 
 /* ════════════════════════════════════════════════════════════════
-   6. REVEAL ON SCROLL — IntersectionObserver
-
-   IntersectionObserver è un'API moderna del browser:
-   "osserva" elementi e ti notifica quando entrano/escono dal viewport.
-
-   Più efficiente del vecchio addEventListener("scroll") perché
-   il browser lo gestisce internamente — niente calcoli a ogni pixel.
+   6. REVEAL ON SCROLL
 ═══════════════════════════════════════════════════════════════════ */
-
 const revealElements = document.querySelectorAll(".reveal");
 
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      /* isIntersecting = true → l'elemento è dentro il viewport */
       if (entry.isIntersecting) {
-        /* Aggiunge .revealed → CSS fa l'animazione fade-up */
         entry.target.classList.add("revealed");
-
-        /* unobserve: smetti di osservarlo. Una volta apparso, non
-           ci serve più sapere se entra/esce. Risparmia risorse. */
         observer.unobserve(entry.target);
       }
     });
   },
-  {
-    /* threshold: percentuale di visibilità per scattare.
-       0.15 = parte quando il 15% è visibile. */
-    threshold: 0.15,
-    /* rootMargin: spinge virtualmente i bordi del viewport.
-       -50px in basso = scatta quando l'elemento è 50px DENTRO lo schermo. */
-    rootMargin: "0px 0px -50px 0px",
-  },
+  { threshold: 0.15, rootMargin: "0px 0px -50px 0px" },
 );
 
 revealElements.forEach((el) => observer.observe(el));
 
 /* ════════════════════════════════════════════════════════════════
-   7. PROJECTS — sticky frame switching
+   7. PROJECTS — sticky frame switching + carousel
 
-   Quando un .project entra nel viewport, leggiamo i suoi
-   data-attributes (data-image, data-url) e aggiorniamo
-   l'immagine + URL del browser sticky.
-
-   Risultato: scrollando il contenuto a destra, l'immagine
-   nel browser di sinistra cambia in modo sincronizzato.
+   Ogni progetto ha data-images (JSON array di URL).
+   Quando un progetto entra nel viewport, il browser frame
+   mostra le sue immagini. Se ha più di una immagine,
+   appaiono le frecce e i dots per navigare.
 ═══════════════════════════════════════════════════════════════════ */
-
 const projectImage = document.getElementById("projectImage");
 const browserUrl = document.getElementById("browserUrl");
+const carouselPrev = document.getElementById("carouselPrev");
+const carouselNext = document.getElementById("carouselNext");
+const carouselDots = document.getElementById("carouselDots");
 const projects = document.querySelectorAll(".project");
 
-/* Verifichiamo che gli elementi esistano — su mobile il browser
-   sticky è nascosto via CSS, ma gli elementi sono ancora nel DOM.
-   Se per qualche motivo mancano, il listener viene saltato. */
+let currentImages = [];
+let currentImageIndex = 0;
+
+/* aggiorna le frecce e i dots in base al numero di immagini */
+function updateCarouselUI() {
+  if (currentImages.length <= 1) {
+    carouselPrev.style.display = "none";
+    carouselNext.style.display = "none";
+    carouselDots.style.display = "none";
+    return;
+  }
+
+  carouselPrev.style.display = "flex";
+  carouselNext.style.display = "flex";
+  carouselDots.style.display = "flex";
+
+  /* genera dots */
+  carouselDots.innerHTML = "";
+  currentImages.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "carousel-dot" + (i === currentImageIndex ? " active" : "");
+    dot.addEventListener("click", () => goToImage(i));
+    carouselDots.appendChild(dot);
+  });
+}
+
+function goToImage(index) {
+  currentImageIndex = index;
+  projectImage.style.opacity = "0";
+  setTimeout(() => {
+    projectImage.src = currentImages[currentImageIndex];
+    projectImage.style.opacity = "1";
+    updateCarouselUI();
+  }, 200);
+}
+
+if (carouselPrev) {
+  carouselPrev.addEventListener("click", () => {
+    const prev =
+      (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+    goToImage(prev);
+  });
+}
+
+if (carouselNext) {
+  carouselNext.addEventListener("click", () => {
+    const next = (currentImageIndex + 1) % currentImages.length;
+    goToImage(next);
+  });
+}
+
 if (projectImage && browserUrl && projects.length > 0) {
   const projectObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          /* dataset = oggetto JS contenente tutti i data-* dell'elemento.
-             data-image (HTML) → dataset.image (JS). */
-          const newImage = entry.target.dataset.image;
-          const newUrl = entry.target.dataset.url;
+          /* leggi data-images come JSON array */
+          let images = [];
+          try {
+            images = JSON.parse(entry.target.dataset.images || "[]");
+          } catch (e) {
+            images = [];
+          }
 
-          /* Se l'immagine è già quella mostrata, salta — evita
-             transizioni inutili. */
-          if (projectImage.src === newImage) return;
+          const newUrl = entry.target.dataset.url || "";
 
-          /* TRANSIZIONE FADE in 3 fasi:
-             1. abbassa opacity → fade-out 0.4s (CSS transition)
-             2. dopo 200ms cambia src e URL
-             3. opacity = 1 → fade-in automatico */
+          /* se sono le stesse immagini, salta */
+          if (JSON.stringify(images) === JSON.stringify(currentImages)) return;
+
+          currentImages = images;
+          currentImageIndex = 0;
+
           projectImage.style.opacity = "0";
           setTimeout(() => {
-            projectImage.src = newImage;
+            if (currentImages.length > 0) {
+              projectImage.src = currentImages[0];
+            }
             browserUrl.textContent = newUrl;
             projectImage.style.opacity = "1";
+            updateCarouselUI();
           }, 200);
         }
       });
     },
-    {
-      /* threshold più alto del reveal (0.5 invece di 0.15):
-         vogliamo essere sicuri che l'utente stia GUARDANDO il progetto. */
-      threshold: 0.5,
-      /* rootMargin: zona attiva = solo il 60% centrale dello schermo.
-         Cambio scatta quando il progetto è AL CENTRO. */
-      rootMargin: "-20% 0px -20% 0px",
-    },
+    { threshold: 0.5, rootMargin: "-20% 0px -20% 0px" },
   );
 
   projects.forEach((project) => projectObserver.observe(project));
 }
 
 /* ════════════════════════════════════════════════════════════════
-   8. STAT CARDS TOGGLE — sezione About
-
-   Le 3 card (Timeline / Focus / Internship) si espandono al click
-   mostrando un dettaglio aggiuntivo. Il + ruota e diventa ×.
-   Tutto via classe .open: il CSS fa l'animazione, il JS fa il toggle.
+   8. STAT CARDS TOGGLE
 ═══════════════════════════════════════════════════════════════════ */
-
 const statCards = document.querySelectorAll(".stat-card");
 
 statCards.forEach((card) => {
   card.addEventListener("click", () => {
-    /* classList.toggle: se la classe c'è la rimuove, se non c'è la aggiunge.
-       È esattamente il comportamento "apri se chiusa, chiudi se aperta". */
     card.classList.toggle("open");
   });
 });
-
-/* ══════════════════════════════════════════════════════════════════
-   FINE DEL FILE
-
-   Concetti JavaScript usati:
-   - const / let
-   - Arrow functions   → () => {}
-   - getElementById, querySelector, querySelectorAll
-   - addEventListener
-   - classList.add/remove/contains/toggle
-   - element.style.X
-   - element.textContent
-   - element.dataset
-   - setInterval / setTimeout
-   - Math.floor, padStart, modulo (%)
-   - Template literals → `${}`
-   - Operatore ternario
-   - forEach
-   - IntersectionObserver
-   - { passive: true }
-══════════════════════════════════════════════════════════════════ */
