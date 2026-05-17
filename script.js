@@ -98,38 +98,70 @@ document.addEventListener("mousemove", (e) => {
 });
 
 /* ════════════════════════════════════════════════════════════════
-   5. HAMBURGER MENU
+   5. HAMBURGER MENU — rifatto da zero
+   - hamburger apre l'overlay
+   - bottone × lo chiude (click + touch)
+   - Escape lo chiude
+   - click su un link lo chiude
+   - body scroll bloccato quando aperto
 ═══════════════════════════════════════════════════════════════════ */
 const hamburger = document.getElementById("hamburger");
 const mobileMenu = document.getElementById("mobileMenu");
 const mmClose = document.getElementById("mmClose");
 
-function openMenu() {
+function openMobileMenu() {
+  if (!mobileMenu) return;
   hamburger.classList.add("open");
   mobileMenu.classList.add("open");
+  if (mmClose) mmClose.classList.add("visible");
   document.body.style.overflow = "hidden";
 }
 
-function closeMenu() {
+function closeMobileMenu() {
+  if (!mobileMenu) return;
   hamburger.classList.remove("open");
   mobileMenu.classList.remove("open");
+  if (mmClose) mmClose.classList.remove("visible");
   document.body.style.overflow = "";
 }
 
-hamburger.addEventListener("click", () => {
-  mobileMenu.classList.contains("open") ? closeMenu() : openMenu();
-});
-
-if (mmClose) {
-  mmClose.addEventListener("click", closeMenu);
+/* apertura: click sull'hamburger */
+if (hamburger) {
+  hamburger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (mobileMenu.classList.contains("open")) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
 }
 
+/* chiusura: bottone × — gestisce sia click che touchend */
+if (mmClose) {
+  const closeHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  };
+  mmClose.addEventListener("click", closeHandler);
+  mmClose.addEventListener("touchend", closeHandler);
+}
+
+/* chiusura: tasto Escape */
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && mobileMenu.classList.contains("open")) closeMenu();
+  if (
+    e.key === "Escape" &&
+    mobileMenu &&
+    mobileMenu.classList.contains("open")
+  ) {
+    closeMobileMenu();
+  }
 });
 
+/* chiusura: click su un link del menu */
 document.querySelectorAll(".mm-link").forEach((link) => {
-  link.addEventListener("click", closeMenu);
+  link.addEventListener("click", closeMobileMenu);
 });
 
 /* ════════════════════════════════════════════════════════════════
@@ -191,10 +223,13 @@ revealElements.forEach((el) => observer.observe(el));
 
 /* ════════════════════════════════════════════════════════════════
    6b. TOOLTIP CLICK-TOGGLE (mobile/tablet)
-   Su touch, hover non funziona. I tooltip si aprono/chiudono al tap.
+   Su touch device, hover non funziona. I tooltip si aprono al tap.
    Tappando fuori dal tooltip, si chiude.
 ═══════════════════════════════════════════════════════════════════ */
-const isTouchDevice = window.matchMedia("(max-width: 800px)").matches;
+const isTouchDevice =
+  "ontouchstart" in window ||
+  navigator.maxTouchPoints > 0 ||
+  window.matchMedia("(max-width: 800px)").matches;
 
 if (isTouchDevice) {
   const keyWords = document.querySelectorAll(".key-word");
@@ -204,7 +239,7 @@ if (isTouchDevice) {
       e.preventDefault();
       e.stopPropagation();
 
-      /* chiudi tutti gli altri */
+      /* chiudi tutti gli altri tooltip aperti */
       keyWords.forEach((other) => {
         if (other !== kw) other.classList.remove("tip-open");
       });
@@ -214,7 +249,7 @@ if (isTouchDevice) {
     });
   });
 
-  /* tap fuori chiude tutti */
+  /* tap fuori chiude tutti i tooltip */
   document.addEventListener("click", () => {
     keyWords.forEach((kw) => kw.classList.remove("tip-open"));
   });

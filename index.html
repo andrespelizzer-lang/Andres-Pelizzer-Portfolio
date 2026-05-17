@@ -115,12 +115,41 @@
 
     <!-- ════════════════════════════════════════════
          MOBILE MENU — overlay fullscreen
-         Bottone × posizionato direttamente nell'overlay.
+         × è un bottone fluttuante separato, position: fixed.
+         Indipendente dal layout interno — sempre visibile.
     ════════════════════════════════════════════ -->
-    <div class="mobile-menu" id="mobileMenu">
-      <!-- bottone chiudi — standalone, posizionato in alto a destra -->
-      <button class="mm-close" id="mmClose" aria-label="Close menu">×</button>
 
+    <!-- bottone × fluttuante (FUORI dal menu, position: fixed) -->
+    <button
+      type="button"
+      class="mm-close-floating"
+      id="mmClose"
+      aria-label="Close menu"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="22"
+        height="22"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+      >
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </button>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <!-- HEADER: solo logo + nome -->
+      <header class="mm-header">
+        <div class="mm-brand">
+          <img src="logo.png" alt="AP" class="mm-brand-img" />
+          <span class="mm-brand-name">Andres Pelizzer</span>
+        </div>
+      </header>
+
+      <!-- LINKS -->
       <nav class="mm-links">
         <a href="#about" class="mm-link">
           <span class="mm-num">001</span>
@@ -140,9 +169,23 @@
         </a>
       </nav>
 
-      <div class="mm-bottom">
-        <span class="mm-email">andrespelizzer@gmail.com</span>
-        <div class="mm-chips">
+      <!-- FOOTER: status + email + social -->
+      <footer class="mm-footer">
+        <div class="mm-status">
+          <span class="mm-status-dot"></span>
+          <span class="mm-status-text">Open to opportunities</span>
+        </div>
+
+        <div class="mm-contact">
+          <span class="mm-contact-label">Get in touch</span>
+          <a href="mailto:andrespelizzer@gmail.com" class="mm-email"
+            >andrespelizzer@gmail.com</a
+          >
+        </div>
+
+        <div class="mm-divider"></div>
+
+        <div class="mm-social">
           <a
             href="https://github.com/andrespelizzer-lang"
             target="_blank"
@@ -158,7 +201,7 @@
             >LinkedIn</a
           >
         </div>
-      </div>
+      </footer>
     </div>
 
     <!-- ════════════════════════════════════════════
