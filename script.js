@@ -167,7 +167,6 @@ document.addEventListener("mousemove", (e) => {
 
 const hamburger = document.getElementById("hamburger");
 const mobileMenu = document.getElementById("mobileMenu");
-const mmClose = document.getElementById("mmClose");
 const mmLogoLink = document.getElementById("mmLogoLink");
 
 function openMenu() {
@@ -189,13 +188,8 @@ hamburger.addEventListener("click", () => {
 
 /* funzione globale chiamata dall'onclick inline del nuovo pulsante × */
 function closeMobileMenu() {
-  mobileMenu.classList.remove("open");
-  hamburger.classList.remove("open");
-  document.body.style.overflow = "";
+  closeMenu();
 }
-
-/* × nell'overlay → chiude */
-mmClose.addEventListener("click", closeMenu);
 
 /* click sul logo nell'overlay → torna all'hero e chiude */
 mmLogoLink.addEventListener("click", closeMenu);

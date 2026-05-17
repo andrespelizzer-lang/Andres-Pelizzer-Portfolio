@@ -139,22 +139,12 @@
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:0 24px;height:60px;border-bottom:0.5px solid #1e1e1e;flex-shrink:0;">
-        <div style="display:flex;align-items:center;gap:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:0 24px;height:60px;border-bottom:0.5px solid #1e1e1e;flex-shrink:0;width:100%;box-sizing:border-box;">
+        <a href="#hero" id="mmLogoLink" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
           <img src="logo.png" alt="AP" style="height:28px;">
           <span style="font-family:Syne,sans-serif;font-size:13px;color:#ebebeb;">Andres Pelizzer</span>
-        </div>
-        <button onclick="closeMobileMenu()" style="width:32px;height:32px;border-radius:50%;border:0.5px solid #1e1e1e;background:none;color:#c8ff00;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">×</button>
-      </div>
-      <!-- top bar: stessa altezza e padding della nav -->
-      <div class="mm-topbar">
-        <a href="#hero" class="mm-logo" id="mmLogoLink">
-          <img src="logo.png" alt="AP" class="mm-logo-img" />
-          <span class="mm-logo-text">Andres Pelizzer</span>
         </a>
-        <button class="mm-close" id="mmClose" aria-label="Chiudi menu">
-          ×
-        </button>
+        <button onclick="closeMobileMenu()" style="width:32px;height:32px;border-radius:50%;border:0.5px solid #1e1e1e;background:none;color:#c8ff00;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;flex-shrink:0;">×</button>
       </div>
 
       <!-- link di navigazione: numero + nome sezione -->
