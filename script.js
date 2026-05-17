@@ -99,12 +99,9 @@ document.addEventListener("mousemove", (e) => {
 
 /* ════════════════════════════════════════════════════════════════
    5. HAMBURGER MENU
-   FIXATO: il pulsante × usa id="mmClose" con addEventListener.
-   Body overflow bloccato quando il menu è aperto.
 ═══════════════════════════════════════════════════════════════════ */
 const hamburger = document.getElementById("hamburger");
 const mobileMenu = document.getElementById("mobileMenu");
-const mmLogoLink = document.getElementById("mmLogoLink");
 const mmClose = document.getElementById("mmClose");
 
 function openMenu() {
@@ -127,10 +124,6 @@ if (mmClose) {
   mmClose.addEventListener("click", closeMenu);
 }
 
-if (mmLogoLink) {
-  mmLogoLink.addEventListener("click", closeMenu);
-}
-
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && mobileMenu.classList.contains("open")) closeMenu();
 });
@@ -138,6 +131,44 @@ document.addEventListener("keydown", (e) => {
 document.querySelectorAll(".mm-link").forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
+
+/* ════════════════════════════════════════════════════════════════
+   5b. TENNIS EASTER EGG — click sul logo in nav
+   Mostra un tip che racconta la passione per il tennis.
+═══════════════════════════════════════════════════════════════════ */
+const navLogo = document.getElementById("navLogo");
+const tennisTip = document.getElementById("tennisTip");
+let tennisTipTimeout = null;
+
+if (navLogo && tennisTip) {
+  navLogo.addEventListener("click", (e) => {
+    /* se siamo già nell'hero, preveniamo la navigazione e mostriamo il tip */
+    if (window.scrollY < window.innerHeight) {
+      e.preventDefault();
+    }
+
+    /* toggle del tip */
+    if (tennisTip.classList.contains("visible")) {
+      tennisTip.classList.remove("visible");
+      clearTimeout(tennisTipTimeout);
+    } else {
+      tennisTip.classList.add("visible");
+      /* nascondi automaticamente dopo 3 secondi */
+      clearTimeout(tennisTipTimeout);
+      tennisTipTimeout = setTimeout(() => {
+        tennisTip.classList.remove("visible");
+      }, 3000);
+    }
+  });
+
+  /* click fuori chiude il tip */
+  document.addEventListener("click", (e) => {
+    if (!navLogo.contains(e.target)) {
+      tennisTip.classList.remove("visible");
+      clearTimeout(tennisTipTimeout);
+    }
+  });
+}
 
 /* ════════════════════════════════════════════════════════════════
    6. REVEAL ON SCROLL
@@ -157,6 +188,37 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
+/* ════════════════════════════════════════════════════════════════
+   6b. TOOLTIP CLICK-TOGGLE (mobile/tablet)
+   Su touch, hover non funziona. I tooltip si aprono/chiudono al tap.
+   Tappando fuori dal tooltip, si chiude.
+═══════════════════════════════════════════════════════════════════ */
+const isTouchDevice = window.matchMedia("(max-width: 800px)").matches;
+
+if (isTouchDevice) {
+  const keyWords = document.querySelectorAll(".key-word");
+
+  keyWords.forEach((kw) => {
+    kw.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      /* chiudi tutti gli altri */
+      keyWords.forEach((other) => {
+        if (other !== kw) other.classList.remove("tip-open");
+      });
+
+      /* toggle questo */
+      kw.classList.toggle("tip-open");
+    });
+  });
+
+  /* tap fuori chiude tutti */
+  document.addEventListener("click", () => {
+    keyWords.forEach((kw) => kw.classList.remove("tip-open"));
+  });
+}
 
 /* ════════════════════════════════════════════════════════════════
    7. PROJECTS — sticky frame switching + carousel
@@ -273,3 +335,57 @@ statCards.forEach((card) => {
     card.classList.toggle("open");
   });
 });
+
+/* ════════════════════════════════════════════════════════════════
+   9. SKILLS ANIMATION — chip stagger + counter
+   Quando la sezione skills entra nel viewport, i chip dentro
+   ogni card appaiono uno alla volta con un delay progressivo.
+   Il contatore "24 skills" conta da 0 a 24.
+═══════════════════════════════════════════════════════════════════ */
+const skillsGrid = document.querySelector(".skills-grid");
+const skillsTotal = document.querySelector(".skills-total");
+
+if (skillsGrid) {
+  const skillsObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          /* anima i chip dentro ogni card con delay crescente */
+          const allChips = skillsGrid.querySelectorAll(".skill-chip");
+          allChips.forEach((chip, i) => {
+            chip.style.opacity = "0";
+            chip.style.transform = "translateY(8px) scale(0.95)";
+            chip.style.transition = "none";
+
+            setTimeout(
+              () => {
+                chip.style.transition =
+                  "opacity 0.35s ease, transform 0.35s ease";
+                chip.style.opacity = "1";
+                chip.style.transform = "translateY(0) scale(1)";
+              },
+              400 + i * 40,
+            );
+          });
+
+          /* count-up da 0 a 24 */
+          if (skillsTotal) {
+            let count = 0;
+            const target = 24;
+            const step = () => {
+              count++;
+              skillsTotal.textContent = count + " skills";
+              if (count < target) requestAnimationFrame(step);
+            };
+            setTimeout(step, 600);
+          }
+
+          skillsObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 },
+  );
+
+  skillsObserver.observe(skillsGrid);
+}

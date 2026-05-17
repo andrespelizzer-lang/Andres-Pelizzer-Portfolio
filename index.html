@@ -95,8 +95,12 @@
          NAV
     ════════════════════════════════════════════ -->
     <nav>
-      <a href="#hero" class="nav-logo">
+      <a href="#hero" class="nav-logo" id="navLogo">
         <img src="logo.png" alt="AP" class="nav-logo-img" /> Andres Pelizzer
+        <!-- easter egg tennis — appare al click sul logo -->
+        <span class="nav-tennis-tip" id="tennisTip">
+          Tennis player, code writer, curious mind.
+        </span>
       </a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
@@ -111,16 +115,12 @@
 
     <!-- ════════════════════════════════════════════
          MOBILE MENU — overlay fullscreen
-         Usa le classi CSS .mm-topbar, .mm-close ecc.
+         Bottone × posizionato direttamente nell'overlay.
     ════════════════════════════════════════════ -->
     <div class="mobile-menu" id="mobileMenu">
-      <div class="mm-topbar">
-        <a href="#hero" id="mmLogoLink" class="mm-logo">
-          <img src="logo.png" alt="AP" class="mm-logo-img" />
-          <span class="mm-logo-text">Andres Pelizzer</span>
-        </a>
-        <button class="mm-close" id="mmClose" aria-label="Close menu">×</button>
-      </div>
+      <!-- bottone chiudi — standalone, posizionato in alto a destra -->
+      <button class="mm-close" id="mmClose" aria-label="Close menu">×</button>
+
       <nav class="mm-links">
         <a href="#about" class="mm-link">
           <span class="mm-num">001</span>
@@ -139,6 +139,7 @@
           <span class="mm-name">Contact</span>
         </a>
       </nav>
+
       <div class="mm-bottom">
         <span class="mm-email">andrespelizzer@gmail.com</span>
         <div class="mm-chips">
