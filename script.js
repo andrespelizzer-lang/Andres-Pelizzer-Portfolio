@@ -187,6 +187,13 @@ hamburger.addEventListener("click", () => {
   mobileMenu.classList.contains("open") ? closeMenu() : openMenu();
 });
 
+/* funzione globale chiamata dall'onclick inline del nuovo pulsante × */
+function closeMobileMenu() {
+  mobileMenu.classList.remove("open");
+  hamburger.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
 /* × nell'overlay → chiude */
 mmClose.addEventListener("click", closeMenu);
 
