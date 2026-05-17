@@ -53,7 +53,12 @@ setInterval(() => {
    Ogni 1.8s: nasconde → cambia testo → mostra
 ═══════════════════════════════════════════════════════════════════ */
 
-const stacks = [
+/* Due array paralleli: nomi lunghi su desktop, abbreviati su mobile.
+   Su schermi stretti "JavaScript" allarga la riga della status bar e
+   spinge fuori gli altri item: usiamo "JS"/"Node" sotto i 720px.
+   matchMedia + listener: se l'utente ruota o ridimensiona, l'array
+   attivo si aggiorna senza dover ricaricare la pagina. */
+const stacksDesktop = [
   "HTML",
   "CSS",
   "JavaScript",
@@ -62,6 +67,22 @@ const stacks = [
   "MySQL",
   "Python",
 ];
+const stacksMobile = [
+  "HTML",
+  "CSS",
+  "JS",
+  "Node",
+  "Express",
+  "MySQL",
+  "Python",
+];
+
+const mqMobile = window.matchMedia("(max-width: 720px)");
+let stacks = mqMobile.matches ? stacksMobile : stacksDesktop;
+mqMobile.addEventListener("change", (e) => {
+  stacks = e.matches ? stacksMobile : stacksDesktop;
+});
+
 const stackEl = document.getElementById("stackCycle");
 let si = 0; /* "stack index" — l'indice corrente nell'array */
 

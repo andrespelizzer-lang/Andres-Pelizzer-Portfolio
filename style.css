@@ -203,6 +203,7 @@ nav {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.28s ease;
+  overflow: hidden; /* l'overlay non scrolla mai: scrolla solo .mm-links interno */
 }
 
 .mobile-menu.open {
